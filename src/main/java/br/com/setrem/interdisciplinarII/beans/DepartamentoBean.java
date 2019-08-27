@@ -1,7 +1,7 @@
-package br.com.empresa.modelo.beans;
+package br.com.setrem.interdisciplinarII.beans;
 
-import br.com.empresa.modelo.model.Departamento;
-import br.com.empresa.modelo.repository.DepartamentoRepository;
+import br.com.setrem.interdisciplinarII.model.Departamento;
+import br.com.setrem.interdisciplinarII.repository.DepartamentoRepository;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package br.com.empresa.modelo.model;
+package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
