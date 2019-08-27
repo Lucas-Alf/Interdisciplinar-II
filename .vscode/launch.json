@@ -1,7 +1,4 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -12,10 +9,10 @@
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-ModeloApplication<modelo>",
+            "name": "Debug (Launch)-InterdisciplinarIIApplication<Interdisciplinar-II-SI>",
             "request": "launch",
-            "mainClass": "br.com.empresa.modelo.ModeloApplication",
-            "projectName": "modelo"
+            "mainClass": "br.com.setrem.interdisciplinarII.InterdisciplinarIIApplication",
+            "projectName": "Interdisciplinar-II-SI"
         }
     ]
 }
