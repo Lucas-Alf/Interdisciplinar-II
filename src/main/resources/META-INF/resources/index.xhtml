@@ -14,16 +14,17 @@
     <div class="ui-g">
         <div class="ui-g-12"
             style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%)">
-            <p:fieldset legend="Login" style="width: 400px; margin-bottom:20px; margin: 0 auto">
+            <p:fieldset legend="Login" style="width: 400px; margin-bottom:20px; margin: 0 auto;">
                 <h:form>
                     <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
-                        <h:outputText value="Usuário: " />
-                        <p:inputText style="width: 100%" id="user" />
+                        <h:outputText value="Email: " />
+                        <p:inputText binding="#{email}" style="width: 100%" id="email" />
                         <h:outputText value="Senha: " />
-                        <p:password style="width: 100%" id="pwd" />
+                        <p:password binding="#{senha}" style="width: 100%" id="senha" />
                     </h:panelGrid>
                 </h:form>
-                <p:commandButton value="Entrar" style="float: right" action="usuarioController.login" />
+                <p:growl id="growl" showDetail="true" />
+                <p:commandButton style="float: right" action="#{usuarioBean.Login(email.value, senha.value)}" value="Entrar" update="growl" />
             </p:fieldset>
         </div>
     </div>
