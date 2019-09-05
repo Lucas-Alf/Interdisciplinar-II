@@ -6,7 +6,6 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import br.com.setrem.interdisciplinarII.InterdisciplinarIIApplication;
-import br.com.setrem.interdisciplinarII.SessionFactory;
 import br.com.setrem.interdisciplinarII.model.Usuario;
 import br.com.setrem.interdisciplinarII.repository.UsuarioRepository;
 import java.io.Serializable;
@@ -35,14 +34,16 @@ public class UsuarioBean implements Serializable {
         Usuario usuario = usuarioRepository.login(email, senha);
         if (usuario != null) {
             System.out.println("-> Login: " + usuario.getEmail());
-            return "/home.xhtml?faces-redirect=true";  
+            return "/home.xhtml?faces-redirect=true";
         } else {
             System.out.println("-> Usuario não encontrado!");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário não encontrado."));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário não encontrado."));
             return "Usuario não encontrado";
         }
     }
+
 }
 // <p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="100">
-//     <h:outputText value="This is a Modal Dialog." />
+// <h:outputText value="This is a Modal Dialog." />
 // </p:dialog>
