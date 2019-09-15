@@ -2,32 +2,33 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Interdisciplinar II</title>
-</h:head>
-<h:body style="background-image: url(images/background.jpg); background-size: cover; overflow: hidden">
-    <div class="ui-g">
-        <div class="ui-g-12"
-            style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%)">
-            <p:fieldset legend="Login" style="width: 400px; margin-bottom:20px; margin: 0 auto;">
-                <h:form>
-                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
-                        <h:outputText value="Email: " />
-                        <p:inputText binding="#{email}" style="width: 100%" id="email" />
-                        <h:outputText value="Senha: " />
-                        <p:password binding="#{senha}" style="width: 100%" id="senha" />
-                    </h:panelGrid>
-                </h:form>
-                <p:growl id="growl" showDetail="true" />
-                <p:commandButton style="float: right" action="#{usuarioBean.Login(email.value, senha.value)}" value="Entrar" update="growl" />
-            </p:fieldset>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Interdisciplinar II</title>
+    </h:head>
+    <h:body style="overflow: hidden; background-color:#d0d0d0">
+        <div class="ui-g">
+            <div class="ui-g-12"
+                 style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%)">
+                <p:panel style="width: 400px; height: 245px; margin-bottom:50px; margin: 0 auto;">
+                    <img src="images/AbacoLogoPequeno.png" style="display: block; margin-left: auto;margin-right: auto; margin-top: 15px; margin-bottom: 15px"/>
+                    <h:form>
+                        <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
+                            <h:outputText value="Email: " />
+                            <p:inputText binding="#{email}" style="width: 100%" id="email" />
+                            <h:outputText value="Senha: " />
+                            <p:password binding="#{senha}" style="width: 100%" id="senha" />
+                        </h:panelGrid>
+                    </h:form>
+                    <p:growl id="growl" showDetail="true" />
+                    <p:commandButton style="float: right" action="#{usuarioBean.Login(email.value, senha.value)}" value="Entrar" update="growl" />
+                </p:panel>
+            </div>
         </div>
-    </div>
-</h:body>
+    </h:body>
 
 </html>
