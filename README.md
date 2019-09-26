@@ -8,6 +8,6 @@
 -> Java 8<br/>
 -> Spring Boot 2+<br/>
 -> JSF 2+<br/>
--> Maven
--> Teste git
--> Algum teste de aula
+-> Maven<br/>
+-> Teste git<br/>
+-> Teste git com conflito
