@@ -1,9 +1,8 @@
-<p align="center">
-   <img src="src/main/resources/META-INF/resources/images/AbacoLogoMedio.png" width="400">
-</p>
-
 # Interdisciplinar II
-Projeto Web para LP I
+<p align="center">
+   <img src="src/main/resources/META-INF/resources/images/AbacoLogoMedio.png" width="400"><br/><br/>
+    Projeto Web para LP I
+</p>
 
 # Requisitos
 -> Java 8<br/>
