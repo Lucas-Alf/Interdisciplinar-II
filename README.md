@@ -9,5 +9,3 @@
 -> Spring Boot 2+<br/>
 -> JSF 2+<br/>
 -> Maven<br/>
--> Teste git<br/>
--> Teste git com conflito
