@@ -10,4 +10,4 @@
 -> JSF 2+<br/>
 -> Maven
 -> Teste git
-
+-> Teste git com conflito 😢
