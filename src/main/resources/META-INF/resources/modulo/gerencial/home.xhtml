@@ -1,16 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Interdisciplinar II</title>
+    </h:head>
+    <h:body style="overflow: hidden; background-color:white; margin: 0px">
+        <p:menubar style="border-radius: 0px">
+            <p:submenu label="Lançamentos" icon="pi pi-file">
+                <p:submenu label="Novo" icon="pi pi-briefcase">
+                    <p:menuitem value="exemplo" url="#" />
+                    <p:menuitem value="outro exemplo" url="#" />
+                </p:submenu>
+            </p:submenu>
+            <p:submenu label="Relatórios" icon="pi pi-pencil">
+                <p:submenu label="Contábeis" icon="pi pi-briefcase">
+                    <p:menuitem value="DRE" url="#" />
+                    <p:menuitem value="Balancete" url="#" />
+                </p:submenu>
+                <p:submenu label="Patrimonial" icon="pi pi-briefcase">
+                    <p:menuitem value="Estoque" url="#" />
+                </p:submenu>
+            </p:submenu>
+        </p:menubar>
+        <div class="ui-g">
+            <p:dataTable var="item" value="#{usuarioBean.Lista()}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{item.id}" />
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="#{item.email}" />
+                </p:column>
+
+                <p:column headerText="Senha">
+                    <h:outputText value="#{item.senha}" />
+                </p:column>
+            </p:dataTable>
+        </div>
+    </h:body>
+
 </html>

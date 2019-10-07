@@ -16,6 +16,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaQuery;
+
+import com.google.gson.Gson;
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,10 @@ public class UsuarioBean implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário não encontrado."));
             return "Usuario não encontrado";
         }
+    }
+
+    public List<Usuario> Lista(){
+        return usuarioRepository.lista();
     }
 
 }

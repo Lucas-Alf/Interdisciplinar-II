@@ -9,33 +9,43 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Interdisciplinar II</title>
+        <link rel="stylesheet" href="./css/simple-sidebar.css" />
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="webjars/font-awesome/5.11.2/css/all.min.css" />
+        <script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+        <!--<script src="webjars/bower/bootbox.js/5.3.2/bootbox.all.min.js"></script>-->
+
     </h:head>
     <h:body style="overflow: hidden; background-color:white; margin: 0px">
-        <p:menubar style="border-radius: 0px">
-            <p:submenu label="Lançamentos" icon="pi pi-file">
-                <p:submenu label="Novo" icon="pi pi-briefcase">
-                    <p:menuitem value="exemplo" url="#" />
-                    <p:menuitem value="outro exemplo" url="#" />
-                </p:submenu>
-            </p:submenu>
-            <p:submenu label="Relatórios" icon="pi pi-pencil">
-                <p:submenu label="Contábeis" icon="pi pi-briefcase">
-                    <p:menuitem value="DRE" url="#" />
-                    <p:menuitem value="Balancete" url="#" />
-                </p:submenu>
-                <p:submenu label="Patrimonial" icon="pi pi-briefcase">
-                    <p:menuitem value="Estoque" url="#" />
-                </p:submenu>
-            </p:submenu>
-            <f:facet name="options">
-                <p:button outcome="index" value="Sair">
-                </p:button>
-            </f:facet>
-        </p:menubar>
-        <div class="ui-g">
-            <div class="ui-g-12"
-                 style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%)">
-                <img src="images/AbacoLogoMedio.png" style="display: block; margin-left: auto;margin-right: auto; margin-top: 15px; margin-bottom: 15px; opacity: 0.4"/>
+        <div class="d-flex" id="wrapper">
+            <div class="bg-dark" id="sidebar-wrapper">
+                <div class="sidebar-heading" style="color: white; text-align: center">
+                    <b>Menus do sistema</b>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="#" style="color: white" class="list-group-item list-group-item-action bg-dark">Lançamentos</a>
+                    <a href="#" style="color: white" class="list-group-item list-group-item-action bg-dark">Módulo
+                        Gerencial</a>
+                    <a href="#" style="color: white" class="list-group-item list-group-item-action bg-dark">Contas a
+                        Pagar/Receber</a>
+                </div>
+            </div>
+            <div id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.xhtml">Sair</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container"
+                     style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%)">
+                    <img src="images/AbacoLogoMedio.png"
+                         style="display: block; margin-left: auto;margin-right: auto; margin-top: 15px; margin-bottom: 15px; opacity: 0.4" />
+                </div>
             </div>
         </div>
     </h:body>
