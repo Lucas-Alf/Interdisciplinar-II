@@ -1,0 +1,11 @@
+.sidebar-link{
+    color: white
+}
+
+.sidebar-menu{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 15px;
+    margin-left: 0px; 
+    background-color: #3a3a3a;
+}

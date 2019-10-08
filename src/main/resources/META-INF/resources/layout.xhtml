@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Interdisciplinar II</title>
     <link rel="stylesheet" href="./css/simple-sidebar.css" />
+    <link rel="stylesheet" href="./css/site.css" />
     <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="webjars/font-awesome/5.11.2/css/all.min.css" />
     <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
     <script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css" />
-    <script src="webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
     <script src="webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js"></script>
     <script src="webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/modules/treeview.js"></script>
 </h:head>
@@ -25,21 +25,29 @@
             <div class="sidebar-heading" style="color: #d8d8d8; text-align: center">
                 <b>Menus do sistema</b>
             </div>
-            <div class="list-group list-group-flush">
-                <a href="#" style="color: #d8d8d8" class="list-group-item list-group-item-action bg-dark">Lançamentos
-                    Contábeis</a>
-                <a href="#" style="color: grey; font-size: 12px" class="list-group-item list-group-item-action bg-dark">
-                    &emsp;-> Lançamento Avulso</a>
-                <a href="#" style="color: grey; font-size: 12px" class="list-group-item list-group-item-action bg-dark">
-                    &emsp;-> Cadastro de Contas</a>
-                <a href="#" style="color: grey; font-size: 12px" class="list-group-item list-group-item-action bg-dark">
-                    &emsp;-> Plano de Contas</a>
-                <a href="#" style="color: grey; font-size: 12px" class="list-group-item list-group-item-action bg-dark">
-                    &emsp;-> Centro de Custo</a>
-                <a href="#" style="color: #d8d8d8" class="list-group-item list-group-item-action bg-dark">Módulo
-                    Gerencial</a>
-                <a href="#" style="color: #d8d8d8" class="list-group-item list-group-item-action bg-dark">Contas a
-                    Pagar/Receber</a>
+            <div class="treeview"
+                style="background-color: #212121; color: rgb(210, 210, 210); width: 260px;">
+                <ul style="padding-left: 0px">
+                    <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
+                        <span><i class="far fa-folder-open ic-w mx-1"></i>Lançamentos Contábeis</span>
+                        <ul class="nested">
+                            <li><i class="fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
+                                    href="home.xhtml">Balancete</a></li>
+                            <li><i class="fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
+                                    href="home.xhtml">DRE</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
+                        <span><i class="far fa-folder-open ic-w mx-1"></i>Módulo Gerencial</span>
+                        <ul class="nested">
+                            <li><i class="fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
+                                    href="home.xhtml">Balancete</a></li>
+                            <li><i class="fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
+                                    href="home.xhtml">DRE</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu"><i class="fas fa-cogs ic-w mr-1"></i>Settings</li>
+                </ul>
             </div>
         </div>
         <div id="page-content-wrapper">
@@ -57,6 +65,7 @@
             </ui:insert>
         </div>
     </div>
+    <script src="webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.treeview').mdbTreeview();
