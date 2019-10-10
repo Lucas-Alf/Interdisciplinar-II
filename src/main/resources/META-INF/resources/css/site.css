@@ -24,10 +24,7 @@
     padding-left: 25px
 }
 
-
 /* uhef */
-
-
 
 .treeview-animated.w-20 {
     width: 20rem !important;
@@ -122,3 +119,14 @@
     color: #f8f9fa !important;
     transform: rotate(90deg) !important;
   }
+
+.crud-btn {
+    float: left;
+    margin-top: 2px;
+    margin-right: 7px;
+}
+
+.formato-btn {
+    height: 35px;
+    padding-top: 10px;
+}
