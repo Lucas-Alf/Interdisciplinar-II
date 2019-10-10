@@ -22,11 +22,8 @@
         <ui:composition template="/layout.xhtml">
             <ui:define name="content">
                 <div class="container">
-                    <h2><b>Lançamento de Patrimônio</b></h2>
+                    <h2><b>Cadastro Estado de Conservação</b></h2>
                     <h:form>
-                        Pesquisar Patrimônio: <h:inputText value="" style="width: 60%; margin-right: 5px;" /> 
-                        <h:commandButton class="" value="Pesquisar" action="#" style="width: 120px; margin-bottom: 20px;"/><br/>
-
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#flipFlop"><i class="fas fa-plus crud-btn" ></i> Incluir</button>
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#flipFlop"><i class="far fa-edit crud-btn" ></i> Alterar</button>
 
@@ -34,7 +31,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="modalLabel">Lançamento de Patrimônio</h4>
+                                        <h4 class="modal-title" id="modalLabel">Cadastro Estado de Conservação</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -58,17 +55,11 @@
                             <i class="far fa-trash-alt crud-btn" ></i>
                         </h:commandLink>           
 
-                        <p:dataTable class="ui-g-12 ui-md-6 ui-lg-3" var="patrimonio" value="" style="width: 95%; margin-top: 10px" >
+                        <p:dataTable class="ui-g-12 ui-md-6 ui-lg-3" var="estadoConservacao" value="" style="width: 95%; margin-top: 10px" >
                             <p:column headerText="Código" style="width: 15%;">
                                 <h:outputText value="" />
                             </p:column>
-                            <p:column headerText="Patrimônio" style="width: 70%; text-align: left">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Valor" style="width: 15%;">
-                                <h:outputText value="" />
-                            </p:column>
-                            <p:column headerText="Data" style="width: 15%;">
+                            <p:column headerText="Descrição" style="width: 70%; text-align: left">
                                 <h:outputText value="" />
                             </p:column>
                         </p:dataTable>
