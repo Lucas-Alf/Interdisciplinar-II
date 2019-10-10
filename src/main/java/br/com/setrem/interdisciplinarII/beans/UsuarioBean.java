@@ -51,6 +51,3 @@ public class UsuarioBean implements Serializable {
     }
 
 }
-// <p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="100">
-// <h:outputText value="This is a Modal Dialog." />
-// </p:dialog>

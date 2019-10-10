@@ -13,9 +13,9 @@
 <h:body style="overflow: hidden; background-color:white; margin: 0px">
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
-            <p>
-                testeee
-            </p>
+            <h:form>
+                <h:commandLink styleClass="btn btn-primary" value="click" action="#{usuarioBean.Login(master,123)}"/>
+            </h:form>
         </ui:define>
     </ui:composition>
 </h:body>
