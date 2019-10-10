@@ -23,3 +23,14 @@
 .sidebar-group{
     padding-left: 25px
 }
+
+.crud-btn {
+    float: left;
+    margin-top: 2px;
+    margin-right: 7px;
+}
+
+.formato-btn {
+    height: 35px;
+    padding-top: 10px;
+}
