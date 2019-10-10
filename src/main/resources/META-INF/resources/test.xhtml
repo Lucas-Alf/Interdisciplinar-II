@@ -13,49 +13,70 @@
 <h:body>
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
-            <div class="treeview w-20 border">
-                <h6 class="pt-3 pl-3">Folders</h6>
-                <ul class="mb-1 pl-3 pb-2">
-                    <li><i class="fas fa-angle-right rotate"></i>
-                        <span><i class="far fa-envelope-open ic-w mx-1"></i>Mail</span>
-                        <ul class="nested">
-                            <li><i class="far fa-bell ic-w mr-1"></i>Offers</li>
-                            <li><i class="far fa-address-book ic-w mr-1"></i>Contacts</li>
-                            <li><i class="fas fa-angle-right rotate"></i>
-                                <span><i class="far fa-calendar-alt ic-w mx-1"></i>Calendar</span>
-                                <ul class="nested">
-                                    <li><i class="far fa-clock ic-w mr-1"></i>Deadlines</li>
-                                    <li><i class="fas fa-users ic-w mr-1"></i>Meetings</li>
-                                    <li><i class="fas fa-basketball-ball ic-w mr-1"></i>Workouts</li>
-                                    <li><i class="fas fa-mug-hot ic-w mr-1"></i>Events</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><i class="fas fa-angle-right rotate"></i>
-                        <span><i class="far fa-folder-open ic-w mx-1"></i>Inbox</span>
-                        <ul class="nested">
-                            <li><i class="far fa-folder-open ic-w mr-1"></i>Admin</li>
-                            <li><i class="far fa-folder-open ic-w mr-1"></i>Corporate</li>
-                            <li><i class="far fa-folder-open ic-w mr-1"></i>Finance</li>
-                            <li><i class="far fa-folder-open ic-w mr-1"></i>Other</li>
-                        </ul>
-                    </li>
-                    <li><i class="fas fa-angle-right rotate"></i>
-                        <span><i class="far fa-gem ic-w mx-1"></i>Favourites</span>
-                        <ul class="nested">
-                            <li><i class="fas fa-pepper-hot ic-w mr-1"></i>Restaurants</li>
-                            <li><i class="far fa-eye ic-w mr-1"></i>Places</li>
-                            <li><i class="fas fa-gamepad ic-w mr-1"></i>Games</li>
-                            <li><i class="fas fa-cocktail ic-w mr-1"></i>Coctails</li>
-                            <li><i class="fas fa-pizza-slice ic-w mr-1"></i>Food</li>
-                        </ul>
-                    </li>
-                    <li><i class="far fa-comment ic-w mr-1"></i>Notes</li>
-                    <li><i class="fas fa-cogs ic-w mr-1"></i>Settings</li>
-                    <li><i class="fas fa-desktop ic-w mr-1"></i>Devices</li>
-                    <li><i class="fas fa-trash-alt ic-w mr-1"></i>Deleted Items</li>
-                </ul>
+            <div class="treeview" style="background-color: #3a3a3a; color: rgb(210, 210, 210); width: 260px;">
+                <div class="treeview-animated w-20 border mx-4 my-4">
+                    <hr>
+                    <ul class="treeview-animated-list mb-3">
+                        <li class="treeview-animated-items">
+                            <!-- LANCAMENTOS CONTABEIS -->
+                            <a class="closed">
+                                <i class="fas fa-angle-right"></i>
+                                <span><i class="far fa-envelope-open ic-w mx-1"></i>Lançamentos Contábeis</span>
+                            </a>
+                            <ul class="nested">
+                                <li>
+                                    <a class="closed"><i class="fas fa-angle-right"></i>
+                                        <span><i class="far fa-calendar-alt ic-w mx-1"></i>Lançamento /
+                                            Cadastro</span></a>
+                                    <ul class="nested">
+                                        <li>
+                                            <div class="treeview-animated-element"><i
+                                                    class="far fa-bell ic-w mr-1"></i>Lançamentos Avulsos</div>
+                                        </li>
+                                        <li>
+                                            <div class="treeview-animated-element"><i
+                                                    class="far fa-address-book ic-w mr-1"></i>Centro de Custo</div>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a class="closed"><i class="fas fa-angle-right"></i>
+                                        <span><i class="far fa-calendar-alt ic-w mx-1"></i>Consultas</span></a>
+                                    <ul class="nested">
+                                        <li>
+                                            <div class="treeview-animated-element"><i
+                                                    class="far fa-bell ic-w mr-1"></i>Movimentação do Sistema</div>
+                                        </li>
+                                        <li>
+                                            <div class="treeview-animated-element"><i
+                                                    class="far fa-address-book ic-w mr-1"></i>Auditoria de Dados</div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- GERENCIAL -->
+                        <li class="treeview-animated-items">
+                            <a class="closed">
+                                <i class="fas fa-angle-right"></i>
+                                <span><i class="far fa-folder-open ic-w mx-1"></i>Relatórios</span>
+                            </a>
+                            <ul class="nested">
+                                <li>
+                                    <div class="treeview-animated-element"><i
+                                            class="far fa-folder-open ic-w mr-1"></i>Balancete</div>
+                                </li>
+                                <li>
+                                    <div class="treeview-animated-element"><i
+                                            class="far fa-folder-open ic-w mr-1"></i>DRE
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    </hr>
+                </div>
             </div>
         </ui:define>
     </ui:composition>
