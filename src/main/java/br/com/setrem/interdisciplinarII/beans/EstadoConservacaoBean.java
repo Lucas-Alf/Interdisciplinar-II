@@ -1,12 +1,21 @@
 package br.com.setrem.interdisciplinarII.beans;
 
+import br.com.setrem.interdisciplinarII.SessionFactory;
 import br.com.setrem.interdisciplinarII.model.EstadoConservacao;
+import br.com.setrem.interdisciplinarII.model.Usuario;
 import br.com.setrem.interdisciplinarII.repository.EstadoConservacaoRepository;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Named(value = "estadoConservacaoBean")
@@ -19,49 +28,10 @@ public class EstadoConservacaoBean implements Serializable {
     public EstadoConservacaoBean() {
     }
 
-    public void insertAction() {
-        estadoConservacaoRepository.save(estadoConservacao);
-        this.estadoConservacao = new EstadoConservacao();
-        this.estadoConservacoes = estadoConservacaoRepository.findAll();
-    }
-
-    public void atualizarAction() {
-        this.estadoConservacoes = estadoConservacaoRepository.findAll();
-    }
-
-    public void selectItem(EstadoConservacao dpt) {
-        this.estadoConservacao = dpt;
-    }
-
-    public void limpaForm() {
-        this.estadoConservacao = new EstadoConservacao();
-    }
-
-    public void removeAction(EstadoConservacao dpt) {
-        estadoConservacaoRepository.delete(dpt);
-        this.estadoConservacoes = estadoConservacaoRepository.findAll();
-    }
-
-    private EstadoConservacao estadoConservacao = new EstadoConservacao();
-    private List<EstadoConservacao> estadoConservacoes = new ArrayList<>();
-
-    public EstadoConservacao getEstadoConservacao() {
-        return estadoConservacao;
-    }
-
-    public void setEstadoConservacao(EstadoConservacao estadoConservacao) {
-        this.estadoConservacao = estadoConservacao;
-    }
-
-    public List<EstadoConservacao> getEstadoConservacoes() {
-        if (this.estadoConservacoes == null) {
-            this.estadoConservacoes = estadoConservacaoRepository.findAll();
-        }
-        return estadoConservacoes;
-    }
-
-    public void setEstadoConservacoes(List<EstadoConservacao> estadoConservacoes) {
-        this.estadoConservacoes = estadoConservacoes;
+    public void SalvarEstado(String descricao) {
+        EstadoConservacao est = new EstadoConservacao();
+        est.setDescricao(descricao);
+        estadoConservacaoRepository.save(est);
     }
 
 }

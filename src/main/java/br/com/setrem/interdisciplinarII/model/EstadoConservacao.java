@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "estadoConservacao")
+@Entity(name = "estadoconservacao")
 public class EstadoConservacao implements Serializable {
 
     @Id

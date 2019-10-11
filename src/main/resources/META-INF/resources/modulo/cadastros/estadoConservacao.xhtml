@@ -27,7 +27,7 @@
                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#flipFlop" ><i class="fas fa-plus crud-btn" ></i> Incluir</button>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#flipFlop"><i class="far fa-edit crud-btn" ></i> Alterar</button>
 
-                        <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal fade" id="flipFlop" widgetVar="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                             <div  class="modal-dialog" role="document">
                                 <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;" class="modal-content">
                                     <div class="modal-header">
@@ -39,14 +39,14 @@
                                     <div class="modal-body">
                                         <span class="ui-float-label">
                                             <h:outputText value="Descrição: " />
-                                            <p:inputText style="width: 540px;" id="descricao" value="#{EstadoConservacao.descricao}" />
+                                            <p:inputText style="width: 540px;" id="descricao" binding="#{descricao}" />
                                         </span>
                                     </div>
                                     <div class="modal-footer">
-                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{EstadoConservacao.insertAction()}">
+                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{estadoConservacaoBean.SalvarEstado(descricao.value)}">
                                             <f:ajax execute="@form" render="@form"/>
                                             <i class="far fa-save crud-btn" ></i>
-                                        </h:commandLink>      
+                                        </h:commandLink>  
                                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban" ></i> Cancelar</button>
                                     </div>
                                 </div>
@@ -58,12 +58,12 @@
                             <i class="far fa-trash-alt crud-btn" ></i>
                         </h:commandLink>           
 
-                        <p:dataTable class="col-12 col-md-12" var="EstadoConservacao" value="#{EstadoConservacao.atualizarAction}" style="margin-top: 10px" >
+                        <p:dataTable class="col-12 col-md-12" var="estadoConservacao" value="#{estadoConservacao}" style="margin-top: 10px" >
                             <p:column headerText="Código" style="width: 15%;">
-                                <h:outputText value="#{EstadoConservacao.id}" />
+                                <h:outputText value="#{estadoConservacao.id}" />
                             </p:column>
                             <p:column headerText="Descrição" style="width: 70%; text-align: left">
-                                <h:outputText value="#{EstadoConservacao.descricao}" />
+                                <h:outputText value="#{estadoConservacao.descricao}" />
                             </p:column>
                         </p:dataTable>
                     </h:form>
