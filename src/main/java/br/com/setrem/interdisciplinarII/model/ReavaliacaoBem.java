@@ -8,6 +8,7 @@ package br.com.setrem.interdisciplinarII.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,19 +17,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author lukin
+ * 
  */
-@Entity(name = "ReavaliacaoBem")
+@Entity(name = "reavaliacaobem")
 
 public class ReavaliacaoBem implements Serializable {
 
@@ -43,7 +40,8 @@ public class ReavaliacaoBem implements Serializable {
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
+    // consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "valorreavaliado")
@@ -74,7 +72,8 @@ public class ReavaliacaoBem implements Serializable {
         this.id = id;
     }
 
-    public ReavaliacaoBem(Integer id, Date data, BigDecimal valorreavaliado, BigDecimal valordepreciar, BigDecimal residual, BigDecimal valorresidual) {
+    public ReavaliacaoBem(Integer id, Date data, BigDecimal valorreavaliado, BigDecimal valordepreciar,
+            BigDecimal residual, BigDecimal valorresidual) {
         this.id = id;
         this.data = data;
         this.valorreavaliado = valorreavaliado;
@@ -171,5 +170,5 @@ public class ReavaliacaoBem implements Serializable {
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.ReavaliacaoBem[ id=" + id + " ]";
     }
-    
+
 }

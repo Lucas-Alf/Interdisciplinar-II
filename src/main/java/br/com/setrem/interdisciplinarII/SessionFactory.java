@@ -10,7 +10,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author lukin
+ * 
  */
 public class SessionFactory {
 
@@ -26,8 +26,7 @@ public class SessionFactory {
             Configuration config = new Configuration();
             sessionFactory = config.configure().buildSessionFactory();
         } catch (Throwable e) {
-            System.err.println("Error in creating SessionFactory object."
-                    + e.getMessage());
+            System.err.println("Error in creating SessionFactory object." + e.getMessage());
             throw new ExceptionInInitializerError(e);
         }
     }

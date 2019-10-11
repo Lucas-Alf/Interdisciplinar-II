@@ -15,17 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author lukin
+ * 
  */
 @Entity(name = "movimentacao")
 
@@ -45,7 +41,8 @@ public class Movimentacao implements Serializable {
     @NotNull
     @Column(name = "qtde")
     private int qtde;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
+    // consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor")
@@ -132,5 +129,5 @@ public class Movimentacao implements Serializable {
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.Movimentacao[ id=" + id + " ]";
     }
-    
+
 }

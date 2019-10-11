@@ -7,6 +7,7 @@ package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,20 +15,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author lukin
+ * 
  */
-@Entity(name = "CliFor")
+@Entity(name = "clifor")
 
 public class CliFor implements Serializable {
 
@@ -62,7 +59,9 @@ public class CliFor implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "nomefantasia")
     private String nomefantasia;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+    // message="Invalid email")//if the field contains email address consider using
+    // this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -114,7 +113,8 @@ public class CliFor implements Serializable {
         this.id = id;
     }
 
-    public CliFor(String id, String cnpj, String cpf, Character tipopessoa, String nome, String nomefantasia, String email, String telefone, String celular, String tipocliente) {
+    public CliFor(String id, String cnpj, String cpf, Character tipopessoa, String nome, String nomefantasia,
+            String email, String telefone, String celular, String tipocliente) {
         this.id = id;
         this.cnpj = cnpj;
         this.cpf = cpf;
@@ -329,5 +329,5 @@ public class CliFor implements Serializable {
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.CliFor[ id=" + id + " ]";
     }
-    
+
 }

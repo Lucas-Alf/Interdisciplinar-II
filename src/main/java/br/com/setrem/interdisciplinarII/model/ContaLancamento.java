@@ -6,6 +6,7 @@
 package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,18 +15,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author lukin
+ * 
  */
-@Entity(name = "ContaLancamento")
+@Entity(name = "contalancamento")
 
 public class ContaLancamento implements Serializable {
 
@@ -115,5 +112,5 @@ public class ContaLancamento implements Serializable {
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.ContaLancamento[ id=" + id + " ]";
     }
-    
+
 }
