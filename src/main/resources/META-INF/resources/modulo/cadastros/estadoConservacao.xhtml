@@ -39,11 +39,11 @@
                                     <div class="modal-body">
                                         <span class="ui-float-label">
                                             <h:outputText value="Descrição: " />
-                                            <p:inputText style="width: 540px;" id="descricao" value="#{estadoConservacao.descricao}" />
+                                            <p:inputText style="width: 540px;" id="descricao" value="#{EstadoConservacao.descricao}" />
                                         </span>
                                     </div>
                                     <div class="modal-footer">
-                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{estadoConservacao.insertAction()}">
+                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{EstadoConservacao.insertAction()}">
                                             <f:ajax execute="@form" render="@form"/>
                                             <i class="far fa-save crud-btn" ></i>
                                         </h:commandLink>      
@@ -58,12 +58,12 @@
                             <i class="far fa-trash-alt crud-btn" ></i>
                         </h:commandLink>           
 
-                        <p:dataTable class="col-12 col-md-12" var="estadoConservacao" value="#{estadoConservacao.atualizarAction}" style="margin-top: 10px" >
+                        <p:dataTable class="col-12 col-md-12" var="EstadoConservacao" value="#{EstadoConservacao.atualizarAction}" style="margin-top: 10px" >
                             <p:column headerText="Código" style="width: 15%;">
-                                <h:outputText value="#{estadoConservacao.id}" />
+                                <h:outputText value="#{EstadoConservacao.id}" />
                             </p:column>
                             <p:column headerText="Descrição" style="width: 70%; text-align: left">
-                                <h:outputText value="#{estadoConservacao.descricao}" />
+                                <h:outputText value="#{EstadoConservacao.descricao}" />
                             </p:column>
                         </p:dataTable>
                     </h:form>
