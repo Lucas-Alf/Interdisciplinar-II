@@ -22,16 +22,16 @@
         <ui:composition template="/layout.xhtml">
             <ui:define name="content">
                 <div class="container">
-                    <h3><b>Cadastro Unidade de Medida</b></h3>
+                    <h3><b>Categoria</b></h3>
                     <h:form>
                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#flipFlop" ><i class="fas fa-plus crud-btn" ></i> Incluir</button>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#flipFlop"><i class="far fa-edit crud-btn" ></i> Alterar</button>
 
                         <div class="modal fade" id="flipFlop" widgetVar="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                             <div  class="modal-dialog" role="document">
-                                <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 260px;" class="modal-content">
+                                <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;" class="modal-content">
                                     <div class="modal-header">
-                                        <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Unidade de Medida</h4>
+                                        <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Categoria</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -40,10 +40,6 @@
                                         <span class="ui-float-label">
                                             <h:outputText value="Descrição: " />
                                             <p:inputText style="width: 540px;" id="descricao" binding="#{descricao}" />
-                                        </span>
-                                        <span class="ui-float-label">
-                                            <h:outputText value="Sigla: " />
-                                            <p:inputText style="width: 540px;margin-top: 20px;" id="sigla" binding="#{sigla}" />
                                         </span>
                                     </div>
                                     <div class="modal-footer">
@@ -62,14 +58,11 @@
                             <i class="far fa-trash-alt crud-btn" ></i>
                         </h:commandLink>           
 
-                        <p:dataTable class="col-12 col-md-12" var="unidademedida" value="#{unidadeMedida}" style="margin-top: 10px" >
+                        <p:dataTable class="col-12 col-md-12" var="grupo" value="#{estadoConservacao}" style="margin-top: 10px" >
                             <p:column headerText="Código" style="width: 15%;">
                                 <h:outputText value="#{estadoConservacao.id}" />
                             </p:column>
                             <p:column headerText="Descrição" style="width: 70%; text-align: left">
-                                <h:outputText value="#{estadoConservacao.descricao}" />
-                            </p:column>
-                            <p:column headerText="Sigla" style="width: 70%; text-align: left">
                                 <h:outputText value="#{estadoConservacao.descricao}" />
                             </p:column>
                         </p:dataTable>
