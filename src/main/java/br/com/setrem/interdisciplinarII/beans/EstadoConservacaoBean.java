@@ -28,10 +28,26 @@ public class EstadoConservacaoBean implements Serializable {
     public EstadoConservacaoBean() {
     }
 
-    public void SalvarEstado(String descricao) {
+    public void Salvar(String descricao) {
         EstadoConservacao est = new EstadoConservacao();
         est.setDescricao(descricao);
         estadoConservacaoRepository.save(est);
+    }
+
+    public List<EstadoConservacao> ListarTabela() {
+        return estadoConservacaoRepository.findAll();
+    }
+
+    public void Deletar(int id) {
+        if (id == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Selecione um registro para excluir.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+
+        } else {
+            estadoConservacaoRepository.deleteById(id);
+        }
+
     }
 
 }
