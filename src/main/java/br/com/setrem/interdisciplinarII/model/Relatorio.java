@@ -6,21 +6,15 @@
 package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -50,13 +44,8 @@ public class Relatorio implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "sqlquery")
     private String sqlquery;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relatorioid")
-    private Collection<SolicitacaoRelatorio> SolicitacaoRelatorioCollection;
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private CliFor CliForid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relatorioid")
-    private Collection<FiltroRelatorio> FiltroRelatorioCollection;
+    @Column(name = "cliforid")
+    private int CliForid;
 
     public Relatorio() {
     }
@@ -104,30 +93,12 @@ public class Relatorio implements Serializable {
         this.sqlquery = sqlquery;
     }
 
-    @XmlTransient
-    public Collection<SolicitacaoRelatorio> getSolicitacaoRelatorioCollection() {
-        return SolicitacaoRelatorioCollection;
-    }
-
-    public void setSolicitacaoRelatorioCollection(Collection<SolicitacaoRelatorio> SolicitacaoRelatorioCollection) {
-        this.SolicitacaoRelatorioCollection = SolicitacaoRelatorioCollection;
-    }
-
-    public CliFor getCliForid() {
+    public int getCliForid() {
         return CliForid;
     }
 
-    public void setCliForid(CliFor CliForid) {
+    public void setCliForid(int CliForid) {
         this.CliForid = CliForid;
-    }
-
-    @XmlTransient
-    public Collection<FiltroRelatorio> getFiltroRelatorioCollection() {
-        return FiltroRelatorioCollection;
-    }
-
-    public void setFiltroRelatorioCollection(Collection<FiltroRelatorio> FiltroRelatorioCollection) {
-        this.FiltroRelatorioCollection = FiltroRelatorioCollection;
     }
 
     @Override

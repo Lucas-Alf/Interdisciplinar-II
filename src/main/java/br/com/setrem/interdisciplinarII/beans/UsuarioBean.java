@@ -5,23 +5,17 @@
  */
 package br.com.setrem.interdisciplinarII.beans;
 
-import br.com.setrem.interdisciplinarII.InterdisciplinarIIApplication;
-import br.com.setrem.interdisciplinarII.model.Usuario;
-import br.com.setrem.interdisciplinarII.repository.UsuarioRepository;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.persistence.criteria.CriteriaQuery;
 
-import com.google.gson.Gson;
-
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.setrem.interdisciplinarII.model.Usuario;
+import br.com.setrem.interdisciplinarII.repository.UsuarioRepository;
 
 @Named(value = "usuarioBean")
 @SessionScoped
@@ -45,9 +39,4 @@ public class UsuarioBean implements Serializable {
             return "Usuario não encontrado";
         }
     }
-
-    public List<Usuario> Lista(){
-        return usuarioRepository.lista();
-    }
-
 }

@@ -12,7 +12,4 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(value = "SELECT * FROM usuario WHERE email = ?1 and senha = ?2 LIMIT 1", nativeQuery = true)
     Usuario login(String email, String senha);
-
-    @Query(value = "SELECT * FROM usuario", nativeQuery = true)
-    List<Usuario> lista();
 }

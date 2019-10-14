@@ -46,9 +46,8 @@ public class FiltroRelatorio implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "sqlwhere")
     private String sqlwhere;
-    @JoinColumn(name = "relatorioid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Relatorio relatorioid;
+    @Column(name = "relatorioid")
+    private int relatorioId;
 
     public FiltroRelatorio() {
     }
@@ -96,12 +95,12 @@ public class FiltroRelatorio implements Serializable {
         this.sqlwhere = sqlwhere;
     }
 
-    public Relatorio getRelatorioid() {
-        return relatorioid;
+    public int getRelatorioid() {
+        return relatorioId;
     }
 
-    public void setRelatorioid(Relatorio relatorioid) {
-        this.relatorioid = relatorioid;
+    public void setRelatorioid(int relatorioid) {
+        this.relatorioId = relatorioid;
     }
 
     @Override

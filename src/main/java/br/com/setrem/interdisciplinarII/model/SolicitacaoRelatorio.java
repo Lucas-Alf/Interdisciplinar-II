@@ -41,12 +41,10 @@ public class SolicitacaoRelatorio implements Serializable {
     @NotNull
     @Column(name = "tipo")
     private int tipo;
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private CliFor CliForid;
-    @JoinColumn(name = "relatorioid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Relatorio relatorioid;
+    @Column(name = "cliforid")
+    private int CliForid;
+    @Column(name = "relatorioid")
+    private int relatorioId;
 
     public SolicitacaoRelatorio() {
     }
@@ -85,20 +83,20 @@ public class SolicitacaoRelatorio implements Serializable {
         this.tipo = tipo;
     }
 
-    public CliFor getCliForid() {
+    public int getCliForid() {
         return CliForid;
     }
 
-    public void setCliForid(CliFor CliForid) {
+    public void setCliForid(int CliForid) {
         this.CliForid = CliForid;
     }
 
-    public Relatorio getRelatorioid() {
-        return relatorioid;
+    public int getRelatorioid() {
+        return relatorioId;
     }
 
-    public void setRelatorioid(Relatorio relatorioid) {
-        this.relatorioid = relatorioid;
+    public void setRelatorioid(int relatorioid) {
+        this.relatorioId = relatorioid;
     }
 
     @Override
