@@ -33,6 +33,10 @@ public class ContaBean implements Serializable {
         contaRepository.save(conta);
     }
 
+    public List<Conta> Listar() {
+        return contaRepository.findAll();
+    }
+
     public void Remove(int id) {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Selecione um registro para excluir.");
