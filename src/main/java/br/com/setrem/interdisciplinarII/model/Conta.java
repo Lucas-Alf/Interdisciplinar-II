@@ -37,25 +37,28 @@ public class Conta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "descricao")
     private String descricao;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "hierarquia")
-    private String hierarquia;
+
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor")
     private BigDecimal valor;
+
     @JoinColumn(name = "CliForid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
+
+    @JoinColumn(name = "ContaPai", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Conta  ContaPai;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaid")
     private Collection<ContaLancamento> ContaLancamentoCollection;
 
@@ -66,11 +69,11 @@ public class Conta implements Serializable {
         this.id = id;
     }
 
-    public Conta(Integer id, String descricao, String hierarquia, BigDecimal valor) {
+    public Conta(Integer id, String descricao, BigDecimal valor, Conta ContaPai) {
         this.id = id;
         this.descricao = descricao;
-        this.hierarquia = hierarquia;
         this.valor = valor;
+        this.ContaPai = ContaPai;
     }
 
     public Integer getId() {
@@ -89,14 +92,6 @@ public class Conta implements Serializable {
         this.descricao = descricao;
     }
 
-    public String getHierarquia() {
-        return hierarquia;
-    }
-
-    public void setHierarquia(String hierarquia) {
-        this.hierarquia = hierarquia;
-    }
-
     public BigDecimal getValor() {
         return valor;
     }
@@ -112,6 +107,15 @@ public class Conta implements Serializable {
     public void setCliForid(CliFor CliForid) {
         this.CliForid = CliForid;
     }
+
+    public Conta getContaPai() {
+        return ContaPai;
+    }
+
+    public void setContaPai(Conta contaPai) {
+        ContaPai = contaPai;
+    }
+
 
     @XmlTransient
     public Collection<ContaLancamento> getContaLancamentoCollection() {

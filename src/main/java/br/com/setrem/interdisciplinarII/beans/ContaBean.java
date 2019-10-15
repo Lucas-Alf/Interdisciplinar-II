@@ -1,9 +1,9 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import br.com.setrem.interdisciplinarII.SessionFactory;
-import br.com.setrem.interdisciplinarII.model.CentroCusto;
+import br.com.setrem.interdisciplinarII.model.Conta;
 import br.com.setrem.interdisciplinarII.model.Usuario;
-import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -12,25 +12,25 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Named(value = "centroCustoBean")
+import java.math.BigDecimal;
+
+@Named(value = "contaBean")
 @SessionScoped
-public class CentroCustoBean implements Serializable {
+public class ContaBean implements Serializable {
 
     @Autowired
-    private CentroCustoRepository centroCustoRepository;
+    private ContaRepository contaRepository;
 
-    public CentroCustoBean() {
+    public ContaBean() {
     }
 
-    public void Insert(String nome) {
-        CentroCusto centCust = new CentroCusto();
-        centCust.setNome(nome);
-        //centCust.setCliForid();
-        centroCustoRepository.save(centCust);
-    }
-
-    public List<CentroCusto> AtualizarTable() {
-        return centroCustoRepository.findAll();
+    public void Insert(String descricao, BigDecimal valor/*, Conta contaPai */) {
+        Conta conta = new Conta();
+        conta.setDescricao(descricao);
+        conta.setValor(valor);
+        //conta.setContaPai(contaPai);
+        //conta.setCliForid();
+        contaRepository.save(conta);
     }
 
     public void Remove(int id) {
@@ -40,7 +40,7 @@ public class CentroCustoBean implements Serializable {
             context.addMessage(null, fm);
 
         } else {
-            centroCustoRepository.deleteById(id);
+            contaRepository .deleteById(id);
         }
 
     }

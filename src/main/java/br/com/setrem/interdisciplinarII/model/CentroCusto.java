@@ -35,16 +35,20 @@ public class CentroCusto implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "id")
     private String id;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 80)
     @Column(name = "nome")
     private String nome;
+
     @JoinColumn(name = "CliForid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CentroCustoid")
     private Collection<LancamentoContabil> LancamentoContabilCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CentroCustoid")
     private Collection<Patrimonio> patrimonioCollection;
 

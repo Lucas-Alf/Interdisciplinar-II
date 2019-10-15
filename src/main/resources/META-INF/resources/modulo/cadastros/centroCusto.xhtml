@@ -8,6 +8,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/simple-sidebar.css" />
+    <link rel="stylesheet" href="/css/site.css" />
     <title>Interdisciplinar II</title>
 </h:head>
 <h:body style="overflow: hidden; background-color:white; margin: 0px">
@@ -21,14 +23,13 @@
                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#flipFlop"><i
                             class="far fa-edit crud-btn"></i> Alterar</button>
 
-                    <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="flipFlop" widgetVar="flipFlop" tabindex="-1" role="dialog"
+                        aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 750px; height: 200px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastrar Centro
-                                        de Custo</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Centro de Custo</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -36,12 +37,12 @@
                                 <div class="modal-body">
                                     <span class="ui-float-label">
                                         <h:outputText value="Centro de Custo: " />
-                                        <p:inputText style="width: 500px;" id="Nome" value="#{CentroCusto.Nome}" />
+                                        <p:inputText style="width: 540px;" id="nome" binding="#{nome}" />
                                     </span>
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{CentroCusto.insertAction()}">
+                                        action="#{centroCustoBean.Insert(nome.value)}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
@@ -52,20 +53,32 @@
                         </div>
                     </div>
 
-                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#">
+                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
+                        action="#{centroCustoBean.Remove(centroCusto.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
-                    <p:dataTable class="col-12 col-md-12" var="CentroCusto" value="#{CentroCusto.atualizarAction}"
-                        style="margin-top: 10px">
+                    <p:dataTable scrollable="true" scrollHeight="70%" var="centroCusto"
+                        value="#{centrocusto}" style="margin-top: 10px"
+                        rowKey="#{centroCusto.id}" selection="#{centroCusto}" selectionMode="single"
+                        emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="width: 15%;">
-                            <h:outputText value="#{CentroCusto.id}" />
+                            <h:outputText value="#{centroCusto.id}" />
                         </p:column>
-                        <p:column headerText="Centro de Custo" style="width: 85%;">
-                            <h:outputText value="#{CentroCusto.Nome}" />
+                        <p:column headerText="Centro de Custo" style="width: 70%; text-align: left">
+                            <h:outputText value="#{centroCusto.nome}" />
                         </p:column>
+
+                        <f:facet name="paginatorTopLeft">
+                            <p:commandButton type="button" icon="pi pi-refresh" />
+                        </f:facet>
+
+                        <f:facet name="paginatorBottomRight">
+                            <p:commandButton type="button" icon="pi pi-cloud-upload" />
+                        </f:facet>
                     </p:dataTable>
+
                 </h:form>
             </div>
         </ui:define>
