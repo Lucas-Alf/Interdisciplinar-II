@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,10 +33,9 @@ public class CentroCusto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 5)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private Integer id;
 
     @Basic(optional = false)
     @NotNull
@@ -55,20 +56,20 @@ public class CentroCusto implements Serializable {
     public CentroCusto() {
     }
 
-    public CentroCusto(String id) {
+    public CentroCusto(Integer id) {
         this.id = id;
     }
 
-    public CentroCusto(String id, String nome) {
+    public CentroCusto(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -24,32 +24,40 @@
         <ui:composition template="/layout.xhtml">
             <ui:define name="content">
                 <div class="container">
-                    <h3><b>Cadastro Centro de Custo</b></h3>
+                    <h3><b>Cadastro Conta</b></h3>
                     <h:form>
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#CadastrarCentroCusto" ><i class="fas fa-plus crud-btn" ></i> Incluir</button>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#CadastrarConta" ><i class="fas fa-plus crud-btn" ></i> Incluir</button>
 
-                        <h:commandLink process="@this" class="btn btn-warning btn-sm" value="Alterar" action="#{centroCustoBean.AbreAlterar(item.id)}">
+                        <h:commandLink process="@this" class="btn btn-warning btn-sm" value="Alterar" action="#{contaBean.AbreAlterar(item.id)}">
                             <f:ajax execute="@form" render="@form"/>
                             <i class="far fa-edit crud-btn" ></i>
                         </h:commandLink>
 
-                        <div class="modal fade" id="CadastrarCentroCusto" widgetVar="CadastrarCentroCusto" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal fade" id="CadastrarConta" widgetVar="CadastrarConta" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                             <div  class="modal-dialog" role="document">
-                                <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;" class="modal-content">
+                                <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 325px;" class="modal-content">
                                     <div class="modal-header">
-                                        <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Centro de Custo</h4>
+                                        <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Conta</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <span class="ui-float-label">
-                                            <h:outputText value="Nome: " />
-                                            <p:inputText style="width: 540px;" id="nome" binding="#{nome}"/>
+                                            <h:outputText value="Descrição: " />
+                                            <p:inputText style="width: 540px;" id="descricao" binding="#{descricao}"/>
+                                        </span>
+                                        <span class="ui-float-label">
+                                            <h:outputText value="Valor: " style="margin-left: 17px; margin-right: 16px;" />
+                                            <p:inputText style="width: 540px;margin-top: 20px;" id="valor" binding="#{valor}"/>
+                                        </span>
+                                        <span class="ui-float-label">
+                                            <h:outputText value="Conta Pai: " />
+                                            <p:inputText style="width: 540px;margin-top: 20px;" id="contaPai" binding="#{contaPai}"/>
                                         </span>
                                     </div>
                                     <div class="modal-footer">
-                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{centroCustoBean.Insert(nome.value)}">
+                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{contaBean.Insert(descricao.value)}">
                                             <f:ajax execute="@form" render="@form"/>
                                             <i class="far fa-save crud-btn" ></i>
                                         </h:commandLink>  
@@ -101,11 +109,14 @@
                                          selection="#{item}"
                                          selectionMode="single"
                                          emptyMessage="Não há registros na tabela.">
-                                <p:column headerText="Código" style="width: 15%;">
+                                <p:column headerText="Código" style="width: 10%;">
                                     <h:outputText value="#{item.id}" />
                                 </p:column>
-                                <p:column headerText="Centro de Custo" style="width: 70%; text-align: left">
-                                    <h:outputText value="#{item.nome}" />
+                                <p:column headerText="Descrição" style="width: 30%; text-align: left">
+                                    <h:outputText value="#{item.descricao}" />
+                                </p:column>
+                                <p:column headerText="Valor" style="width: 35%; text-align: left">
+                                    <h:outputText value="#{item.valor}" />
                                 </p:column>
                             </p:dataTable>
     
