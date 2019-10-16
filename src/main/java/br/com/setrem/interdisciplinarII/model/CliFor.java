@@ -90,10 +90,10 @@ public class CliFor implements Serializable {
     private Collection<SolicitacaoRelatorio> SolicitacaoRelatorioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
     private Collection<LancamentoContabil> LancamentoContabilCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fornecedorid")
-    private Collection<Estoque> estoqueCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "EmpresaId")
+    private Collection<Movimentacao> movimentacaoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
-    private Collection<Estoque> estoqueCollection1;
+    private Collection<Movimentacao> movimentacaoCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
     private Collection<Relatorio> relatorioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fornecedorid")
@@ -102,6 +102,8 @@ public class CliFor implements Serializable {
     private Collection<Patrimonio> patrimonioCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
     private Collection<Produto> produtoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
+    private Collection<MovItens> movitensCollection;
     @JoinColumn(name = "enderecoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Endereco enderecoid;
@@ -244,21 +246,21 @@ public class CliFor implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Estoque> getEstoqueCollection() {
-        return estoqueCollection;
+    public Collection<Movimentacao> getMovimentacaoCollection() {
+        return movimentacaoCollection;
     }
 
-    public void setEstoqueCollection(Collection<Estoque> estoqueCollection) {
-        this.estoqueCollection = estoqueCollection;
+    public void setMovimentacaoCollection(Collection<Movimentacao> movimentacaoCollection) {
+        this.movimentacaoCollection = movimentacaoCollection;
     }
 
     @XmlTransient
-    public Collection<Estoque> getEstoqueCollection1() {
-        return estoqueCollection1;
+    public Collection<Movimentacao> getMovimentacaoCollection1() {
+        return movimentacaoCollection1;
     }
 
-    public void setEstoqueCollection1(Collection<Estoque> estoqueCollection1) {
-        this.estoqueCollection1 = estoqueCollection1;
+    public void setEstoqueCollection1(Collection<Movimentacao> movimentacaoCollection1) {
+        this.movimentacaoCollection1 = movimentacaoCollection1;
     }
 
     @XmlTransient
@@ -295,6 +297,15 @@ public class CliFor implements Serializable {
 
     public void setProdutoCollection(Collection<Produto> produtoCollection) {
         this.produtoCollection = produtoCollection;
+    }
+
+    @XmlTransient
+    public Collection<MovItens> getMovItensCollection() {
+        return movitensCollection;
+    }
+
+    public void setMovItensCollection(Collection<MovItens> movitensCollection) {
+        this.movitensCollection = movitensCollection;
     }
 
     public Endereco getEnderecoid() {

@@ -49,8 +49,6 @@ public class Local implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "estante")
     private String estante;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "localid")
-    private Collection<Estoque> estoqueCollection;
 
     public Local() {
     }
@@ -96,15 +94,6 @@ public class Local implements Serializable {
 
     public void setEstante(String estante) {
         this.estante = estante;
-    }
-
-    @XmlTransient
-    public Collection<Estoque> getEstoqueCollection() {
-        return estoqueCollection;
-    }
-
-    public void setEstoqueCollection(Collection<Estoque> estoqueCollection) {
-        this.estoqueCollection = estoqueCollection;
     }
 
     @Override

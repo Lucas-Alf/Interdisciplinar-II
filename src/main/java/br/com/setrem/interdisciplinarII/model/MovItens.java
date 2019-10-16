@@ -8,7 +8,7 @@ package br.com.setrem.interdisciplinarII.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
@@ -29,44 +27,54 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * 
  */
-@Entity(name = "saldo")
+@Entity(name = "movitem")
 
-public class Saldo implements Serializable {
+public class MovItens implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
-    // consider using these annotations to enforce field validation
+
+    @JoinColumn(name = "MovimentacaoId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Movimentacao MovimentacaoId;
+
+    @JoinColumn(name = "ProdutoId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Movimentacao ProdutoId;
+
+    @JoinColumn(name = "LocalId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Movimentacao LocalId;
+
     @Basic(optional = false)
     @NotNull
-    @Column(name = "qtde")
+    @Column(name = "quantidade")
     private int qtde;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor")
     private BigDecimal valor;
-    @JoinColumn(name = "IdLocal", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Local idlocal;
-    @JoinColumn(name = "ProdutoId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Produto produtoid;
 
-    public Saldo() {
+    @JoinColumn(name = "CliForId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Movimentacao CliForId;
+
+    public MovItens() {
     }
 
-    public Saldo(Integer id) {
+    public MovItens(Integer id) {
         this.id = id;
     }
 
-    public Saldo(Integer id, int qtde, BigDecimal valor) {
+    public MovItens(Integer id, int qtde, BigDecimal valor) {
         this.id = id;
-        this.valor = valor;
         this.qtde = qtde;
+        this.valor = valor;
     }
 
     @Override
@@ -79,10 +87,10 @@ public class Saldo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Saldo)) {
+        if (!(object instanceof MovItens)) {
             return false;
         }
-        Saldo other = (Saldo) object;
+        MovItens other = (MovItens) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -91,7 +99,7 @@ public class Saldo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.setrem.interdisciplinarII.model.Saldo[ id=" + id + " ]";
+        return "br.com.setrem.interdisciplinarII.model.MovItem[ id=" + id + " ]";
     }
 
     public Integer getId() {
@@ -100,6 +108,30 @@ public class Saldo implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Movimentacao getMovimentacaoId() {
+        return MovimentacaoId;
+    }
+
+    public void setMovimentacaoId(Movimentacao movimentacaoId) {
+        MovimentacaoId = movimentacaoId;
+    }
+
+    public Movimentacao getProdutoId() {
+        return ProdutoId;
+    }
+
+    public void setProdutoId(Movimentacao produtoId) {
+        ProdutoId = produtoId;
+    }
+
+    public Movimentacao getLocalId() {
+        return LocalId;
+    }
+
+    public void setLocalId(Movimentacao localId) {
+        LocalId = localId;
     }
 
     public int getQtde() {
@@ -118,20 +150,13 @@ public class Saldo implements Serializable {
         this.valor = valor;
     }
 
-    public Local getIdlocal() {
-        return idlocal;
+    public Movimentacao getCliForId() {
+        return CliForId;
     }
 
-    public void setIdlocal(Local idlocal) {
-        this.idlocal = idlocal;
+    public void setCliForId(Movimentacao cliForId) {
+        CliForId = cliForId;
     }
 
-    public Produto getProdutoid() {
-        return produtoid;
-    }
-
-    public void setProdutoid(Produto produtoid) {
-        this.produtoid = produtoid;
-    }
-
+    
 }

@@ -48,9 +48,7 @@ public class Preco implements Serializable {
     @Column(name = "datavigente")
     @Temporal(TemporalType.DATE)
     private Date datavigente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "precoid")
-    private Collection<Estoque> estoqueCollection;
-
+    
     public Preco() {
     }
 
@@ -86,15 +84,6 @@ public class Preco implements Serializable {
 
     public void setDatavigente(Date datavigente) {
         this.datavigente = datavigente;
-    }
-
-    @XmlTransient
-    public Collection<Estoque> getEstoqueCollection() {
-        return estoqueCollection;
-    }
-
-    public void setEstoqueCollection(Collection<Estoque> estoqueCollection) {
-        this.estoqueCollection = estoqueCollection;
     }
 
     @Override

@@ -54,8 +54,6 @@ public class Produto implements Serializable {
     @Column(name = "quantidademinima")
     private BigDecimal quantidademinima;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produtoid")
-    private Collection<Estoque> estoqueCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "produtoid")
     private Collection<Patrimonio> patrimonioCollection;
     @JoinColumn(name = "CliForid", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -117,15 +115,6 @@ public class Produto implements Serializable {
 
     public void setQuantidademinima(BigDecimal quantidademinima) {
         this.quantidademinima = quantidademinima;
-    }
-
-    @XmlTransient
-    public Collection<Estoque> getEstoqueCollection() {
-        return estoqueCollection;
-    }
-
-    public void setEstoqueCollection(Collection<Estoque> estoqueCollection) {
-        this.estoqueCollection = estoqueCollection;
     }
 
     @XmlTransient

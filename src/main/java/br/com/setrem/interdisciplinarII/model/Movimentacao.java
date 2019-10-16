@@ -8,6 +8,8 @@ package br.com.setrem.interdisciplinarII.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,7 +17,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,20 +41,30 @@ public class Movimentacao implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "notafiscal")
+    private Character notafiscal;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "tipo")
     private Character tipo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "qtde")
-    private int qtde;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data")
+    private Date data;
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Column(name = "valor")
-    private BigDecimal valor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimentacaoid")
-    private Collection<Estoque> estoqueCollection;
+    @Column(name = "valortotal")
+    private BigDecimal valortotal;
+    @JoinColumn(name = "CliForid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
+    @JoinColumn(name = "EmpresaId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor EmpresaId;
+
 
     public Movimentacao() {
     }
@@ -57,11 +73,11 @@ public class Movimentacao implements Serializable {
         this.id = id;
     }
 
-    public Movimentacao(Integer id, Character tipo, int qtde, BigDecimal valor) {
+    public Movimentacao(Integer id, Character tipo, Date data, BigDecimal valortotal) {
         this.id = id;
         this.tipo = tipo;
-        this.qtde = qtde;
-        this.valor = valor;
+        this.data = data;
+        this.valortotal = valortotal;
     }
 
     public Integer getId() {
@@ -80,30 +96,22 @@ public class Movimentacao implements Serializable {
         this.tipo = tipo;
     }
 
-    public int getQtde() {
-        return qtde;
+    public Date getData() {
+        return data;
     }
 
-    public void setQtde(int qtde) {
-        this.qtde = qtde;
+    public void setData(Date data) {
+        this.data = data;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public BigDecimal getValortotal() {
+        return valortotal;
     }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    public void setValortotal(BigDecimal valortotal) {
+        this.valortotal = valortotal;
     }
 
-    @XmlTransient
-    public Collection<Estoque> getEstoqueCollection() {
-        return estoqueCollection;
-    }
-
-    public void setEstoqueCollection(Collection<Estoque> estoqueCollection) {
-        this.estoqueCollection = estoqueCollection;
-    }
 
     @Override
     public int hashCode() {
