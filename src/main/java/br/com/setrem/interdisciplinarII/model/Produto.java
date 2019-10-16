@@ -55,7 +55,7 @@ public class Produto implements Serializable {
     private BigDecimal quantidademinima;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produtoid")
     private Collection<Patrimonio> patrimonioCollection;
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
     @JoinColumn(name = "grupoid", referencedColumnName = "id")

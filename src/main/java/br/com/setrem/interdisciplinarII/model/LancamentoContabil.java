@@ -60,10 +60,10 @@ public class LancamentoContabil implements Serializable {
     @Size(min = 1, max = 150)
     @Column(name = "historico")
     private String historico;
-    @JoinColumn(name = "CentroCustoid", referencedColumnName = "id")
+    @JoinColumn(name = "centrocustoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CentroCusto CentroCustoid;
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
 

@@ -46,7 +46,7 @@ public class FechaEstoque implements Serializable {
     @Column(name = "customedio")
     private BigDecimal customedio;
 
-    @JoinColumn(name = "IdProduto", referencedColumnName = "id")
+    @JoinColumn(name = "idproduto", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Produto idproduto;
 

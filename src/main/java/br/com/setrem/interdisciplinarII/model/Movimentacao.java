@@ -58,10 +58,10 @@ public class Movimentacao implements Serializable {
     @NotNull
     @Column(name = "valortotal")
     private BigDecimal valortotal;
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
-    @JoinColumn(name = "EmpresaId", referencedColumnName = "id")
+    @JoinColumn(name = "empresaid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor EmpresaId;
 

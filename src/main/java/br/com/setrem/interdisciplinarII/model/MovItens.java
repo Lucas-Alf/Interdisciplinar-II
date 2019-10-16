@@ -60,7 +60,7 @@ public class MovItens implements Serializable {
     @Column(name = "valor")
     private BigDecimal valor;
 
-    @JoinColumn(name = "CliForId", referencedColumnName = "id")
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Movimentacao CliForId;
 

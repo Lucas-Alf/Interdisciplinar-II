@@ -7,10 +7,8 @@ package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -51,11 +47,11 @@ public class Conta implements Serializable {
     @Column(name = "valor")
     private BigDecimal valor;
 
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
 
-    @JoinColumn(name = "ContaPai", referencedColumnName = "id")
+    @JoinColumn(name = "contapai", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Conta  ContaPai;
 

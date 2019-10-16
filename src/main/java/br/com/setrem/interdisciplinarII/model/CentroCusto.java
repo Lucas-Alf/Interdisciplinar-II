@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * 
  */
-@Entity(name = "CentroCusto")
+@Entity(name = "centrocusto")
 
 public class CentroCusto implements Serializable {
 
@@ -43,7 +43,7 @@ public class CentroCusto implements Serializable {
     @Column(name = "nome")
     private String nome;
 
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
 

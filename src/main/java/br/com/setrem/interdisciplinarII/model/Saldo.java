@@ -49,10 +49,10 @@ public class Saldo implements Serializable {
     @NotNull
     @Column(name = "valor")
     private BigDecimal valor;
-    @JoinColumn(name = "IdLocal", referencedColumnName = "id")
+    @JoinColumn(name = "idlocal", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Local idlocal;
-    @JoinColumn(name = "ProdutoId", referencedColumnName = "id")
+    @JoinColumn(name = "produtoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Produto produtoid;
 

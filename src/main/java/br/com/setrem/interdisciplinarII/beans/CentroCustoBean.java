@@ -33,7 +33,7 @@ public class CentroCustoBean implements Serializable {
 
     public void Insert(String nome/*, CliFor CliForid*/) {
         if (nome == "") {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um nome!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {

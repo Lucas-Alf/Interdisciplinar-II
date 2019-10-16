@@ -58,19 +58,19 @@ public class Patrimonio implements Serializable {
     private String observacao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patrimonioid")
     private Collection<BaixaBem> baixabemCollection;
-    @JoinColumn(name = "CentroCustoid", referencedColumnName = "id")
+    @JoinColumn(name = "centrocustoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CentroCusto CentroCustoid;
     @JoinColumn(name = "fornecedorid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor fornecedorid;
-    @JoinColumn(name = "CliForid", referencedColumnName = "id")
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
-    @JoinColumn(name = "EstadoConservacaoid", referencedColumnName = "id")
+    @JoinColumn(name = "estadoconservacaoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private EstadoConservacao EstadoConservacaoid;
-    @JoinColumn(name = "GrupoBemid", referencedColumnName = "id")
+    @JoinColumn(name = "grupobemid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private GrupoBem GrupoBemid;
     @JoinColumn(name = "produtoid", referencedColumnName = "id")
