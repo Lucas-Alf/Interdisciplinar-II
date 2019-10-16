@@ -104,4 +104,12 @@ public class Marca implements Serializable {
         return "br.com.setrem.interdisciplinarII.model.Marca[ id=" + id + " ]";
     }
 
+    public String getDescricao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setDescricao(String descricao) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
