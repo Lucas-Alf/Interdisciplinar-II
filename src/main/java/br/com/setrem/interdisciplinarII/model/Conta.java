@@ -58,9 +58,6 @@ public class Conta implements Serializable {
     @JoinColumn(name = "ContaPai", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Conta  ContaPai;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaid")
-    private Collection<ContaLancamento> ContaLancamentoCollection;
 
     public Conta() {
     }
@@ -114,16 +111,6 @@ public class Conta implements Serializable {
 
     public void setContaPai(Conta contaPai) {
         ContaPai = contaPai;
-    }
-
-
-    @XmlTransient
-    public Collection<ContaLancamento> getContaLancamentoCollection() {
-        return ContaLancamentoCollection;
-    }
-
-    public void setContaLancamentoCollection(Collection<ContaLancamento> ContaLancamentoCollection) {
-        this.ContaLancamentoCollection = ContaLancamentoCollection;
     }
 
     @Override

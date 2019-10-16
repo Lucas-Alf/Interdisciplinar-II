@@ -37,6 +37,12 @@ public class UnidadedeMedida implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "descricao")
     private String descricao;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "sigla")
+    private String sigla;
+    //Do we need this?
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidademedidaid")
     private Collection<Produto> produtoCollection;
 

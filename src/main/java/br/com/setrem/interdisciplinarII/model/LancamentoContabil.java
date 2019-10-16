@@ -60,8 +60,6 @@ public class LancamentoContabil implements Serializable {
     @Size(min = 1, max = 150)
     @Column(name = "historico")
     private String historico;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lancamentoid")
-    private Collection<ContaLancamento> ContaLancamentoCollection;
     @JoinColumn(name = "CentroCustoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CentroCusto CentroCustoid;
@@ -122,15 +120,6 @@ public class LancamentoContabil implements Serializable {
 
     public void setHistorico(String historico) {
         this.historico = historico;
-    }
-
-    @XmlTransient
-    public Collection<ContaLancamento> getContaLancamentoCollection() {
-        return ContaLancamentoCollection;
-    }
-
-    public void setContaLancamentoCollection(Collection<ContaLancamento> ContaLancamentoCollection) {
-        this.ContaLancamentoCollection = ContaLancamentoCollection;
     }
 
     public CentroCusto getCentroCustoid() {

@@ -69,6 +69,9 @@ public class Produto implements Serializable {
     @JoinColumn(name = "unidademedidaid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private UnidadedeMedida unidademedidaid;
+    @JoinColumn(name = "precoid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Preco precoid;
 
     public Produto() {
     }
