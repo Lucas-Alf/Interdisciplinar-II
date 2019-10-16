@@ -32,12 +32,17 @@ public class CentroCustoBean implements Serializable {
     }
 
     public void Insert(String nome/*, CliFor CliForid*/) {
-        CentroCusto centCust = new CentroCusto();
-        centCust.setNome(nome);
-        //centCust.setCliForid(CliForid);
-        PrimeFaces.current().executeScript("$('#CadastrarCentroCusto').modal('hide');");
-        centroCustoRepository.save(centCust);
-        this.AtualizarTable();
+        if (nome == "") {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        } else {
+            CentroCusto centrocusto = new CentroCusto();
+            centrocusto.setNome(nome);
+            centroCustoRepository.save(centrocusto);
+            this.AtualizarTable();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        }
     }
 
     public List<CentroCusto> ListarTable() {
@@ -78,6 +83,11 @@ public class CentroCustoBean implements Serializable {
     public void Alterar() {
         centroCustoRepository.save(centroCusto);
         this.AtualizarTable(); 
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");   
+    }
+
+    public void Pesquisar(String nome) {
+        this.centrosCustos = centroCustoRepository.pesquisar(nome);
     }
 
     public int getId() {

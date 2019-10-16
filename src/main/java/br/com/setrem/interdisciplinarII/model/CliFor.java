@@ -102,7 +102,7 @@ public class CliFor implements Serializable {
     private Collection<Patrimonio> patrimonioCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
     private Collection<Produto> produtoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForId")
     private Collection<MovItens> movitensCollection;
     @JoinColumn(name = "enderecoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
