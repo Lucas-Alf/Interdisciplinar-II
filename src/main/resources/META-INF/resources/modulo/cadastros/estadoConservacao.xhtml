@@ -24,16 +24,10 @@
         <ui:composition template="/layout.xhtml">
             <ui:define name="content">
                 <div class="container">
-                    <h3><b>Cadastro Estado de Conservação</b></h3>
-                    <h:form>
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#CadastrarEstadoConservacao" ><i class="fas fa-plus crud-btn" ></i> Incluir</button>
+                    <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;" >Cadastro Estado de Conservação</h3>
+                    <h:form>               
 
-                        <h:commandLink process="@this" class="btn btn-warning btn-sm" value="Alterar" action="#{estadoConservacaoBean.AbreAlterar(item.id)}">
-                            <f:ajax execute="@form" render="@form"/>
-                            <i class="far fa-edit crud-btn" ></i>
-                        </h:commandLink>
-
-                        <div class="modal fade" id="CadastrarEstadoConservacao" widgetVar="CadastrarEstadoConservacao" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal fade" id="CadastrarEstadoConservacao" widgetVar="CadastrarEstadoConservacao" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                             <div  class="modal-dialog" role="document">
                                 <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;" class="modal-content">
                                     <div class="modal-header">
@@ -59,8 +53,8 @@
                             </div>
                         </div>
 
-                        <div class="modal fade" id="AlterarEstadoConservacao" widgetVar="AlterarEstadoConservacao" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                        <div class="modal fade" id="AlterarEstadoConservacao" widgetVar="AlterarEstadoConservacao" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+                                <div class="modal-dialog" >
                                     <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;" class="modal-content">
                                         <div class="modal-header">
                                             <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Alterar Estado de Conservação</h4>
@@ -84,30 +78,38 @@
                                     </div>
                                 </div>
                             </div>
+                                                                    
+                            <h:outputText style="font-weight:bold" value="Pesquisar: " />
+                            <p:inputText style="width: 540px;" id="pesquisa" binding="#{pesquisa}"/>
+                            <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{estadoConservacaoBean.Pesquisar(pesquisa.value)}">
+                                <f:ajax execute="@form" render="@form"/>
+                                <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search" ></i>
+                            </h:commandLink><br/>
+    
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#CadastrarEstadoConservacao" ><i class="fas fa-plus crud-btn" ></i> Incluir</button>
+    
+                            <h:commandLink process="@this" class="btn btn-warning btn-sm" value="Alterar" action="#{estadoConservacaoBean.AbreAlterar(item.id)}">
+                                <f:ajax execute="@form" render="@form"/>
+                                <i class="far fa-edit crud-btn" ></i>
+                            </h:commandLink>
 
-                        <p:growl id="messages" showDetail="true" closable="true" />
-                        <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#{estadoConservacaoBean.Deletar(item.id)}">
-                            <f:ajax execute="@form" render="@form"/>
-                            <i class="far fa-trash-alt crud-btn" ></i>
-                        </h:commandLink>
+                            <p:growl id="messages" showDetail="true" closable="true" />
+                            <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#{estadoConservacaoBean.Deletar(item.id)}">
+                                <f:ajax execute="@form" render="@form"/>
+                                <i class="far fa-trash-alt crud-btn" ></i>
+                            </h:commandLink>
 
-                        <h:commandLink class="btn btn-danger btn-sm" value="Atualizar" action="#{estadoConservacaoBean.AtualizarTabela()}">
-                            <f:ajax execute="@tabela1" render="@form"/>
-                            <i class="far fa-trash-alt crud-btn" ></i>
-                        </h:commandLink>
-
-                        <p:dataTable scrollable="true" scrollHeight="70%"  id="tabela1" var="item" value="#{estadoConservacaoBean.estadoConservacoes}" style="margin-top: 10px"
-                                     rowKey="#{item.id}"   
-                                     selection="#{item}"
-                                     selectionMode="single"
-                                     emptyMessage="Não há registros na tabela.">
-                            <p:column headerText="Código" style="width: 15%;">
-                                <h:outputText value="#{item.id}" />
-                            </p:column>
-                            <p:column headerText="Descrição" style="width: 70%; text-align: left">
-                                <h:outputText value="#{item.descricao}" />
-                            </p:column>
-                        </p:dataTable>
+                            <p:dataTable scrollable="true" scrollHeight="80%"  id="tabela1" var="item" value="#{estadoConservacaoBean.estadoConservacoes}"
+                            style="margin-top: 10px;"
+                            rowKey="#{item.id}" selection="#{item}" selectionMode="single"
+                            emptyMessage="Não há registros na tabela.">
+                                <p:column headerText="Código" style="text-align: center; width: 15%;">
+                                    <h:outputText value="#{item.id}" />
+                                </p:column>
+                                <p:column headerText="Descrição" style="width: 70%; text-align: left">
+                                    <h:outputText value="#{item.descricao}" />
+                                </p:column>
+                            </p:dataTable>
 
                     </h:form>
                 </div>

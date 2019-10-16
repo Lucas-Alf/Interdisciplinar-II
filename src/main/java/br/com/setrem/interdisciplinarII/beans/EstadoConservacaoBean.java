@@ -43,11 +43,17 @@ public class EstadoConservacaoBean implements Serializable {
     }
 
     public void Salvar(String descricao) {
-        EstadoConservacao est = new EstadoConservacao();
-        est.setDescricao(descricao);
-        PrimeFaces.current().executeScript("$('#CadastrarEstadoConservacao').modal('hide');");
-        estadoConservacaoRepository.save(est);
-        this.AtualizarTabela();
+        if (descricao == "") {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        } else {
+            EstadoConservacao est = new EstadoConservacao();
+            est.setDescricao(descricao);
+            estadoConservacaoRepository.save(est);
+            this.AtualizarTabela();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        }
     }
 
     public List<EstadoConservacao> ListarTabela() {
@@ -56,6 +62,10 @@ public class EstadoConservacaoBean implements Serializable {
 
     public void AtualizarTabela() {
         this.estadoConservacoes = estadoConservacaoRepository.findAll();
+    }
+
+    public void Pesquisar(String descricao) {
+        this.estadoConservacoes = estadoConservacaoRepository.pesquisar(descricao);
     }
 
     public void Deletar(int id) {
@@ -87,6 +97,7 @@ public class EstadoConservacaoBean implements Serializable {
     public void Alterar() {
         estadoConservacaoRepository.save(estadoConservacao);
         this.AtualizarTabela(); 
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");    
     }
 
     public EstadoConservacao getEstadoConservacao() {
