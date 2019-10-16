@@ -39,11 +39,11 @@
                                     <div class="modal-body">
                                         <span class="ui-float-label">
                                             <h:outputText value="Descrição: " />
-                                            <p:inputText style="width: 540px;" id="descricao" binding="#{descricao}"/>
+                                            <p:inputText style="width: 540px;" id="descricao" value="#{estadoConservacaoBean.estadoConservacao.descricao}"/>
                                         </span>
                                     </div>
                                     <div class="modal-footer">
-                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{estadoConservacaoBean.Salvar(descricao.value)}">
+                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{estadoConservacaoBean.Salvar()}">
                                             <f:ajax execute="@form" render="@form"/>
                                             <i class="far fa-save crud-btn" ></i>
                                         </h:commandLink>  
@@ -99,8 +99,8 @@
                                 <i class="far fa-trash-alt crud-btn" ></i>
                             </h:commandLink>
 
-                            <p:dataTable scrollable="true" scrollHeight="80%"  id="tabela1" var="item" value="#{estadoConservacaoBean.estadoConservacoes}"
-                            style="margin-top: 10px;"
+                            <p:dataTable scrollable="true" scrollHeight="60%"  id="tabela1" var="item" value="#{estadoConservacaoBean.estadoConservacoes}"
+                            style="margin-top: 10px; height: 550px;"
                             rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                             emptyMessage="Não há registros na tabela.">
                                 <p:column headerText="Código" style="text-align: center; width: 15%;">
