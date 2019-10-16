@@ -87,7 +87,7 @@ public class CentroCustoBean implements Serializable {
     }
 
     public void Pesquisar(String nome) {
-        this.centrosCustos = centroCustoRepository.pesquisar(nome);
+        //this.centrosCustos = centroCustoRepository.pesquisar(nome);
     }
 
     public int getId() {

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * 
  */
-@Entity(name = "centrocusto")
+@Entity(name = "CentroCusto")
 
 public class CentroCusto implements Serializable {
 

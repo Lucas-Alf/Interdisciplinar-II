@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface CentroCustoRepository extends JpaRepository<CentroCusto, Integer> {
 
-    @Query("SELECT e FROM centrocusto cc WHERE cc.nome LIKE %?1%")
-    public List<CentroCusto> pesquisar(String nome);
+    //@Query("SELECT c FROM centrocusto c WHERE c.nome LIKE %?1%")
+    //public List<CentroCusto> pesquisar(String nome);
 }
