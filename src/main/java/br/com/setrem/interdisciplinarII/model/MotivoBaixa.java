@@ -36,7 +36,7 @@ public class MotivoBaixa implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    //@Size(min = 1, max = 100)
     @Column(name = "descricao")
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "motivobaixaid")
