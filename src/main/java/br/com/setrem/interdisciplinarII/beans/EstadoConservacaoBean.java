@@ -22,8 +22,8 @@ public class EstadoConservacaoBean implements Serializable {
     private EstadoConservacaoRepository estadoConservacaoRepository;
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
 
-    //private int id;
-    //private String descricao;
+    private int id;
+    private String descricao;
     private List<EstadoConservacao> estadoConservacoes;
 
     public EstadoConservacaoBean() {
@@ -38,13 +38,18 @@ public class EstadoConservacaoBean implements Serializable {
         this.estadoConservacoes = estadoConservacaoRepository.pesquisar(descricao);
     }
 
+    public void AbrirModal() {
+        this.estadoConservacao = new EstadoConservacao();
+        PrimeFaces.current().executeScript("$('#CadastrarEstadoConservacao').modal('show');");
+    }
+
     public void Salvar() {
         if (this.estadoConservacao.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            estadoConservacaoRepository.save(estadoConservacao);
+            estadoConservacaoRepository.save(this.estadoConservacao);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }
@@ -52,8 +57,7 @@ public class EstadoConservacaoBean implements Serializable {
 
     public void Deletar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
-                    "Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
@@ -70,11 +74,7 @@ public class EstadoConservacaoBean implements Serializable {
             context.addMessage(null, fm);
         } else {
             estadoConservacao = estadoConservacaoRepository.getOne(id);
-            int codigo = estadoConservacao.getId();
-            String descricao = estadoConservacao.getDescricao();
-            estadoConservacao.setId(codigo);
-            estadoConservacao.setDescricao(descricao);
-            PrimeFaces.current().executeScript("$('#AlterarEstadoConservacao').modal('show');");
+            PrimeFaces.current().executeScript("$('#CadastrarEstadoConservacao').modal('show');");
         }
     }
 
@@ -92,7 +92,7 @@ public class EstadoConservacaoBean implements Serializable {
         this.estadoConservacao = estadoConservacao;
     }
 
-    /*public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -106,7 +106,7 @@ public class EstadoConservacaoBean implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }*/
+    }
 
     public List<EstadoConservacao> getEstadoConservacoes() {
         if (this.estadoConservacoes == null) {
