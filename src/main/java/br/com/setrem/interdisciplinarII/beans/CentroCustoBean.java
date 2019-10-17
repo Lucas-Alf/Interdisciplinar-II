@@ -21,7 +21,7 @@ public class CentroCustoBean implements Serializable {
 
     @Autowired
     private CentroCustoRepository centroCustoRepository;
-    private CentroCusto centroCusto =  new CentroCusto();
+    private CentroCusto centroCusto = new CentroCusto();
 
     private int id;
     private String nome;
@@ -31,14 +31,24 @@ public class CentroCustoBean implements Serializable {
     public CentroCustoBean() {
     }
 
-    public void Insert(String nome/*, CliFor CliForid*/) {
+    public void Insert(String nome/* , CliFor CliForid */) {
         if (nome == "") {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um nome!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        } else if (nome.length() > 80) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
+                    "Centro de custo nao pode conter mais que 80 caracteres.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
             CentroCusto centrocusto = new CentroCusto();
             centrocusto.setNome(nome);
+            CliFor emp = new CliFor();
+            emp.setId("teste");
+            centrocusto.setCliForid(emp);
             centroCustoRepository.save(centrocusto);
             this.AtualizarTable();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
@@ -55,7 +65,8 @@ public class CentroCustoBean implements Serializable {
 
     public void Remove(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
@@ -67,7 +78,8 @@ public class CentroCustoBean implements Serializable {
 
     public void AbreAlterar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
@@ -76,18 +88,18 @@ public class CentroCustoBean implements Serializable {
             String nome = centroCusto.getNome();
             centroCusto.setId(codigo);
             centroCusto.setNome(nome);
-            PrimeFaces.current().executeScript("$('#AlterarCentroCusto').modal('hide');");
+            PrimeFaces.current().executeScript("$('#AlterarCentroCusto').modal('show');");
         }
     }
 
     public void Alterar() {
         centroCustoRepository.save(centroCusto);
-        this.AtualizarTable(); 
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");   
+        this.AtualizarTable();
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
     }
 
     public void Pesquisar(String nome) {
-        //this.centrosCustos = centroCustoRepository.pesquisar(nome);
+         this.centrosCustos = centroCustoRepository.pesquisar(nome);
     }
 
     public int getId() {
@@ -132,7 +144,5 @@ public class CentroCustoBean implements Serializable {
     public void setCentroCusto(CentroCusto centroCusto) {
         this.centroCusto = centroCusto;
     }
-
-    
 
 }
