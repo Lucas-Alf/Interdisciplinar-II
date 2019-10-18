@@ -50,9 +50,9 @@ public class GrupoBem implements Serializable {
     //@NotNull
     @Column(name = "vidautil")
     private BigDecimal vidautil;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupobemid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "GrupoBemid")
     private Collection<Patrimonio> patrimonioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupobemid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "GrupoBemid")
     private Collection<ReavaliacaoBem> ReavaliacaoBemCollection;
 
     public GrupoBem() {
@@ -126,6 +126,7 @@ public class GrupoBem implements Serializable {
         return hash;
     }
 
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

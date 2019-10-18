@@ -58,7 +58,7 @@ public class ReavaliacaoBem implements Serializable {
     @NotNull
     @Column(name = "valorresidual")
     private BigDecimal valorresidual;
-    @JoinColumn(name = "GrupoBemid", referencedColumnName = "id")
+    @JoinColumn(name = "grupobemid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private GrupoBem GrupoBemid;
     @JoinColumn(name = "patrimonioid", referencedColumnName = "id")
