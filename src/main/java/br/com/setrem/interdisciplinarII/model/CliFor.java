@@ -7,10 +7,12 @@ package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.faces.convert.FacesConverter;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * 
+ *
  */
 @Entity(name = "clifor")
 
@@ -318,19 +320,29 @@ public class CliFor implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CliFor)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        CliFor other = (CliFor) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        CliFor other = (CliFor) obj;
+        if (id == null) {
+            if (other.id != null) {
+                return false;
+            }
+        } else if (!id.equals(other.id)) {
             return false;
         }
         return true;
@@ -338,7 +350,6 @@ public class CliFor implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.setrem.interdisciplinarII.model.CliFor[ id=" + id + " ]";
+        return "CliFor [id=" + id + ", nome=" + nome + "]";
     }
-
 }

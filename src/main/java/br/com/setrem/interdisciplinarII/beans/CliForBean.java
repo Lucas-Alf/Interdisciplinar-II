@@ -1,16 +1,18 @@
 package br.com.setrem.interdisciplinarII.beans;
 
-import br.com.setrem.interdisciplinarII.SessionFactory;
-import br.com.setrem.interdisciplinarII.model.CliFor;
-import br.com.setrem.interdisciplinarII.model.Usuario;
-import br.com.setrem.interdisciplinarII.repository.CliForRepository;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.repository.CliForRepository;
 
 @Named(value = "cliforBean")
 @SessionScoped
@@ -23,7 +25,7 @@ public class CliForBean implements Serializable {
     }
 
     public void Insert(String cnpj, String cpf, Character tipopessoa, String nome, String nomefantasia,
-                        String email, String telefone, String celular, String tipocliente) {
+            String email, String telefone, String celular, String tipocliente) {
         CliFor clifor = new CliFor();
         clifor.setCnpj(cnpj);
         clifor.setCpf(cpf);
@@ -40,6 +42,11 @@ public class CliForBean implements Serializable {
 
     public List<CliFor> AtualizarTable() {
         return cliforRepository.findAll();
+    }
+
+    public List<CliFor> listaEmpresas() {
+        List<CliFor> lista = cliforRepository.ListaEmpresa();
+        return lista;
     }
 
     public void Remove(int id) {
