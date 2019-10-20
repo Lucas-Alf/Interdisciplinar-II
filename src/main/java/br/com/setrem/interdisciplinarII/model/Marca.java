@@ -36,7 +36,7 @@ public class Marca implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+   //@Size(min = 1, max = 50)
     @Column(name = "nome")
     private String nome;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaid")
@@ -104,11 +104,11 @@ public class Marca implements Serializable {
         return "br.com.setrem.interdisciplinarII.model.Marca[ id=" + id + " ]";
     }
 
-    public String getDescricao() {
+    public String getMarca() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setDescricao(String descricao) {
+    public void setMarca(String marca) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
