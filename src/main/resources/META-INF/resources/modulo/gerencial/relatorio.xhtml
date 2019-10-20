@@ -14,19 +14,14 @@
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
             <div class="container">
-                <h3><b>Relatórios Gerenciais</b></h3>
+                <h3 style="margin-top: 10px;"><b>Relatórios Gerenciais</b></h3>
                 <h:form>
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#flipFlop"><i
-                            class="fas fa-plus crud-btn"></i> Incluir</button>
-                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#flipFlop"><i
-                            class="far fa-edit crud-btn"></i> Alterar</button>
-                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                        action="#{estadoConservacaoBean.Deletar(estadoConservacao.id)}">
-                        <f:ajax execute="@form" render="@form" />
-                        <i class="far fa-trash-alt crud-btn"></i>
-                    </h:commandLink>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#solicitacaoModal"><i class="fas fa-print crud-btn"></i> Imprimir</button>
+                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                        data-target="#solicitacaoModal"><i class="far fa-edit crud-btn"></i> Solicitar</button>
 
-                    <p:dataTable scrollable="true" scrollHeight="70%" var="item" value="#{relatorioBean.Lista()}"
+                    <p:dataTable scrollable="true" scrollHeight="70%" var="item" value="#{relatorioBean.listaRelatorio}"
                         style="margin-top: 10px" rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="width: 15%;">
@@ -45,28 +40,43 @@
                         </f:facet>
                     </p:dataTable>
 
-                    <div class="modal fade" id="flipFlop" widgetVar="flipFlop" tabindex="-1" role="dialog"
-                        aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal fade" id="solicitacaoModal" widgetVar="solicitacaoModal" tabindex="1"
+                        role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 330px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Estado
-                                        de Conservação</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Nova Solicitação
+                                    </h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <span class="ui-float-label">
+                                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
+                                        <h:outputText value="Tipo: " />
+                                        <p:selectOneMenu id="tipo" binding="#{tipo}" style="width: 100%"
+                                            appendTo="@this">
+                                            <f:selectItem itemValue="1" itemLabel="Novo relatório" />
+                                            <f:selectItem itemValue="2" itemLabel="Correção de relatório" />
+                                        </p:selectOneMenu>
+                                        <h:outputText value="Relatório: " />
+                                        <p:selectOneMenu id="relatorio" binding="#{relatorio}" style="width: 100%"
+                                            converter="CliForConverter" appendTo="@this">
+                                            <f:selectItem itemValue="null" itemLabel="Selecione um relatório" />
+                                            <f:selectItems value="#{cliforBean.listaEmpresas()}" var="emp"
+                                                itemValue="#{emp}" itemLabel="#{emp.nome}" />
+                                        </p:selectOneMenu>
                                         <h:outputText value="Descrição: " />
-                                        <p:inputText style="width: 540px;" id="descricao" binding="#{descricao}" />
-                                    </span>
+                                        <p:inputTextarea rows="2" style="width: 540px;" id="mensagem"
+                                            binding="#{mensagem}" />
+                                    </h:panelGrid>
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{estadoConservacaoBean.Salvar(descricao.value)}">
+                                        action="#{solicitacaoRelatorioBean.Salvar(mensagem.value)}">
                                         <f:ajax execute="@form" render="@form" />
+                                        <!-- <i class="fas far fa-print crud-btn"></i> -->
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
                                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
@@ -82,5 +92,7 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+    <f:viewAction action="#{relatorioBean.Lista()}" />
 </f:metadata>
+
 </html>

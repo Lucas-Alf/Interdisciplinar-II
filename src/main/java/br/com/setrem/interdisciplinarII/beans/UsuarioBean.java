@@ -86,12 +86,18 @@ public class UsuarioBean implements Serializable {
 
     public String Login(String email, String senha) {
         Usuario usuario = usuarioRepository.login(email, senha);
-        if (empresa == null || cliforRepository.BuscaPorId(empresa.getId()) == null) {
+        if (empresa == null) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Empresa Inválida."));
             return "Empresa Inválida";
+        } else {
+            empresa = cliforRepository.BuscaPorId(empresa.getId());
+            if (empresa == null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Empresa Inválida."));
+                return "Empresa Inválida";
+            }
         }
-        empresa = cliforRepository.BuscaPorId(empresa.getId());
         if (usuario != null) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuario);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("empresa", empresa);

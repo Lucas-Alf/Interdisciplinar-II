@@ -42,7 +42,7 @@ public class SolicitacaoRelatorio implements Serializable {
     @Column(name = "tipo")
     private int tipo;
     @Column(name = "cliforid")
-    private int CliForid;
+    private String CliForid;
     @Column(name = "relatorioid")
     private int relatorioId;
 
@@ -83,11 +83,11 @@ public class SolicitacaoRelatorio implements Serializable {
         this.tipo = tipo;
     }
 
-    public int getCliForid() {
+    public String getCliForid() {
         return CliForid;
     }
 
-    public void setCliForid(int CliForid) {
+    public void setCliForid(String CliForid) {
         this.CliForid = CliForid;
     }
 
