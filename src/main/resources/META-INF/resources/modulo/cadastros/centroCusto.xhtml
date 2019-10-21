@@ -43,7 +43,7 @@
                                 <div class="modal-body">
                                     <span class="ui-float-label">
                                         <h:inputHidden  id="id" value="#{centroCustoBean.centroCusto.id}" />
-                                        <h:inputHidden  id="CliForid" value="#{centroCustoBean.centroCusto.CliForid}" />
+                                        <h:inputHidden  id="CliForid" value="#{centroCustoBean.centroCusto.cliforid}" converter = "CliForConverter"/>
                                         <h:outputText value="Nome: " />
                                         <p:inputText style="width: 540px;" id="nome"
                                             value="#{centroCustoBean.centroCusto.nome}" />

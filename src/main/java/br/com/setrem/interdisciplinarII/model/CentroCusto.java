@@ -47,12 +47,13 @@ public class CentroCusto implements Serializable {
     @ManyToOne(optional = false)
     private CliFor cliforid;
 
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CentroCustoid")
     private Collection<LancamentoContabil> LancamentoContabilCollection;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CentroCustoid")
     private Collection<Patrimonio> patrimonioCollection;
-
+    */
     public CentroCusto() {
     }
 
@@ -81,6 +82,7 @@ public class CentroCusto implements Serializable {
         this.nome = nome;
     }
 
+    /*
     @XmlTransient
     public Collection<LancamentoContabil> getLancamentoContabilCollection() {
         return LancamentoContabilCollection;
@@ -98,7 +100,7 @@ public class CentroCusto implements Serializable {
     public void setPatrimonioCollection(Collection<Patrimonio> patrimonioCollection) {
         this.patrimonioCollection = patrimonioCollection;
     }
-
+    */
     @Override
     public int hashCode() {
         int hash = 0;
