@@ -39,7 +39,7 @@ public class CentroCusto implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    // @Size(min = 1, max = 80)
+    @Size(min = 1, max = 80)
     @Column(name = "nome")
     private String nome;
 
@@ -85,8 +85,8 @@ public class CentroCusto implements Serializable {
         return CliForid;
     }
 
-    public void setCliForid(CliFor CliForid) {
-        this.CliForid = CliForid;
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
 
     @XmlTransient
