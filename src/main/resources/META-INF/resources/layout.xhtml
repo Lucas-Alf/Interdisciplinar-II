@@ -2,127 +2,128 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Interdisciplinar II</title>
-    <link rel="stylesheet" href="/css/simple-sidebar.css" />
-    <link rel="stylesheet" href="/css/site.css" />
-    <!-- <script src="/webjars/jquery/3.4.1/jquery.min.js"></script> -->
-    <link rel="stylesheet" href="/webjars/font-awesome/5.11.2/css/all.min.css" />
-    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css" />
-    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js"></script>
-    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/modules/treeview.js"></script>
-</h:head>
-<h:body style="overflow: hidden; background-color:white; margin: 0px">
-    <div class="d-flex" id="wrapper">
-        <div class="bg-dark" id="sidebar-wrapper">
-            <div class="sidebar-heading" onclick="window.location.href='/home.xhtml'"
-                style="color: #d8d8d8; text-align: center; cursor: pointer;" title="Voltar a Home">
-                <b>Menus do sistema</b>
-            </div>
-            <div class="treeview" style="background-color: #212121; color: rgb(210, 210, 210); width: 260px;">
-                <ul style="padding-left: 0px">
-                    <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
-                        <span><i class="far fa-folder-open ic-w mx-1"></i>Cadastros</span>
-                        <ul class="sidebar-group nested">
-                            <li><i class="sidebar-icon fas fa-tags"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/grupo.xhtml">
-                                    Categoria</a></li>
-                            <li><i class="sidebar-icon fas fa-compass"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/centroCusto.xhtml">
-                                    Centro de Custo</a></li>
-                            <li><i class="sidebar-icon fas fa-city"></i><a class="sidebar-link" href="home.xhtml">
-                                    Cidade</a></li>
-                            <li><i class="sidebar-icon fas fa-dollar-sign"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/conta.xhtml">
-                                    Conta</a></li>
-                            <li><i class="sidebar-icon fas fa-building"></i><a class="sidebar-link" href="home.xhtml">
-                                    Empresa</a></li>
-                            <li><i class="sidebar-icon fas fa-map-pin"></i><a class="sidebar-link" href="home.xhtml">
-                                    Endereço</a></li>
-                            <li><i class="sidebar-icon fas fa-flag"></i><a class="sidebar-link" href="home.xhtml">
-                                    Estado</a></li>
-                            <li><i class="sidebar-icon fas fa-wrench"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/estadoConservacao.xhtml"> Estado de Conservação</a></li>
-                            <li><i class="sidebar-icon fas fa-truck"></i><a class="sidebar-link" href="home.xhtml">
-                                    Fornecedor</a></li>
-                            <li><i class="sidebar-icon fas fa-map-marker-alt"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/local.xhtml"> Local do Produto</a></li>
-                            <li><i class="sidebar-icon fas fa-bookmark"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/marca.xhtml"> Marca</a></li>
-                            <li><i class="sidebar-icon fas fa-arrow-down"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/motivoBaixa.xhtml">
-                                    Motivo Baixa</a></li>
-                            <li><i class="sidebar-icon fas fa-box-open"></i><a class="sidebar-link" href="home.xhtml">
-                                    Produto</a></li>
-                            <li><i class="sidebar-icon fas fa-weight-hanging"></i><a class="sidebar-link"
-                                    href="/modulo/cadastros/unidadeMedida.xhtml"> Unidade de Medida</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
-                        <span><i class="far fa-folder-open ic-w mx-1"></i>Lançamentos Contábeis</span>
-                        <ul class="sidebar-group nested">
-                            <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
-                                    href="home.xhtml">Consulta Auditoria</a></li>
-                            <!-- <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link" href="home.xhtml">Consulta Auditoria</a></li> -->
-                            <!-- <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link" href="home.xhtml">Consulta Auditoria</a></li> -->
-                            <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
-                                    href="home.xhtml">Consulta de Movimentação</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
-                        <span><i class="far fa-folder-open ic-w mx-1"></i>Módulo Gerencial</span>
-                        <ul class="sidebar-group nested">
-                            <li>
-                                <i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
-                                    href="/modulo/gerencial/relatorio.xhtml">Relatórios</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
-                        <span><i class="far fa-folder-open ic-w mx-1"></i>Módulo Patrimonial</span>
-                        <ul class="sidebar-group nested">
-                            <li><i class="-icon fas fa-layer-group"></i><a class="sidebar-link"
-                                    href="/modulo/patrimonial/grupoBem.xhtml">
-                                    Grupo de Bem</a></li>
-                            <li><i class="sidebar-icon fas fa-landmark"></i><a class="sidebar-link"
-                                    href="/modulo/patrimonial/patrimonio.xhtml"> Lançamento Patrimonial</a></li>
-                            <li><i class="sidebar-icon fas fa-sort-amount-down"></i><a class="sidebar-link"
-                                    href="home.xhtml"> Baixa Patrimonial</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-menu"><i class="fas fa-cogs ic-w mr-1"></i>Settings</li>
-                </ul>
-            </div>
-        </div>
-        <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/sair.xhtml"><i class="fas fa-times"></i> Sair</a>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Interdisciplinar II</title>
+        <link rel="stylesheet" href="/css/simple-sidebar.css" />
+        <link rel="stylesheet" href="/css/site.css" />
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+        <link rel="stylesheet" href="/webjars/font-awesome/5.11.2/css/all.min.css" />
+        <link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css" />
+        <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js"></script>
+        <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/modules/treeview.js"></script>
+    </h:head>
+    <h:body style="overflow: hidden; background-color:white; margin: 0px">
+        <div class="d-flex" id="wrapper">
+            <div class="bg-dark" id="sidebar-wrapper">
+                <div class="sidebar-heading" onclick="window.location.href = '/home.xhtml'"
+                     style="color: #d8d8d8; text-align: center; cursor: pointer;" title="Voltar a Home">
+                    <b>Menus do sistema</b>
+                </div>
+                <div class="treeview" style="background-color: #212121; color: rgb(210, 210, 210); width: 260px;">
+                    <ul style="padding-left: 0px">
+                        <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
+                            <span><i class="far fa-folder-open ic-w mx-1"></i>Cadastros</span>
+                            <ul class="sidebar-group nested">
+                                <li><i class="sidebar-icon fas fa-tags"></i><a class="sidebar-link"
+                                                                               href="/modulo/cadastros/grupo.xhtml">
+                                        Categoria</a></li>
+                                <li><i class="sidebar-icon fas fa-compass"></i><a class="sidebar-link"
+                                                                                  href="/modulo/cadastros/centroCusto.xhtml">
+                                        Centro de Custo</a></li>
+                                <li><i class="sidebar-icon fas fa-city"></i><a class="sidebar-link" href="home.xhtml">
+                                        Cidade</a></li>
+                                <li><i class="sidebar-icon fas fa-dollar-sign"></i><a class="sidebar-link"
+                                                                                      href="/modulo/cadastros/conta.xhtml">
+                                        Conta</a></li>
+                                <li><i class="sidebar-icon fas fa-building"></i><a class="sidebar-link" href="home.xhtml">
+                                        Empresa</a></li>
+                                <li><i class="sidebar-icon fas fa-map-pin"></i><a class="sidebar-link" href="home.xhtml">
+                                        Endereço</a></li>
+                                <li><i class="sidebar-icon fas fa-flag"></i><a class="sidebar-link" href="home.xhtml">
+                                        Estado</a></li>
+                                <li><i class="sidebar-icon fas fa-wrench"></i><a class="sidebar-link"
+                                                                                 href="/modulo/cadastros/estadoConservacao.xhtml"> Estado de Conservação</a></li>
+                                <li><i class="sidebar-icon fas fa-truck"></i><a class="sidebar-link" href="home.xhtml">
+                                        Fornecedor</a></li>
+                                <li><i class="sidebar-icon fas fa-map-marker-alt"></i><a class="sidebar-link"
+                                                                                         href="/modulo/cadastros/local.xhtml"> Local do Produto</a></li>
+                                <li><i class="sidebar-icon fas fa-bookmark"></i><a class="sidebar-link"
+                                                                                   href="/modulo/cadastros/marca.xhtml"> Marca</a></li>
+                                <li><i class="sidebar-icon fas fa-arrow-down"></i><a class="sidebar-link"
+                                                                                     href="/modulo/cadastros/motivoBaixa.xhtml">
+                                        Motivo Baixa</a></li>
+                                <li><i class="sidebar-icon fas fa-box-open"></i><a class="sidebar-link" href="home.xhtml">
+                                        Produto</a></li>
+                                <li><i class="sidebar-icon fas fa-weight-hanging"></i><a class="sidebar-link"
+                                                                                         href="/modulo/cadastros/unidadeMedida.xhtml"> Unidade de Medida</a></li>
+                            </ul>
                         </li>
+                        <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
+                            <span><i class="far fa-folder-open ic-w mx-1"></i>Lançamentos Contábeis</span>
+                            <ul class="sidebar-group nested">
+                                <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
+                                                                                               href="home.xhtml">Consulta Auditoria</a></li>
+                                <!-- <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link" href="home.xhtml">Consulta Auditoria</a></li> -->
+                                <!-- <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link" href="home.xhtml">Consulta Auditoria</a></li> -->
+                                <li><i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
+                                                                                               href="home.xhtml">Consulta de Movimentação</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
+                            <span><i class="far fa-folder-open ic-w mx-1"></i>Módulo Gerencial</span>
+                            <ul class="sidebar-group nested">
+                                <li>
+                                    <i class="sidebar-icon fas fa-chart-line ic-w mr-1"></i><a class="sidebar-link"
+                                                                                               href="/modulo/gerencial/relatorio.xhtml">Relatórios</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-menu"><i class="fas fa-angle-right rotate"></i>
+                            <span><i class="far fa-folder-open ic-w mx-1"></i>Módulo Patrimonial</span>
+                            <ul class="sidebar-group nested">
+                                <li><i class="-icon fas fa-layer-group"></i><a class="sidebar-link"
+                                                                               href="/modulo/patrimonial/grupoBem.xhtml">
+                                        Grupo de Bem</a></li>
+                                <li><i class="sidebar-icon fas fa-landmark"></i><a class="sidebar-link"
+                                                                                   href="/modulo/patrimonial/patrimonio.xhtml"> Lançamento Patrimonial</a></li>
+                                <li><i class="sidebar-icon fas fa-sort-amount-down"></i><a class="sidebar-link"
+                                                                                           href="home.xhtml"> Baixa Patrimonial</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-menu"><i class="fas fa-cogs ic-w mr-1"></i>Settings</li>
                     </ul>
                 </div>
-            </nav>
-            <ui:insert name="content">
+            </div>
+            <div id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/sair.xhtml"><i class="fas fa-times"></i> Sair</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <ui:insert name="content">
 
-            </ui:insert>
+                </ui:insert>
+            </div>
         </div>
-    </div>
-    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // $('.treeview-animated').mdbTreeview();
-            $('.treeview').mdbTreeview();
-        });
-    </script>
-</h:body>
+        <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
+        <script>
+                    $(document).ready(function () {
+                        // $('.treeview-animated').mdbTreeview();
+                        $('.treeview').mdbTreeview();
+                    });
+        </script>
+    </h:body>
 
 </html>

@@ -49,8 +49,8 @@ public class CliForBean implements Serializable {
         return lista;
     }
 
-    public void Remove(int id) {
-        if (id == 0) {
+    public void Remove(String id) {
+        if (id == "") {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Selecione um registro para excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
@@ -58,7 +58,5 @@ public class CliForBean implements Serializable {
         } else {
             cliforRepository.deleteById(id);
         }
-
     }
-
 }
