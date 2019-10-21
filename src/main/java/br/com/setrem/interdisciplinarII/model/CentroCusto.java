@@ -85,8 +85,8 @@ public class CentroCusto implements Serializable {
         return CliForid;
     }
 
-    public void setCliForid(CliFor cliForid) {
-        CliForid = cliForid;
+public void setCliForid(CliFor CliForid) {
+        this.CliForid = CliForid;
     }
 
     @XmlTransient
