@@ -44,6 +44,8 @@ public class CentroCustoBean implements Serializable {
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }*/ else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            this.centroCusto.setCliforid(empresa);
             centroCustoRepository.save(this.centroCusto);
             this.AtualizarTable();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
