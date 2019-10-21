@@ -1,9 +1,5 @@
 package br.com.setrem.interdisciplinarII.beans;
 
-
-import br.com.setrem.interdisciplinarII.model.CentroCusto;
-import br.com.setrem.interdisciplinarII.model.CliFor;
-import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,6 +10,10 @@ import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.setrem.interdisciplinarII.model.CentroCusto;
+import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
 
 @Named(value = "centroCustoBean")
 @SessionScoped
@@ -31,25 +31,20 @@ public class CentroCustoBean implements Serializable {
     public CentroCustoBean() {
     }
 
-    public void Insert(String nome/* , CliFor CliForid */) {
-        if (nome == "") {
+    public void Insert() {
+        if (this.centroCusto.getNome().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um nome!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        } else if (nome.length() > 80) {
+        } /*else if (this.centroCusto.getNome().length() > 80) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
                     "Centro de custo nao pode conter mais que 80 caracteres.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        } else {
-            CentroCusto centrocusto = new CentroCusto();
-            centrocusto.setNome(nome);
-            CliFor emp = new CliFor();
-            emp.setId("1");
-            centrocusto.setCliForid(emp);
-            centroCustoRepository.save(centrocusto);
+        }*/ else {
+            centroCustoRepository.save(this.centroCusto);
             this.AtualizarTable();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }
@@ -84,11 +79,7 @@ public class CentroCustoBean implements Serializable {
             context.addMessage(null, fm);
         } else {
             centroCusto = centroCustoRepository.getOne(id);
-            int codigo = centroCusto.getId();
-            String nome = centroCusto.getNome();
-            centroCusto.setId(codigo);
-            centroCusto.setNome(nome);
-            PrimeFaces.current().executeScript("$('#AlterarCentroCusto').modal('show');");
+            PrimeFaces.current().executeScript("$('#CadastrarCentroCusto').modal('show');");
         }
     }
 
@@ -100,6 +91,11 @@ public class CentroCustoBean implements Serializable {
 
     public void Pesquisar(String nome) {
          this.centrosCustos = centroCustoRepository.pesquisar(nome);
+    }
+
+    public void AbrirModal() {
+        this.centroCusto = new CentroCusto();
+        PrimeFaces.current().executeScript("$('#CadastrarCentroCusto').modal('show');");
     }
 
     public int getId() {
@@ -129,20 +125,20 @@ public class CentroCustoBean implements Serializable {
         this.centrosCustos = centrosCustos;
     }
 
-    public CliFor getCliForid() {
-        return CliForid;
-    }
-
-    public void setCliForid(CliFor cliForid) {
-        CliForid = cliForid;
-    }
-
     public CentroCusto getCentroCusto() {
         return centroCusto;
     }
 
     public void setCentroCusto(CentroCusto centroCusto) {
         this.centroCusto = centroCusto;
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
 
 }

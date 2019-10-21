@@ -39,13 +39,13 @@ public class CentroCusto implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 80)
+    //@Size(min = 1, max = 80)
     @Column(name = "nome")
     private String nome;
 
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CliFor CliForid;
+    private CliFor cliforid;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CentroCustoid")
     private Collection<LancamentoContabil> LancamentoContabilCollection;
@@ -79,14 +79,6 @@ public class CentroCusto implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public CliFor getCliForid() {
-        return CliForid;
-    }
-
-public void setCliForid(CliFor CliForid) {
-        this.CliForid = CliForid;
     }
 
     @XmlTransient
@@ -132,4 +124,13 @@ public void setCliForid(CliFor CliForid) {
         return "br.com.setrem.interdisciplinarII.model.CentroCusto[ id=" + id + " ]";
     }
 
+    public CliFor getCliforid() {
+        return cliforid;
+    }
+
+    public void setCliforid(CliFor cliforid) {
+        this.cliforid = cliforid;
+    }
+
+    
 }
