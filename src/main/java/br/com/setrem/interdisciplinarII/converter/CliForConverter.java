@@ -17,7 +17,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author lukin
  */
-@FacesConverter(value = "CliForConverter")
+@FacesConverter(value = "cliforConverter")
 
 public class CliForConverter implements Converter<Object> {
 

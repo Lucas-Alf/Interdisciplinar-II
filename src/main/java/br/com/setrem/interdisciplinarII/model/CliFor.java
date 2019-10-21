@@ -350,6 +350,6 @@ public class CliFor implements Serializable {
 
     @Override
     public String toString() {
-        return "CliFor [id=" + id + ", nome=" + nome + "]";
+        return id;
     }
 }
