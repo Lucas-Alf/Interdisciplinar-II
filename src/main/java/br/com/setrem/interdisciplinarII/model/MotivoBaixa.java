@@ -39,8 +39,6 @@ public class MotivoBaixa implements Serializable {
     //@Size(min = 1, max = 100)
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "motivobaixaid")
-    private Collection<BaixaBem> baixabemCollection;
 
     public MotivoBaixa() {
     }
@@ -68,15 +66,6 @@ public class MotivoBaixa implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    @XmlTransient
-    public Collection<BaixaBem> getBaixabemCollection() {
-        return baixabemCollection;
-    }
-
-    public void setBaixabemCollection(Collection<BaixaBem> baixabemCollection) {
-        this.baixabemCollection = baixabemCollection;
     }
 
     @Override
