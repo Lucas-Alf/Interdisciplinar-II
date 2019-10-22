@@ -1,21 +1,21 @@
 package br.com.setrem.interdisciplinarII.beans;
 
-import br.com.setrem.interdisciplinarII.SessionFactory;
-import br.com.setrem.interdisciplinarII.model.CliFor;
-import br.com.setrem.interdisciplinarII.model.Conta;
-import br.com.setrem.interdisciplinarII.model.Usuario;
-import br.com.setrem.interdisciplinarII.repository.ContaRepository;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
+
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
+import br.com.setrem.interdisciplinarII.model.CentroCusto;
+import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Conta;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
 
 @Named(value = "contaBean")
 @SessionScoped
@@ -35,15 +35,19 @@ public class ContaBean implements Serializable {
     public ContaBean() {
     }
 
-    public void Insert(String descricao, BigDecimal valor, Conta contapai) {
-        Conta conta = new Conta();
-        conta.setDescricao(descricao);
-        conta.setValor(valor);
-        conta.setContaPai(contapai);
-        //centCust.setCliForid(CliForid);
-        PrimeFaces.current().executeScript("$('#CadastrarConta').modal('hide');");
-        contaRepository.save(conta);
-        this.AtualizarTable();
+    public void Insert() {
+        if (this.conta.getDescricao().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descriçao!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            this.conta.setCliForid(empresa);
+            contaRepository.save(this.conta);
+            this.AtualizarTable();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        }
     }
 
     public List<Conta> ListarTable() {
@@ -73,22 +77,25 @@ public class ContaBean implements Serializable {
             context.addMessage(null, fm);
         } else {
             conta = contaRepository.getOne(id);
-            int codigo = conta.getId();
-            String descricao = conta.getDescricao();
-            BigDecimal valor = conta.getValor();
-            Conta contapai = conta.getContaPai();
-            conta.setId(codigo);
-            conta.setDescricao(descricao);
-            conta.setValor(valor);
-            conta.setContaPai(contapai);
-            PrimeFaces.current().executeScript("$('#AlterarConta').modal('hide');");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
         }
     }
 
     public void Alterar() {
         contaRepository.save(conta);
         this.AtualizarTable(); 
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
     }
+
+    public void Pesquisar(String nome) {
+         this.contas = contaRepository.pesquisar(nome);
+    }
+
+    public void AbrirModal() {
+        this.conta = new Conta();
+        PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+    }
+
 
     public Conta getConta() {
         return conta;
