@@ -6,7 +6,6 @@
 package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -40,12 +39,11 @@ public class Conta implements Serializable {
     @Column(name = "descricao")
     private String descricao;
 
-    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
-    // consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Column(name = "valor")
-    private BigDecimal valor;
+    @Size(min = 1, max = 50)
+    @Column(name = "sintetica")
+    private boolean sintetica;
 
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -62,10 +60,10 @@ public class Conta implements Serializable {
         this.id = id;
     }
 
-    public Conta(Integer id, String descricao, BigDecimal valor, Conta ContaPai) {
+    public Conta(Integer id, String descricao, boolean sintetica, Conta ContaPai) {
         this.id = id;
         this.descricao = descricao;
-        this.valor = valor;
+        this.sintetica = sintetica;
         this.ContaPai = ContaPai;
     }
 
@@ -85,12 +83,12 @@ public class Conta implements Serializable {
         this.descricao = descricao;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public boolean getSintetica() {
+        return sintetica;
     }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    public void setSintetica(boolean sintetica) {
+        this.sintetica = sintetica;
     }
 
     public CliFor getCliForid() {

@@ -12,7 +12,6 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.setrem.interdisciplinarII.model.CentroCusto;
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Conta;
 import br.com.setrem.interdisciplinarII.repository.ContaRepository;
@@ -28,7 +27,7 @@ public class ContaBean implements Serializable {
     private int id;
     private String descricao;
     private CliFor CliForid;
-    private BigDecimal valor;
+    private boolean sintetica;
     private Conta contapai;
     private List<Conta> contas;
 
@@ -129,12 +128,12 @@ public class ContaBean implements Serializable {
         CliForid = cliForid;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public boolean getSintetica() {
+        return sintetica;
     }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    public void setSintetica(boolean sintetica) {
+        this.sintetica = sintetica;
     }
 
     public Conta getContapai() {
