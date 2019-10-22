@@ -21,9 +21,9 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * 
  */
-@Entity(name = "unidadedemedida")
+@Entity(name = "unidadeMedida")
 
-public class UnidadedeMedida implements Serializable {
+public class UnidadeMedida implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,18 +42,17 @@ public class UnidadedeMedida implements Serializable {
     @Size(min = 1, max = 4)
     @Column(name = "sigla")
     private String sigla;
-    //Do we need this?
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidademedidaid")
-    private Collection<Produto> produtoCollection;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "unidademedidaid")
+    //private Collection<Produto> produtoCollection;
 
-    public UnidadedeMedida() {
+    public UnidadeMedida() {
     }
 
-    public UnidadedeMedida(String id) {
+    public UnidadeMedida(String id) {
         this.id = id;
     }
 
-    public UnidadedeMedida(String id, String descricao) {
+    public UnidadeMedida(String id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }
@@ -74,14 +73,14 @@ public class UnidadedeMedida implements Serializable {
         this.descricao = descricao;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Produto> getProdutoCollection() {
         return produtoCollection;
     }
 
     public void setProdutoCollection(Collection<Produto> produtoCollection) {
         this.produtoCollection = produtoCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {
@@ -93,10 +92,10 @@ public class UnidadedeMedida implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UnidadedeMedida)) {
+        if (!(object instanceof UnidadeMedida)) {
             return false;
         }
-        UnidadedeMedida other = (UnidadedeMedida) object;
+        UnidadeMedida other = (UnidadeMedida) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -105,7 +104,7 @@ public class UnidadedeMedida implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.setrem.interdisciplinarII.model.UnidadedeMedida[ id=" + id + " ]";
+        return "br.com.setrem.interdisciplinarII.model.UnidadeMedida[ id=" + id + " ]";
     }
 
 }

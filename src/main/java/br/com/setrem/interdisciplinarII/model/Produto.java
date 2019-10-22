@@ -66,7 +66,7 @@ public class Produto implements Serializable {
     private Marca marcaid;
     @JoinColumn(name = "unidademedidaid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private UnidadedeMedida unidademedidaid;
+    private UnidadeMedida unidademedidaid;
     @JoinColumn(name = "precoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Preco precoid;
@@ -150,11 +150,11 @@ public class Produto implements Serializable {
         this.marcaid = marcaid;
     }
 
-    public UnidadedeMedida getUnidademedidaid() {
+    public UnidadeMedida getUnidademedidaid() {
         return unidademedidaid;
     }
 
-    public void setUnidademedidaid(UnidadedeMedida unidademedidaid) {
+    public void setUnidademedidaid(UnidadeMedida unidademedidaid) {
         this.unidademedidaid = unidademedidaid;
     }
 

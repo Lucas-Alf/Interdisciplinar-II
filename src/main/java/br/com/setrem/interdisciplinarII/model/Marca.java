@@ -39,8 +39,8 @@ public class Marca implements Serializable {
    //@Size(min = 1, max = 50)
     @Column(name = "nome")
     private String nome;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaid")
-    private Collection<Produto> produtoCollection;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaid")
+    //private Collection<Produto> produtoCollection;
 
     public Marca() {
     }
@@ -70,14 +70,14 @@ public class Marca implements Serializable {
         this.nome = nome;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Produto> getProdutoCollection() {
         return produtoCollection;
     }
 
     public void setProdutoCollection(Collection<Produto> produtoCollection) {
         this.produtoCollection = produtoCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {

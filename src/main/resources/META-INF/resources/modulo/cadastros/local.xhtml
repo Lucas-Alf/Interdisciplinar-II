@@ -36,7 +36,7 @@
                                 <div class="modal-body">
                                     <span class="ui-float-label">
                                         <h:outputText style="margin-right: 50px;" value="Nome: " />
-                                        <p:inputText style="width: 500px;" id="descricao" binding="#{descricao}" />
+                                        <p:inputText style="width: 500px;" id="nome" binding="#{nome}" />
                                     </span>
                                     <span class="ui-float-label">
                                         <h:outputText style="margin-right: 40px;" value="Estante: " />
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{estadoConservacaoBean.SalvarEstado(descricao.value)}">
+                                        action="#{estadoConservacaoBean.SalvarEstado(nome.value)}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
@@ -67,19 +67,19 @@
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
-                    <p:dataTable class="col-12 col-md-12" var="estadoConservacao" value="#{estadoConservacao}"
+                    <p:dataTable class="col-12 col-md-12" var="local" value="#{local}"
                         style="margin-top: 10px">
                         <p:column headerText="Código" style="width: 25%;">
-                            <h:outputText value="#{estadoConservacao.id}" />
+                            <h:outputText value="#{local.id}" />
                         </p:column>
                         <p:column headerText="Nome" style="width: 70%; text-align: left">
-                            <h:outputText value="#{estadoConservacao.descricao}" />
+                            <h:outputText value="#{local.local}" />
                         </p:column>
                         <p:column headerText="Estante" style="width: 70%; text-align: left">
-                            <h:outputText value="#{estadoConservacao.descricao}" />
+                            <h:outputText value="#{local.nomme}" />
                         </p:column>
                         <p:column headerText="Prateleira" style="width: 70%; text-align: left">
-                            <h:outputText value="#{estadoConservacao.descricao}" />
+                            <h:outputText value="#{local.nome}" />
                         </p:column>
                     </p:dataTable>
                 </h:form>

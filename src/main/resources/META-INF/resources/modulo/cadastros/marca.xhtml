@@ -25,18 +25,18 @@
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
             <div class="container">
-                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro de
-                   Marca</h3>
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro
+                    Marca</h3>
                 <h:form>
 
-                    <div class="modal fade" id="CadastrarMarca" widgetVar="CadastroMarca"
+                    <div class="modal fade" id="CadastrarMarca" widgetVar="CadastrarMarca"
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
                             <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro de Marca</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Marca</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -65,7 +65,7 @@
                     <h:outputText style="font-weight:bold" value="Pesquisar: " />
                     <p:inputText style="width: 540px;" id="pesquisa" binding="#{pesquisa}"/>                              
                     <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value=""
-                    action="#{marcaeBean.Pesquisar(pesquisa.value)}">
+                    action="#{marcaBean.Pesquisar(pesquisa.value)}">
                         <f:ajax execute="@form" render="@form" />
                         <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                     </h:commandLink><br />
