@@ -73,7 +73,7 @@
                                             <f:selectItem itemValue="3" itemLabel="Novo filtro ou correção de filtro" />
                                         </p:selectOneMenu>
                                         <h:outputText value="Relatório: " />
-                                        <p:selectOneMenu id="relatorio" value="#{solicitacaoRelatorioBean.relatorio}"
+                                        <p:selectOneMenu id="relatorio" filter="true" filterMatchMode="contains" value="#{solicitacaoRelatorioBean.relatorio}"
                                             style="width: 100%" converter="RelatorioConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um relatório" />
                                             <f:selectItems value="#{relatorioBean.listaRelatorio}" var="relatorio"
