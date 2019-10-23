@@ -22,7 +22,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 280px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 310px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Conta</h4>
@@ -30,26 +30,44 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <span class="ui-float-label">
+                                <!--<div class="modal-body">
                                         <h:outputText value="Conta Sintética? " />
-                                        <h:selectBooleanCheckbox style="margin-right: 450px;" binding="#{checkbox}" />
+                                        <h:selectBooleanCheckbox value="true" style="margin-right: 450px;" binding="#{checkbox}" />
                                             
                                         <h:inputHidden  id="id" value="#{contaBean.conta.id}" />
 
                                         <h:inputHidden  id="CliForid" value="#{contaBean.conta.cliforid}" converter = "CliForConverter"/>
                                         
                                         <h:outputText value="Descrição: " />
-                                        <p:inputText style="width: 540px;;" id="descricao" value="#{contaBean.conta.descricao}" />
-                                        
-                                        <h:outputText value="Conta Pai: " />
-                                        <p:selectOneMenu id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
+                                        <p:inputText style="width: 540px;" id="descricao" value="#{contaBean.conta.descricao}" />
+
+                                        <h:outputText style="margin-left: 15px;" value="Conta Pai: "  />
+                                        <p:selectOneMenu required="#{checkbox.value == 'false'}" id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
                                             converter="ContaConverter" appendTo="@this">    
                                             <f:selectItem itemValue="null" itemLabel="Selecione uma conta"/>
                                             <f:selectItems value="#{contaBean.PesquisarAnalitica()}" var="pais" itemValue="#{pais}" itemLabel="#{pais.descricao}"/>
                                         </p:selectOneMenu>
-                                    </span>
-                                </div>
+                                </div>-->
+                                <div class="modal-body">
+                                        <h:inputHidden  id="id" value="#{contaBean.conta.id}" />
+        
+                                        <h:inputHidden  id="CliForid" value="#{contaBean.conta.cliforid}" converter = "CliForConverter"/>
+                                        
+                                        <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
+                                            <h:outputText value="Conta Sintética? " />
+                                            <h:selectBooleanCheckbox value="false" binding="#{checkbox}" />
+                                                    
+                                            <h:outputText value="Descrição: " />
+                                            <p:inputText style="width: 540px;" id="descricao" value="#{contaBean.conta.descricao}" />
+        
+                                            <h:outputText value="Conta Pai: "  />
+                                            <p:selectOneMenu required="#{checkbox.value == 'true'}" id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
+                                                converter="ContaConverter" appendTo="@this">    
+                                                <f:selectItem itemValue="null" itemLabel="Selecione uma conta"/>
+                                                <f:selectItems value="#{contaBean.PesquisarAnalitica()}" var="pais" itemValue="#{pais}" itemLabel="#{pais.descricao}"/>
+                                            </p:selectOneMenu>
+                                        </h:panelGrid>
+                                    </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
                                         action="#{contaBean.Insert()}">
