@@ -21,15 +21,16 @@
     <title>Interdisciplinar II</title>
 </h:head>
 <h:body style="overflow: hidden; background-color:white; margin: 0px">
+
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
             <div class="container">
                 <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro Grupo de Bem</h3>
-                <h:form>
+                    <h:form>
 
                     <div class="modal fade" id="CadastrarGrupoBem" widgetVar="CadastrarGrupoBem" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 320px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Grupo de Bem</h4>
@@ -37,7 +38,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body" >
+                                <div class="modal-body">
                                     <span class="ui-float-label">
                                         <h:inputHidden id="id" value="#{grupoBemBean.grupoBem.id}" />
                                         <h:outputText value="Descrição: " style="margin-right: 20px;" />
@@ -49,54 +50,61 @@
                                     </span>
                                 </div>
                                 <div class="modal-footer">
-                                    <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{grupoBemBean.Salvar()}">
+                                    <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
+                                        action="#{grupoBemBean.Salvar()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
-                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
+                                            class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     </div>
 
                     <h:outputText style="font-weight:bold" value="Pesquisar: " />
                     <p:inputText style="width: 540px;" id="pesquisa" binding="#{pesquisa}" />
-                    <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{grupoBemBean.Pesquisar(pesquisa.value)}">
+                    <h:commandLink id="botaoPesquisar"
+                        style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;"
+                        class="btn btn-info btn-sm" value=""
+                        action="#{grupoBemBean.Pesquisar(pesquisa.value)}">
                         <f:ajax execute="@form" render="@form" />
                         <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
-                    </h:commandLink><br/>
+                    </h:commandLink><br />
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{grupoBemBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir"
+                        action="#{grupoBemBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
-                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar" action="#{grupoBemBean.AbreAlterar(itemGrupoBem.id)}">
+                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
+                        action="#{grupoBemBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <p:growl id="messages" showDetail="true" closable="true" />
-                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#{grupoBemBean.Deletar(itemGrupoBem.id)}">
+                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
+                        action="#{grupoBemBean.Deletar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
-                    <p:dataTable scrollable="true" scrollHeight="60%" id="tabelaGrupoBem" var="itemGrupoBem"
-                        value="#{grupoBemBean.grupoBens}" style="margin-top: 10px; width: 100%; height: 550px;"
-                        rowKey="#{itemGrupoBem.id}" selection="#{itemGrupoBem}" selectionMode="single"
-                        emptyMessage="Não há registros na tabela.">
-                        <p:column headerText="Código" style="text-align: center; width: 10%;">
-                            <h:outputText value="#{itemGrupoBem.id}" />
+                    <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
+                        value="#{grupoBemBean.grupoBens}" style="margin-top: 10px; height: 550px;" rowKey="#{item.id}"
+                        selection="#{item}" selectionMode="single" emptyMessage="Não há registros na tabela.">
+                        <p:column headerText="Código" style="text-align: center; width: 15%;">
+                            <h:outputText value="#{item.id}" />
                         </p:column>
                         <p:column headerText="Descrição" style="width: 50%; text-align: left">
-                            <h:outputText value="#{itemGrupoBem.descricao}" />
+                            <h:outputText value="#{item.descricao}" />
                         </p:column>
                         <p:column headerText="Taxa de Depreciação" style="width: 20%; text-align: left">
-                            <h:outputText value="#{itemGrupoBem.taxadepreciacao}" />
+                            <h:outputText value="#{item.taxadepreciacao}" />
                         </p:column>
                         <p:column headerText="Vida Útil" style="width: 20%; text-align: left">
-                            <h:outputText value="#{itemGrupoBem.vidautil}" />
+                            <h:outputText value="#{item.vidautil}" />
                         </p:column>
                     </p:dataTable>
 
@@ -106,4 +114,8 @@
     </ui:composition>
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
+<f:metadata>
+    <f:viewAction action="#{grupoBemBean.AtualizarTabela()}" />
+</f:metadata>
+
 </html>

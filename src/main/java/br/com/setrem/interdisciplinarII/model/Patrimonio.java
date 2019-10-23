@@ -76,8 +76,6 @@ public class Patrimonio implements Serializable {
     @JoinColumn(name = "produtoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Produto produtoid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patrimonioid")
-    private Collection<ReavaliacaoBem> ReavaliacaoBemCollection;
 
     public Patrimonio() {
     }
@@ -180,15 +178,6 @@ public class Patrimonio implements Serializable {
 
     public void setProdutoid(Produto produtoid) {
         this.produtoid = produtoid;
-    }
-
-    @XmlTransient
-    public Collection<ReavaliacaoBem> getReavaliacaoBemCollection() {
-        return ReavaliacaoBemCollection;
-    }
-
-    public void setReavaliacaoBemCollection(Collection<ReavaliacaoBem> ReavaliacaoBemCollection) {
-        this.ReavaliacaoBemCollection = ReavaliacaoBemCollection;
     }
 
     @Override

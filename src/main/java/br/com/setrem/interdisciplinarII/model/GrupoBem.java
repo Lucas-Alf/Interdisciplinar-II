@@ -21,10 +21,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "grupobem")
 
 public class GrupoBem implements Serializable {
@@ -50,10 +46,8 @@ public class GrupoBem implements Serializable {
     //@NotNull
     @Column(name = "vidautil")
     private BigDecimal vidautil;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "GrupoBemid")
-    private Collection<Patrimonio> patrimonioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "GrupoBemid")
-    private Collection<ReavaliacaoBem> ReavaliacaoBemCollection;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "GrupoBemid")
+    //private Collection<Patrimonio> patrimonioCollection;
 
     public GrupoBem() {
     }
@@ -101,23 +95,14 @@ public class GrupoBem implements Serializable {
         this.vidautil = vidautil;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Patrimonio> getPatrimonioCollection() {
         return patrimonioCollection;
     }
 
     public void setPatrimonioCollection(Collection<Patrimonio> patrimonioCollection) {
         this.patrimonioCollection = patrimonioCollection;
-    }
-
-    @XmlTransient
-    public Collection<ReavaliacaoBem> getReavaliacaoBemCollection() {
-        return ReavaliacaoBemCollection;
-    }
-
-    public void setReavaliacaoBemCollection(Collection<ReavaliacaoBem> ReavaliacaoBemCollection) {
-        this.ReavaliacaoBemCollection = ReavaliacaoBemCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {

@@ -11,47 +11,47 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.setrem.interdisciplinarII.model.GrupoBem;
-import br.com.setrem.interdisciplinarII.repository.GrupoBemRepository;
+import br.com.setrem.interdisciplinarII.model.Estado;
+import br.com.setrem.interdisciplinarII.model.MotivoBaixa;
+import br.com.setrem.interdisciplinarII.repository.EstadoRepository;
 
-@Named(value = "grupoBemBean")
+@Named(value = "estadoBean")
 @SessionScoped
-public class GrupoBemBean implements Serializable {
+public class EstadoBean implements Serializable {
 
     @Autowired
-    private GrupoBemRepository grupoBemRepository;
-    private GrupoBem grupoBem = new GrupoBem();
+    private EstadoRepository estadoRepository;
+    private Estado estado = new Estado();
 
     private int id;
     private String descricao;
-    private double taxadepreciacao;
-    private double vidautil;
-    private List<GrupoBem> grupoBens;
+    private String sigla;
+    private List<Estado> estados;
 
-    public GrupoBemBean() {
+    public EstadoBean() {
 
     }
 
     public void AtualizarTabela() {
-        this.grupoBens = grupoBemRepository.findAll();
+        this.estados = estadoRepository.findAll();
     }
 
     public void Pesquisar(String descricao) {
-        this.grupoBens = grupoBemRepository.pesquisar(descricao);
+        this.estados = estadoRepository.pesquisar(descricao);
     }
 
     public void AbrirModal() {
-        this.grupoBem = new GrupoBem();
-        PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
+        this.estado = new Estado();
+        PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
     }
 
     public void Salvar() {
-        if (this.grupoBem.getDescricao().equals("")) {
+        if (this.estado.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            grupoBemRepository.save(this.grupoBem);
+            estadoRepository.save(this.estado);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }
@@ -63,7 +63,7 @@ public class GrupoBemBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            grupoBemRepository.deleteById(id);
+            estadoRepository.deleteById(id);
             this.AtualizarTabela();
         }
     }
@@ -74,23 +74,23 @@ public class GrupoBemBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            grupoBem = grupoBemRepository.getOne(id);
-            PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
+            estado = estadoRepository.getOne(id);
+            PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
         }
     }
 
     public void Alterar() {
-        grupoBemRepository.save(grupoBem);
+        estadoRepository.save(estado);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
     }
 
-    public GrupoBem getGrupoBem() {
-        return grupoBem;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public void setGrupoBem(GrupoBem grupoBem) {
-        this.grupoBem = grupoBem;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public int getId() {
@@ -109,28 +109,20 @@ public class GrupoBemBean implements Serializable {
         this.descricao = descricao;
     }
 
-    public double getTaxadepreciacao() {
-        return taxadepreciacao;
+    public String getSigla() {
+        return sigla;
     }
 
-    public void setTaxadepreciacao(double taxadepreciacao) {
-        this.taxadepreciacao = taxadepreciacao;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
-    public double getVidautil() {
-        return vidautil;
+    public List<Estado> getEstados() {
+        return estados;
     }
 
-    public void setVidautil(double vidautil) {
-        this.vidautil = vidautil;
-    }
-
-    public List<GrupoBem> getGrupoBens() {
-        return grupoBens;
-    }
-
-    public void setGrupoBens(List<GrupoBem> grupoBens) {
-        this.grupoBens = grupoBens;
+    public void setEstados(List<Estado> estados) {
+        this.estados = estados;
     }
     
 }
