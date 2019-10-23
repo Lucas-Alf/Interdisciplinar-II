@@ -107,4 +107,12 @@ public class UnidadeMedida implements Serializable {
         return "br.com.setrem.interdisciplinarII.model.UnidadeMedida[ id=" + id + " ]";
     }
 
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+
 }
