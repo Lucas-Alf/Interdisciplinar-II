@@ -35,19 +35,18 @@ public class Conta implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    //@Size(min = 1, max = 50)
     @Column(name = "descricao")
     private String descricao;
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "sintetica")
     private boolean sintetica;
 
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CliFor CliForid;
+    private CliFor cliforid;
 
     @JoinColumn(name = "contapai", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -91,14 +90,6 @@ public class Conta implements Serializable {
         this.sintetica = sintetica;
     }
 
-    public CliFor getCliForid() {
-        return CliForid;
-    }
-
-    public void setCliForid(CliFor CliForid) {
-        this.CliForid = CliForid;
-    }
-
     public Conta getContaPai() {
         return ContaPai;
     }
@@ -129,7 +120,17 @@ public class Conta implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.setrem.interdisciplinarII.model.Conta[ id=" + id + " ]";
+        return descricao;
     }
+
+    public CliFor getCliforid() {
+        return cliforid;
+    }
+
+    public void setCliforid(CliFor cliforid) {
+        this.cliforid = cliforid;
+    }
+
+    
 
 }

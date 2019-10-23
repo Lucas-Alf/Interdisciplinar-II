@@ -42,7 +42,7 @@ public class ContaBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-            this.conta.setCliForid(empresa);
+            this.conta.setCliforid(empresa);
             contaRepository.save(this.conta);
             this.AtualizarTable();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
@@ -89,6 +89,10 @@ public class ContaBean implements Serializable {
     public void Pesquisar(String nome) {
          this.contas = contaRepository.pesquisar(nome);
     }
+
+    public void PesquisarAnalitica() {
+        this.contas = contaRepository.pesquisarAnalit();
+   }
 
     public void AbrirModal() {
         this.conta = new Conta();
