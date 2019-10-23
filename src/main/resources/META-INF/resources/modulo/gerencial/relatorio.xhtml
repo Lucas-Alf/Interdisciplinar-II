@@ -16,10 +16,21 @@
             <div class="container">
                 <h3 style="margin-top: 10px;"><b>Relatórios Gerenciais</b></h3>
                 <h:form>
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target=""><i class="fas fa-print crud-btn"></i> Imprimir</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=""><i
+                            class="fas fa-print crud-btn"></i> Imprimir</button>
                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                         data-target="#solicitacaoModal"><i class="far fa-edit crud-btn"></i> Solicitar</button>
+
+                    <div class="float-right">
+                        <h:outputText style="font-weight:bold" value="Pesquisar: " />
+                        <p:inputText style="width: 250px;" id="pesquisa" value="#{descricaoBusca}" />
+                        <h:commandLink id="botaoPesquisar"
+                            style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;"
+                            class="btn btn-info btn-sm" value="" action="#{relatorioBean.Lista()}">
+                            <f:ajax execute="@form" render="@form" />
+                            <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
+                        </h:commandLink><br />
+                    </div>
 
                     <p:dataTable scrollable="true" scrollHeight="70%" var="item" value="#{relatorioBean.listaRelatorio}"
                         style="margin-top: 10px" rowKey="#{item.id}" selection="#{item}" selectionMode="single"
@@ -55,26 +66,27 @@
                                 <div class="modal-body">
                                     <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
                                         <h:outputText value="Tipo: " />
-                                        <p:selectOneMenu id="tipo" binding="#{tipo}" style="width: 100%"
-                                            appendTo="@this">
+                                        <p:selectOneMenu id="tipo" value="#{solicitacaoRelatorioBean.tipo}"
+                                            style="width: 100%" appendTo="@this">
                                             <f:selectItem itemValue="1" itemLabel="Novo relatório" />
                                             <f:selectItem itemValue="2" itemLabel="Correção de relatório" />
                                         </p:selectOneMenu>
                                         <h:outputText value="Relatório: " />
-                                        <p:selectOneMenu id="relatorio" binding="#{relatorio}" style="width: 100%"
-                                            converter="CliForConverter" appendTo="@this">
+                                        <p:selectOneMenu id="relatorio" value="#{solicitacaoRelatorioBean.relatorio}"
+                                            style="width: 100%" converter="RelatorioConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um relatório" />
-                                            <f:selectItems value="#{cliforBean.listaEmpresas()}" var="emp"
-                                                itemValue="#{emp}" itemLabel="#{emp.nome}" />
+                                            <f:selectItems value="#{relatorioBean.listaRelatorio}" var="relatorio"
+                                                itemValue="#{relatorio}" itemLabel="#{relatorio.nome}" />
                                         </p:selectOneMenu>
                                         <h:outputText value="Descrição: " />
-                                        <p:inputTextarea rows="2" style="width: 540px;" id="mensagem"
-                                            binding="#{mensagem}" />
+                                        <p:inputTextarea value="#{solicitacaoRelatorioBean.mensagem}" rows="2"
+                                            style="width: 540px;" id="mensagem" />
                                     </h:panelGrid>
                                 </div>
                                 <div class="modal-footer">
+                                    <p:growl id="growl" showDetail="true" />
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{solicitacaoRelatorioBean.Salvar(mensagem.value)}">
+                                        action="#{solicitacaoRelatorioBean.Salvar()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <!-- <i class="fas far fa-print crud-btn"></i> -->
                                         <i class="far fa-save crud-btn"></i>

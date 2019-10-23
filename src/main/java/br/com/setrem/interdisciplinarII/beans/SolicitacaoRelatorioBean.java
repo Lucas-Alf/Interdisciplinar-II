@@ -13,9 +13,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Relatorio;
 import br.com.setrem.interdisciplinarII.model.SolicitacaoRelatorio;
 import br.com.setrem.interdisciplinarII.repository.SolicitacaoRelatorioRepository;
 
@@ -31,6 +33,9 @@ public class SolicitacaoRelatorioBean implements Serializable {
     private SolicitacaoRelatorioRepository solicitacaoRelatorioRepository;
 
     private String nome;
+    private Relatorio relatorio = new Relatorio();
+    private String tipo;
+    private String mensagem;
 
     private List<SolicitacaoRelatorio> listaSolicitacaoRelatorio;
 
@@ -42,21 +47,69 @@ public class SolicitacaoRelatorioBean implements Serializable {
         this.listaSolicitacaoRelatorio = solicitacaoRelatorioRepository.listar(nome, cliforid);
     }
 
-    public void Salvar(String mensagem, Integer relatorioid, Integer tipo) {
+    public String Salvar() {
         try {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                     .get("empresa");
             SolicitacaoRelatorio solicitacao = new SolicitacaoRelatorio();
             solicitacao.setCliForid(empresa.getId());
             solicitacao.setDescricao(mensagem);
-            solicitacao.setRelatorioid(relatorioid);
-            solicitacao.setTipo(tipo);
+            if (relatorio == null || relatorio.getId() == 0) {
+                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Relatório inválido."));
+                return "";
+            }
+            if (mensagem == null || mensagem == "") {
+                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Mensagem inválida."));
+                return "";
+            }
+            solicitacao.setRelatorioid(relatorio.getId());
+            solicitacao.setTipo(Integer.parseInt(tipo));
             solicitacaoRelatorioRepository.save(solicitacao);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso."));
+            new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso."));
+            return "";
         } catch (Exception e) {
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possível salvar a solicitação."));
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possível salvar a solicitação. "));
+            return "";
         }
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Relatorio getRelatorio() {
+        return relatorio;
+    }
+
+    public void setRelatorio(Relatorio relatorio) {
+        this.relatorio = relatorio;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
 }
