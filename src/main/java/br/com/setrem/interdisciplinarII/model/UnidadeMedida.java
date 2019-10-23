@@ -6,22 +6,19 @@
 package br.com.setrem.interdisciplinarII.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * 
  */
-@Entity(name = "unidadeMedida")
+@Entity(name = "unidademedida")
 
 public class UnidadeMedida implements Serializable {
 
@@ -31,7 +28,7 @@ public class UnidadeMedida implements Serializable {
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -46,31 +43,6 @@ public class UnidadeMedida implements Serializable {
     //private Collection<Produto> produtoCollection;
 
     public UnidadeMedida() {
-    }
-
-    public UnidadeMedida(String id) {
-        this.id = id;
-    }
-
-    public UnidadeMedida(String id, String descricao) {
-        this.id = id;
-        this.descricao = descricao;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     /*@XmlTransient
@@ -105,6 +77,22 @@ public class UnidadeMedida implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.UnidadeMedida[ id=" + id + " ]";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getSigla() {

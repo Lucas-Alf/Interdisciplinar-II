@@ -41,19 +41,19 @@ public class Patrimonio implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "dataaquisicao")
     @Temporal(TemporalType.DATE)
     private Date dataaquisicao;
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor")
+    //@NotNull
+    //@Column(name = "valor")
     private BigDecimal valor;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 500)
+    //@NotNull
+    //@Size(min = 1, max = 500)
     @Column(name = "observacao")
     private String observacao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patrimonioid")
