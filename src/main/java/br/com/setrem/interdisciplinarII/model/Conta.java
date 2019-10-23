@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -50,7 +49,7 @@ public class Conta implements Serializable {
 
     @JoinColumn(name = "contapai", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Conta  ContaPai;
+    private Conta  contapai;
 
     public Conta() {
     }
@@ -59,11 +58,11 @@ public class Conta implements Serializable {
         this.id = id;
     }
 
-    public Conta(Integer id, String descricao, boolean sintetica, Conta ContaPai) {
+    public Conta(Integer id, String descricao, boolean sintetica, Conta contapai) {
         this.id = id;
         this.descricao = descricao;
         this.sintetica = sintetica;
-        this.ContaPai = ContaPai;
+        this.contapai = contapai;
     }
 
     public Integer getId() {
@@ -82,7 +81,7 @@ public class Conta implements Serializable {
         this.descricao = descricao;
     }
 
-    public boolean getSintetica() {
+    public boolean isSintetica() {
         return sintetica;
     }
 
@@ -90,12 +89,12 @@ public class Conta implements Serializable {
         this.sintetica = sintetica;
     }
 
-    public Conta getContaPai() {
-        return ContaPai;
+    public Conta getContapai() {
+        return contapai;
     }
 
-    public void setContaPai(Conta contaPai) {
-        ContaPai = contaPai;
+    public void setContapai(Conta contapai) {
+        this.contapai = contapai;
     }
 
     @Override
@@ -130,7 +129,5 @@ public class Conta implements Serializable {
     public void setCliforid(CliFor cliforid) {
         this.cliforid = cliforid;
     }
-
-    
 
 }

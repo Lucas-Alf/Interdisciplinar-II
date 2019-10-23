@@ -13,6 +13,6 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
     @Query("SELECT c FROM conta c WHERE c.descricao LIKE %?1%")
     public List<Conta> pesquisar(String nome);
 
-    @Query("SELECT c FROM conta c WHERE c.sintetica = false")
+    @Query("SELECT c FROM conta c WHERE c.sintetica = true")
     public List<Conta> pesquisarAnalit();
 }

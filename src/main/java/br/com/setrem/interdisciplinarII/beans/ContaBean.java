@@ -1,7 +1,6 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -30,6 +29,7 @@ public class ContaBean implements Serializable {
     private boolean sintetica;
     private Conta contapai;
     private List<Conta> contas;
+    private List<Conta> contasSint;
 
     public ContaBean() {
     }
@@ -91,8 +91,8 @@ public class ContaBean implements Serializable {
     }
 
     public void PesquisarAnalitica() {
-        this.contas = contaRepository.pesquisarAnalit();
-   }
+        this.contasSint = contaRepository.pesquisarAnalit();
+    }
 
     public void AbrirModal() {
         this.conta = new Conta();
@@ -132,7 +132,7 @@ public class ContaBean implements Serializable {
         CliForid = cliForid;
     }
 
-    public boolean getSintetica() {
+    public boolean isSintetica() {
         return sintetica;
     }
 
@@ -159,5 +159,12 @@ public class ContaBean implements Serializable {
         this.contas = contas;
     }
 
+    public List<Conta> getContasSint() {
+        return contasSint;
+    }
+
+    public void setContasSint(List<Conta> contasSint) {
+        this.contasSint = contasSint;
+    }
 
 }
