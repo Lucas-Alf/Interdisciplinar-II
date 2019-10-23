@@ -48,7 +48,7 @@ public class Conta implements Serializable {
     private CliFor cliforid;
 
     @JoinColumn(name = "contapai", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne()
     private Conta  contapai;
 
     public Conta() {

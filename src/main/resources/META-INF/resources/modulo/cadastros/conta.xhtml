@@ -31,31 +31,33 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                                                            
+                                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
+
                                         <h:inputHidden  id="id" value="#{contaBean.conta.id}" />
         
                                         <h:inputHidden  id="CliForid" value="#{contaBean.conta.cliforid}" converter = "CliForConverter"/>
-                                        
-                                        <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
-                                            <h:outputText value="Conta Sintética? " />
-                                            <h:selectBooleanCheckbox id="checkbox" value="#{contaBean.conta.sintetica}" binding="#{checkbox}">
-                                                <p:ajax update="panel panel2"/>
-                                            </h:selectBooleanCheckbox>
-                                                    
-                                            <h:outputText value="Descrição: " />
-                                            <p:inputText style="width: 540px;" id="descricao" value="#{contaBean.conta.descricao}" />
 
-                                            <h:panelGroup id="panel">
-                                                        <h:outputText rendered="#{!checkbox.value}" id="txtAnalt"  value="Analítica: "  />
-                                            </h:panelGroup>
-                                            <h:panelGroup id="panel2">
-                                                        <p:selectOneMenu rendered="#{!checkbox.value}" id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
-                                                            converter="ContaConverter" appendTo="@this" value="#{contaBean.conta.contapai}">    
-                                                            <f:selectItem itemValue="null" itemLabel="Selecione uma conta"/>
-                                                            <f:selectItems value="#{contaBean.contasSint}" var="contapai" itemValue="#{contapai}" itemLabel="#{contapai.descricao}"/>
-                                                        </p:selectOneMenu>
-                                            </h:panelGroup>
-                                        </h:panelGrid>  
-                                    </div>
+                                        <h:outputText value="Conta Sintética? " />
+                                        <h:selectBooleanCheckbox id="checkbox" value="#{contaBean.conta.sintetica}" binding="#{checkbox}">
+                                            <p:ajax update="panel panel2"/>
+                                        </h:selectBooleanCheckbox>
+                                                    
+                                        <h:outputText value="Descrição: " />
+                                        <p:inputText style="width: 540px;" id="descricao" value="#{contaBean.conta.descricao}" />
+
+                                        <h:panelGroup id="panel">
+                                            <h:outputText rendered="#{!checkbox.value}" id="txtAnalt"  value="Analítica: "  />
+                                        </h:panelGroup>
+                                        <h:panelGroup id="panel2">
+                                            <p:selectOneMenu rendered="#{!checkbox.value}" id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
+                                                converter="ContaConverter" appendTo="@this" value="#{contaBean.conta.contapai}">    
+                                                <f:selectItem itemValue="null" itemLabel="Selecione uma conta"/>
+                                                <f:selectItems value="#{contaBean.contasSint}" var="contapai" itemValue="#{contapai}" itemLabel="#{contapai.descricao}"/>
+                                            </p:selectOneMenu>
+                                        </h:panelGroup>
+                                    </h:panelGrid>  
+                                </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
                                         action="#{contaBean.Insert()}">
