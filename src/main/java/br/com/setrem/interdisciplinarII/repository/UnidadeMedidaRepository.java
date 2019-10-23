@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UnidadeMedidaRepository extends JpaRepository<UnidadeMedida, Integer> {
 
-    @Query("SELECT e FROM marca e WHERE e.nome LIKE %?1%")
+    @Query("SELECT e FROM unidademedida e WHERE e.descricao LIKE %?1%")
     public List<UnidadeMedida> pesquisar(String descricao);
 
 }
