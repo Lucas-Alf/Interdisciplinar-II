@@ -86,7 +86,7 @@ public class CliFor implements Serializable {
     private String tipocliente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliforid")
     private Collection<CentroCusto> CentroCustoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliforid")
     private Collection<Conta> contaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForid")
     private Collection<SolicitacaoRelatorio> SolicitacaoRelatorioCollection;
