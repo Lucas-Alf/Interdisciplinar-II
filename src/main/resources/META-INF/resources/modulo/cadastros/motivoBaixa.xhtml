@@ -55,12 +55,14 @@
                         </div>
                     </div>
 
-                    <h:outputText style="font-weight:bold" value="Pesquisar: " />
-                    <p:inputText style="width: 540px;" id="pesquisa" binding="#{pesquisa}" />
-                    <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{motivoBaixaBean.Pesquisar(pesquisa.value)}">
-                        <f:ajax execute="@form" render="@form" />
-                        <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
-                    </h:commandLink><br />
+                    <div class="float-right">
+                        <h:outputText style="font-weight:bold" value="Pesquisar: " />
+                        <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
+                        <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{motivoBaixaBean.Pesquisar(pesquisa.value)}">
+                            <f:ajax execute="@form" render="@form" />
+                            <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
+                        </h:commandLink><br />
+                    </div>
 
                     <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{motivoBaixaBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />

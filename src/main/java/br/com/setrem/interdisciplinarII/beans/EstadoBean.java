@@ -12,7 +12,6 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.Estado;
-import br.com.setrem.interdisciplinarII.model.MotivoBaixa;
 import br.com.setrem.interdisciplinarII.repository.EstadoRepository;
 
 @Named(value = "estadoBean")
@@ -124,5 +123,5 @@ public class EstadoBean implements Serializable {
     public void setEstados(List<Estado> estados) {
         this.estados = estados;
     }
-    
+
 }
