@@ -25,32 +25,36 @@
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
             <div class="container">
-                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro de
-                    Categoria</h3>
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro
+                   Produto</h3>
                 <h:form>
 
-                    <div class="modal fade" id="CadastrarGrupo" widgetVar="CadastrarGrupo"
+                    <div class="modal fade" id="CadastrarProduto" widgetVar="CadastrarProduto"
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 260px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 650px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro de Categoria</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Produto</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                     <span class="ui-float-label">
-                                        <h:inputHidden id="id" value="#{grupoBean.grupo.id}" />
+                                        <h:inputHidden id="id" value="#{produtoBean.produto.id}" />
+                                        <h:outputText value="Nome: " style="margin-right: 50px;" />
+                                        <p:inputText style="width: 450px; margin-right: 20px;" id="nome" value="#{produtoBean.produto.nome}" /><br/><br/>
                                         <h:outputText value="Descrição: " style="margin-right: 20px;" />
-                                        <p:inputText style="width: 500px; margin-right: 20px;" id="descricao" value="#{grupoBean.grupo.descricao}" /><br/><br/>
+                                        <p:inputText style="width: 450px;" id="descricao" value="#{produtoBean.produto.descricao}" /><br/><br/>
+                                        <h:outputText value="Quantidade Miníma: " style="margin-right: 5px;" />
+                                        <p:inputText style="width: 200px;" id="quantidademinima" value="#{produtoBean.produto.quantidademinima}" /><br/><br/>
                                     </span>
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{grupoBean.Salvar()}">
+                                        action="#{produtoBean.Salvar()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
@@ -64,39 +68,45 @@
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
-                        <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{grupoBean.Pesquisar(pesquisa.value)}">
+                        <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{produtoBean.Pesquisar(pesquisa.value)}">
                             <f:ajax execute="@form" render="@form" />
                             <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                         </h:commandLink><br />
                     </div>
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{grupoBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{produtoBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
-                        action="#{grupoBean.AbreAlterar(item.id)}">
+                        action="#{produtoBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                        action="#{grupoBean.Deletar(item.id)}">
+                        action="#{produtoBean.Deletar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{grupoBean.grupos}" style="margin-top: 10px; height: 550px;"
+                        value="#{produtoBean.produtos}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>
-                        <p:column headerText="Descrição" style="width: 50%; text-align: left">
+                        <p:column headerText="Nome" style="width: 50%; text-align: left">
+                            <h:outputText value="#{item.nome}" />
+                        </p:column>
+                        <p:column headerText="Descrição" style="width: 15%; text-align: center">
                             <h:outputText value="#{item.descricao}" />
+                        </p:column>
+                        <p:column headerText="Quantidade Miníma" style="width: 15%; text-align: center">
+                            <h:outputText value="#{item.quantidademinima}" />
                         </p:column>
                     </p:dataTable>
 
