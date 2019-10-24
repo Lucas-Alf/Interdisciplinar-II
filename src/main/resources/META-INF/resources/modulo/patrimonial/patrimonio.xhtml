@@ -41,7 +41,7 @@
                                     <span class="ui-float-label">
                                         <h:inputHidden id="id" value="#{patrimonioBean.patrimonio.id}" />
                                         <p:outputLabel for="button" value="Button:" />
-                                        <p:datePicker id="button" value="#{calendarView.date7}" showIcon="true" />
+                                        <p:datePicker id="button" value="#{patrimonioBean.patrimonio.da}" showIcon="true" />
                                         
                                     </span>
                                 </div>
@@ -88,12 +88,7 @@
                         <p:column headerText="Código" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>
-                        <p:column headerText="Descrição" style="width: 50%; text-align: left">
-                            <h:outputText value="#{item.descricao}" />
-                        </p:column>
-                        <p:column headerText="Sigla" style="width: 10%; text-align: center">
-                            <h:outputText value="#{item.sigla}" />
-                        </p:column>
+
                     </p:dataTable>
 
                 </h:form>
