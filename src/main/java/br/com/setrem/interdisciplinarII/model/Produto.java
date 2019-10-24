@@ -38,19 +38,19 @@ public class Produto implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+   // @NotNull
+   //@Size(min = 1, max = 100)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+   // @NotNull
+    //@Size(min = 1, max = 200)
     @Column(name = "descricao")
     private String descricao;
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "quantidademinima")
     private BigDecimal quantidademinima;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produtoid")
