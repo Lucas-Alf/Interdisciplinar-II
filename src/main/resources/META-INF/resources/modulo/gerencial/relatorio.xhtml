@@ -23,7 +23,8 @@
 
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
-                        <p:inputText style="width: 250px;" id="pesquisa" value="#{descricaoBusca}" />
+                        <p:remoteCommand name="executaBusca" actionListener="#{relatorioBean.Lista()}"/>
+                            <p:inputText style="width: 250px;" id="pesquisa" value="#{relatorioBean.descricaoBusca}" onkeypress="if (event.keyCode == 13) { executaBusca(); return false; }" />
                         <h:commandLink id="botaoPesquisar"
                             style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;"
                             class="btn btn-info btn-sm" value="" action="#{relatorioBean.Lista()}">
