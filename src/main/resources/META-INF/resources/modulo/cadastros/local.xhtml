@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{unidadeMedidaBean.Salvar()}">
+                                        action="#{localBean.Salvar()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
@@ -64,32 +64,32 @@
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
-                        <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{unidadeMedidaBean.Pesquisar(pesquisa.value)}">
+                        <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{localBean.Pesquisar(pesquisa.value)}">
                             <f:ajax execute="@form" render="@form" />
                             <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                         </h:commandLink><br />
                     </div>
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{unidadeMedidaBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{localBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
-                        action="#{unidadeMedidaBean.AbreAlterar(item.id)}">
+                        action="#{localBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                        action="#{unidadeMedidaBean.Deletar(item.id)}">
+                        action="#{localBean.Deletar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{unidadeMedidaBean.unidadeMedidas}" style="margin-top: 10px; height: 550px;"
+                        value="#{localBean.locais}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="text-align: center; width: 10%;">
@@ -97,7 +97,6 @@
                         </p:column>
                         <p:column headerText="Descrição" style="width: 50%; text-align: left">
                             <h:outputText value="#{item.descricao}" />
-                        </p:column>
                         </p:column>
                     </p:dataTable>
 
