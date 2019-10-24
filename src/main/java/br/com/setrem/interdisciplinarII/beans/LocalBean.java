@@ -23,9 +23,7 @@ public class LocalBean implements Serializable {
     private Local local = new Local();
 
     private int id;
-    private String nome;
-    private String prateleira;
-    private String estante;
+    private String descricao;
     private List<Local> locais;
 
     public LocalBean() {
@@ -36,8 +34,8 @@ public class LocalBean implements Serializable {
         this.locais = localRepository.findAll();
     }
 
-    public void Pesquisar(String nome) {
-        this.locais = localRepository.pesquisar(nome);
+    public void Pesquisar(String descricao) {
+        this.locais = localRepository.pesquisar(descricao);
     }
 
     public void AbrirModal() {
@@ -46,8 +44,8 @@ public class LocalBean implements Serializable {
     }
 
     public void Salvar() {
-        if (this.local.getNome().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome!");
+        if (this.local.getDescricao().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
@@ -102,36 +100,20 @@ public class LocalBean implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getPrateleira() {
-        return prateleira;
-    }
-
-    public void setPrateleira(String prateleira) {
-        this.prateleira = prateleira;
-    }
-
-    public String getEstante() {
-        return estante;
-    }
-
-    public void setEstante(String estante) {
-        this.estante = estante;
-    }
-
     public List<Local> getLocais() {
         return locais;
     }
 
     public void setLocais(List<Local> locais) {
         this.locais = locais;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
 }

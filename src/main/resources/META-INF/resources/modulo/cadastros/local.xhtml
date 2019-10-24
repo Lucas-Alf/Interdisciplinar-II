@@ -26,26 +26,26 @@
         <ui:define name="content">
             <div class="container">
                 <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro
-                    Unidade de Medida</h3>
+                    Local</h3>
                 <h:form>
 
-                    <div class="modal fade" id="CadastrarUnidadeMedida" widgetVar="CadastrarUnidadeMedida"
+                    <div class="modal fade" id="CadastrarLocal" widgetVar="CadastrarLocal"
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
                             <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 260px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Unidade de Medida</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Local</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                     <span class="ui-float-label">
-                                        <h:inputHidden id="id" value="#{unidadeMedidaBean.unidadeMedida.id}" />
+                                        <h:inputHidden id="id" value="#{localBean.local.id}" />
                                         <h:outputText value="Descrição: " style="margin-right: 20px;" />
-                                        <p:inputText style="width: 500px; margin-right: 20px;" id="descricao" value="#{unidadeMedidaBean.unidadeMedida.descricao}" /><br/><br/>
+                                        <p:inputText style="width: 500px; margin-right: 20px;" id="descricao" value="#{localBean.local.descricao}" /><br/><br/>
                                     </span>
                                 </div>
                                 <div class="modal-footer">
