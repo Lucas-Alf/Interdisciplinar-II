@@ -35,20 +35,13 @@ public class Local implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "nome")
-    private String nome;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "prateleira")
-    private String prateleira;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "estante")
-    private String estante;
+    //@NotNull
+   // @Size(min = 1, max = 50)
+    @Column(name = "descricao")
+    private String descricao;
+    //@NotNull
+    //@Size(min = 1, max = 100)
+
 
     public Local() {
     }
@@ -57,44 +50,13 @@ public class Local implements Serializable {
         this.id = id;
     }
 
-    public Local(Integer id, String nome, String prateleira, String estante) {
+    public Local(Integer id, String descricao) {
         this.id = id;
-        this.nome = nome;
-        this.prateleira = prateleira;
-        this.estante = estante;
+        this.descricao = descricao;
     }
+       
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getPrateleira() {
-        return prateleira;
-    }
-
-    public void setPrateleira(String prateleira) {
-        this.prateleira = prateleira;
-    }
-
-    public String getEstante() {
-        return estante;
-    }
-
-    public void setEstante(String estante) {
-        this.estante = estante;
-    }
 
     @Override
     public int hashCode() {
@@ -119,6 +81,22 @@ public class Local implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.Local[ id=" + id + " ]";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
 }
