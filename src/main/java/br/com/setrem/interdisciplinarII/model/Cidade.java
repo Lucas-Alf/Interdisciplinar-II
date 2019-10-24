@@ -39,8 +39,8 @@ public class Cidade implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
-    @Column(name = "cidade")
-    private String cidade;
+    @Column(name = "descricao")
+    private String descricao;
     @JoinColumn(name = "estadoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Estado estadoid;
@@ -54,9 +54,9 @@ public class Cidade implements Serializable {
         this.id = id;
     }
 
-    public Cidade(Integer id, String cidade) {
+    public Cidade(Integer id, String descricao) {
         this.id = id;
-        this.cidade = cidade;
+        this.descricao = descricao;
     }
 
     public Integer getId() {
@@ -68,11 +68,11 @@ public class Cidade implements Serializable {
     }
 
     public String getCidade() {
-        return cidade;
+        return descricao;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setCidade(String descricao) {
+        this.descricao = descricao;
     }
 
     public Estado getEstadoid() {
