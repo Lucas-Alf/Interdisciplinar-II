@@ -22,7 +22,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 325px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 400px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Conta</h4>
@@ -40,17 +40,20 @@
 
                                         <h:outputText value="Conta Sintética? " />
                                         <h:selectBooleanCheckbox id="checkbox" value="#{contaBean.conta.sintetica}" binding="#{checkbox}">
-                                            <p:ajax update="panel panel2"/>
+                                            <!--<p:ajax update="panel panel2"/>-->
                                         </h:selectBooleanCheckbox>
+
+                                        <h:outputText value="Ordem: " />
+                                        <p:inputText style="width: 540px;" id="ordem" value="#{contaBean.conta.ordem}" />
                                                     
                                         <h:outputText value="Descrição: " />
                                         <p:inputText style="width: 540px;" id="descricao" value="#{contaBean.conta.descricao}" />
 
                                         <h:panelGroup id="panel">
-                                            <h:outputText rendered="#{!checkbox.value}" id="txtAnalt"  value="Analítica: "  />
+                                            <h:outputText id="txtAnalt"  value="Pai: "  />
                                         </h:panelGroup>
                                         <h:panelGroup id="panel2">
-                                            <p:selectOneMenu rendered="#{!checkbox.value}" id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
+                                            <p:selectOneMenu id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
                                                 converter="ContaConverter" appendTo="@this" value="#{contaBean.conta.contapai}">    
                                                 <f:selectItem itemValue="null" itemLabel="Selecione uma conta"/>
                                                 <f:selectItems value="#{contaBean.contasSint}" var="contapai" itemValue="#{contapai}" itemLabel="#{contapai.descricao}"/>
@@ -71,13 +74,15 @@
                         </div>
                     </div>
 
-                    <h:outputText style="font-weight:bold" value="Pesquisar: " />
-                    <p:inputText style="width: 540px;" id="pesquisa" binding="#{pesquisa}"/>                              
-                    <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value=""
-                    action="#{contaBean.Pesquisar(pesquisa.value)}">
-                        <f:ajax execute="@form" render="@form" />
-                        <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
-                    </h:commandLink><br />
+                    <div class="float-right">
+                        <h:outputText style="font-weight:bold" value="Pesquisar: " />
+                        <p:inputText style="width: 300px;" id="pesquisa" binding="#{pesquisa}"/>                              
+                        <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value=""
+                        action="#{contaBean.Pesquisar(pesquisa.value)}">
+                            <f:ajax execute="@form" render="@form" />
+                            <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
+                        </h:commandLink><br />
+                    </div>
 
                     <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{contaBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
@@ -101,13 +106,13 @@
                         value="#{contaBean.contas}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
-                        <p:column headerText="Código" style="text-align: center; width: 15%;">
-                            <h:outputText value="#{item.id}" />
+                        <p:column headerText="Ordem" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.ordem}" />
                         </p:column>
-                        <p:column headerText="Conta Pai" style="text-align: center; width: 15%;">
+                        <p:column headerText="Conta Pai" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.contapai}" />
                         </p:column>
-                        <p:column headerText="Descrição" style="width: 70%; text-align: left">
+                        <p:column headerText="Descrição" style="width: 65%; text-align: left">
                             <h:outputText value="#{item.descricao}" />
                         </p:column>
                     </p:dataTable>

@@ -15,7 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +36,7 @@ public class Conta implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    //@Size(min = 1, max = 50)
+    // @Size(min = 1, max = 50)
     @Column(name = "descricao")
     private String descricao;
 
@@ -49,8 +51,18 @@ public class Conta implements Serializable {
 
     @JoinColumn(name = "contapai", referencedColumnName = "id")
     @ManyToOne()
-    private Conta  contapai;
+    private Conta contapai;
 
+    @JoinColumn(name = "ordem")
+    @Basic(optional = false)
+    private int ordem;
+
+    @Transient // TABELA NA GRID SUCESSO
+    private String hierarquia;
+
+    // CAMPO NIVEL SINTETICO
+
+    // FAZER TRANSACAO, METODO VAI RECEBER UMA LISTA DE LANCAMENTOS CONTABEIS
     public Conta() {
     }
 
@@ -128,6 +140,14 @@ public class Conta implements Serializable {
 
     public void setCliforid(CliFor cliforid) {
         this.cliforid = cliforid;
+    }
+
+    public int getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(int ordem) {
+        this.ordem = ordem;
     }
 
 }

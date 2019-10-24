@@ -11,10 +11,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-/**
- *
- * @author lukin
- */
 @FacesConverter(value = "ContaConverter")
 
 public class ContaConverter implements Converter<Object> {
