@@ -33,7 +33,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 260px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Local</h4>
@@ -45,7 +45,7 @@
                                     <span class="ui-float-label">
                                         <h:inputHidden id="id" value="#{localBean.local.id}" />
                                         <h:outputText value="Descrição: " style="margin-right: 20px;" />
-                                        <p:inputText style="width: 500px; margin-right: 20px;" id="descricao" value="#{localBean.local.descricao}" /><br/><br/>
+                                        <p:inputText style="width: 500px; margin-right: 20px;" id="descricao" value="#{localBean.local.descricao}" />
                                     </span>
                                 </div>
                                 <div class="modal-footer">
