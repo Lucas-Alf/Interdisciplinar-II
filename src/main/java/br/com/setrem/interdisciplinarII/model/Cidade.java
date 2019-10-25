@@ -37,8 +37,8 @@ public class Cidade implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    //@NotNull
+    //@Size(min = 1, max = 200)
     @Column(name = "descricao")
     private String descricao;
     @JoinColumn(name = "estadoid", referencedColumnName = "id")
@@ -56,22 +56,6 @@ public class Cidade implements Serializable {
 
     public Cidade(Integer id, String descricao) {
         this.id = id;
-        this.descricao = descricao;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCidade() {
-        return descricao;
-    }
-
-    public void setCidade(String descricao) {
         this.descricao = descricao;
     }
 
@@ -115,6 +99,22 @@ public class Cidade implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.Cidade[ id=" + id + " ]";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
 }

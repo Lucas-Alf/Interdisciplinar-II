@@ -1,6 +1,7 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -26,7 +27,7 @@ public class EstadoBean implements Serializable {
     private String descricao;
     private String sigla;
     private List<Estado> estados;
-
+    
     public EstadoBean() {
 
     }
@@ -45,14 +46,21 @@ public class EstadoBean implements Serializable {
     }
 
     public void Salvar() {
-        if (this.estado.getDescricao().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+        if (this.estado.getDescricao().equals("") || this.estado.getSigla().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe Todos os Campos.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
+
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
         } else {
             estadoRepository.save(this.estado);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -120,7 +128,7 @@ public class EstadoBean implements Serializable {
         return estados;
     }
 
-    public void setEstados(List<Estado> estados) {
+    public void setEstados(List<Estado> estados) {  
         this.estados = estados;
     }
 

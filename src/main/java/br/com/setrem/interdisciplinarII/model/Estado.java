@@ -18,10 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "estado")
 
 public class Estado implements Serializable {
@@ -57,8 +53,6 @@ public class Estado implements Serializable {
         this.descricao = descricao;
         this.sigla = sigla;
     }
-
-
 
     @XmlTransient
     public Collection<Cidade> getCidadeCollection() {

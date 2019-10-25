@@ -52,6 +52,10 @@ public class EstadoConservacaoBean implements Serializable {
             estadoConservacaoRepository.save(this.estadoConservacao);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 

@@ -54,6 +54,10 @@ public class GrupoBemBean implements Serializable {
             grupoBemRepository.save(this.grupoBem);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 

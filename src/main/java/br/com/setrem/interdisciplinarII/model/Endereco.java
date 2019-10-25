@@ -37,27 +37,27 @@ public class Endereco implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 8)
+    //@NotNull
+    //@Size(min = 1, max = 8)
     @Column(name = "cep")
     private String cep;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    //@NotNull
+    //@Size(min = 1, max = 200)
     @Column(name = "rua")
     private String rua;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    //@NotNull
+    //@Size(min = 1, max = 200)
     @Column(name = "bairro")
     private String bairro;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "numero")
     private int numero;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 300)
+    //@NotNull
+    //@Size(min = 1, max = 300)
     @Column(name = "complemento")
     private String complemento;
     @JoinColumn(name = "cidadeid", referencedColumnName = "id")
