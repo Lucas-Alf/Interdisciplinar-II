@@ -18,7 +18,7 @@
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js"></script>
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/modules/treeview.js"></script>
     <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
-    <title>Interdisciplinar II</title>
+    <title>Ábaco</title>
 </h:head>
 <h:body style="overflow: hidden; background-color:white; margin: 0px">
     <ui:composition template="/layout.xhtml">
@@ -40,10 +40,12 @@
                                 <div class="modal-body" >
                                     <span class="ui-float-label">
                                         <h:inputHidden id="id" value="#{enderecoBean.endereco.id}" />
-                                        <h:outputText value="CEP: " style="margin-right: 35px;" />
-                                        <p:inputText style="width: 200px; " id="cep" value="#{enderecoBean.endereco.cep}" />
-                                        <h:outputText value="Número: " style="margin-left: 70px; margin-right: 10px;" />
-                                        <p:inputText style="width: 200px; " id="numero" value="#{enderecoBean.endereco.numero}" /><br/><br/>
+                                        <h:outputText value="CEP: " style="margin-right: 36px;" />
+                                        <p:inputNumber id="cep" style="width: 150px;" minValue="0" value="#{enderecoBean.endereco.cep}"></p:inputNumber>
+
+                                        <h:outputText value="Número: " style="margin-left: 10px; margin-right: 10px;" />
+                                        <p:inputNumber id="numero" style="width: 60px;" minValue="0" value="#{enderecoBean.endereco.numero}"></p:inputNumber><br/><br/>  
+
                                         <h:outputText value="Rua: " style="margin-right: 39px;" />
                                         <p:inputText style="width: 542px; " id="rua" value="#{enderecoBean.endereco.rua}" /><br/><br/>
                                         <h:outputText value="Bairro: " style="margin-right: 26px;" />
