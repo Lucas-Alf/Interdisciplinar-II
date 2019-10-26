@@ -15,35 +15,97 @@
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
             <div class="container">
-                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro Empresa/Cliente</h3>
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro Empresa/Fornecedor</h3>
                 <h:form>
 
                     <div class="modal fade" id="CadastrarCliFor" widgetVar="CadastrarCliFor"
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
+                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 550px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Empresa/Cliente</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Empresa/Fornecedor</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
-                                        
-                                        <h:outputText value="Id: " />
-                                        <p:inputText style="width: 540px;" id="id" value="#{cliforBean.clientForn.id}" />
 
-                                        <h:outputText value="Cnpj: " />
-                                        <p:inputText style="width: 540px;" id="cnpj" value="#{cliforBean.clientForn.cnpj}" />
-                                        
-                                    </h:panelGrid>  
+                                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
+                                        <h:panelGroup>
+                                            <h:outputText value="Id: " />
+                                            <p:inputText style="width: 75px;" id="id" value="#{cliforBean.cliFor.id}" />
+                                        </h:panelGroup>
+
+                                        <h:panelGroup>
+                                            <h:outputText value="Pessoa Física? " />
+                                            <h:selectBooleanCheckbox id="checkbox" value="#{cliforBean.tipo}" binding="#{checkbox}">
+                                                <p:ajax update="cnpj1 cnpj2 cpf1 cpf2 nome1 nome2 nomeFant1 nomeFant2"/>
+                                            </h:selectBooleanCheckbox>
+                                        </h:panelGroup>
+
+                                        <h:panelGroup id="cnpj1">
+                                            <h:outputText rendered="#{!checkbox.value}" value="Cnpj: " />
+                                        </h:panelGroup>
+                                        <h:panelGroup id="cnpj2">
+                                            <p:inputText rendered="#{!checkbox.value}" style="width: 200px;" id="cnpj" value="#{cliforBean.cliFor.cnpj}" />
+                                        </h:panelGroup>
+
+                                        <h:panelGroup id="cpf1">
+                                            <h:outputText rendered="#{checkbox.value}" value="Cpf: " />
+                                        </h:panelGroup>
+                                        <h:panelGroup id="cpf2">
+                                            <p:inputText rendered="#{checkbox.value}" style="width: 200px;" id="cpf" value="#{cliforBean.cliFor.cpf}" />
+                                        </h:panelGroup>
+
+                                        <h:panelGroup id="nomeFant1">
+                                            <h:outputText rendered="#{!checkbox.value}" value="Nome Fantasia: " />
+                                        </h:panelGroup>
+                                        <h:panelGroup id="nomeFant2">
+                                            <p:inputText rendered="#{!checkbox.value}" style="width: 450px;" id="nomefantasia" value="#{cliforBean.cliFor.nomefantasia}" />
+                                        </h:panelGroup>
+
+                                        <h:panelGroup id="nome1">
+                                            <h:outputText rendered="#{checkbox.value}" value="Nome: " />
+                                        </h:panelGroup>
+                                        <h:panelGroup id="nome2">
+                                            <p:inputText rendered="#{checkbox.value}" style="width: 450px;" id="nome" value="#{cliforBean.cliFor.nome}" />
+                                        </h:panelGroup>
+
+                                        <h:outputText value="Email: " />
+                                        <p:inputText style="width: 450px;" id="email" value="#{cliforBean.cliFor.email}" />
+
+                                        <h:outputText value="Telefone: " />
+                                        <p:inputText style="width: 200px;" id="telefone" value="#{cliforBean.cliFor.telefone}" />
+
+                                        <h:outputText value="Celular: " />
+                                        <p:inputText style="width: 200px;" id="celular" value="#{cliforBean.cliFor.celular}" />
+
+                                        <h:outputText value="Tipo Cliente: " />
+                                        <p:selectOneMenu id="tipocliente" value="#{cliforBean.cliFor.tipocliente}"
+                                        style="width: 450px;" appendTo="@this">
+                                            <f:selectItem itemValue="" itemLabel="Selecione um Tipo" />
+                                            <f:selectItem itemValue="C" itemLabel="Cliente" />
+                                            <f:selectItem itemValue="F" itemLabel="Fornecedor" />
+                                            <f:selectItem itemValue="E" itemLabel="Empresa" />
+                                            <f:selectItem itemValue="CF" itemLabel="Cliente\Fornecedor" />
+                                            <f:selectItem itemValue="CE" itemLabel="Empresa\Cliente" />
+                                            <f:selectItem itemValue="FE" itemLabel="Fornecedor\Empresa" />
+                                        </p:selectOneMenu>
+
+                                        <h:outputText value="Endereço: " />
+                                        <p:selectOneMenu id="endereco" filter="true" filterMatchMode="contains" value="#{cliforBean.cliFor.enderecoid}"
+                                        style="width: 450px;" converter="EnderecoConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione um Endereço" />
+                                        <f:selectItems value="#{enderecoBean.enderecos}" var="endereco"
+                                            itemValue="#{endereco}" itemLabel="#{endereco.rua}" />
+                                    </p:selectOneMenu>
+                                    </h:panelGrid>
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{cliForBean.Insert()}">
+                                        action="#{cliforBean.Insert()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
@@ -58,36 +120,63 @@
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 300px;" id="pesquisa" binding="#{pesquisa}"/>                              
                         <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value=""
-                        action="#{cliForBean.Pesquisar(pesquisa.value)}">
+                        action="#{cliforBean.Pesquisar(pesquisa.value)}">
                             <f:ajax execute="@form" render="@form" />
                             <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                         </h:commandLink><br />
                     </div>
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{cliForBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{cliforBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
-                        action="#{cliForBean.AbreAlterar(item.id)}">
+                        action="#{cliforBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                        action="#{cliForBean.Remove(item.id)}">
+                        action="#{cliforBean.Remove(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{cliForBean.clifors}" style="margin-top: 10px; height: 550px;"
+                        value="#{cliforBean.clifors}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
-                        <p:column headerText="Código" style="text-align: center; width: 15%;">
+                        <p:column headerText="Código" style="text-align: center; width: 7%;">
                             <h:outputText value="#{item.id}" />
+                        </p:column>
+                        <p:column headerText="CNPJ" style="text-align: center; width: 20%;">
+                            <h:outputText value="#{item.cnpj}" />
+                        </p:column>
+                        <p:column headerText="CPF" style="text-align: center; width: 15%;">
+                            <h:outputText value="#{item.cpf}" />
+                        </p:column>
+                        <p:column headerText="Nome" style="text-align: center; width: 25%;">
+                            <h:outputText value="#{item.nome}" />
+                        </p:column>
+                        <p:column headerText="Nome Fant." style="text-align: center; width: 25%;">
+                            <h:outputText value="#{item.nomefantasia}" />
+                        </p:column>
+                        <p:column headerText="Tipo Pessoa" style="text-align: center; width: 7%;">
+                            <h:outputText value="#{item.tipopessoa}" />
+                        </p:column>
+                        <p:column headerText="Tipo Cliente" style="text-align: center; width: 7%;">
+                            <h:outputText value="#{item.tipocliente}" />
+                        </p:column>
+                        <p:column headerText="Email" style="text-align: center; width: 35%;">
+                            <h:outputText value="#{item.email}" />
+                        </p:column>
+                        <p:column headerText="Telefone" style="text-align: center; width: 15%;">
+                            <h:outputText value="#{item.telefone}" />
+                        </p:column>
+                        <p:column headerText="Endereço" style="text-align: center; width: 40%;">
+                            <h:outputText value="#{item.enderecoid.rua}" />
                         </p:column>
                         
                     </p:dataTable>
@@ -98,5 +187,9 @@
     </ui:composition>
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
-
+<f:metadata>
+    <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+    <f:viewAction action="#{enderecoBean.AtualizarTabela()}" />
+    <f:viewAction action="#{cliforBean.AtualizarTable()}" />
+</f:metadata>
 </html>

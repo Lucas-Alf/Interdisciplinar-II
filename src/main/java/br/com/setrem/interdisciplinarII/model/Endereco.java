@@ -63,9 +63,10 @@ public class Endereco implements Serializable {
     @JoinColumn(name = "cidadeid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cidade cidadeid;
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "enderecoid")
     private Collection<CliFor> CliForCollection;
-
+*/
     public Endereco() {
     }
 
@@ -137,7 +138,7 @@ public class Endereco implements Serializable {
     public void setCidadeid(Cidade cidadeid) {
         this.cidadeid = cidadeid;
     }
-
+/*
     @XmlTransient
     public Collection<CliFor> getCliForCollection() {
         return CliForCollection;
@@ -146,7 +147,7 @@ public class Endereco implements Serializable {
     public void setCliForCollection(Collection<CliFor> CliForCollection) {
         this.CliForCollection = CliForCollection;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;

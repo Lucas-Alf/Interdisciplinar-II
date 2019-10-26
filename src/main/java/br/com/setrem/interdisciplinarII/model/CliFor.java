@@ -38,52 +38,53 @@ public class CliFor implements Serializable {
     @Column(name = "id")
     private String id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    //@NotNull
+    //@Size(min = 1, max = 20)
     @Column(name = "cnpj")
     private String cnpj;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 11)
+    //@NotNull
+    //@Size(min = 1, max = 11)
     @Column(name = "cpf")
     private String cpf;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "tipopessoa")
     private Character tipopessoa;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    //@NotNull
+    //@Size(min = 1, max = 200)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    //@NotNull
+    //@Size(min = 1, max = 200)
     @Column(name = "nomefantasia")
     private String nomefantasia;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
     // message="Invalid email")//if the field contains email address consider using
     // this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    //@NotNull
+    //@Size(min = 1, max = 200)
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 13)
+    //@NotNull
+    //@Size(min = 1, max = 13)
     @Column(name = "telefone")
     private String telefone;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 14)
+    //@NotNull
+    //@Size(min = 1, max = 14)
     @Column(name = "celular")
     private String celular;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 3)
+    //@NotNull
+    //@Size(min = 1, max = 3)
     @Column(name = "tipocliente")
     private String tipocliente;
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliforid")
     private Collection<CentroCusto> CentroCustoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliforid")
@@ -106,6 +107,7 @@ public class CliFor implements Serializable {
     private Collection<Produto> produtoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "CliForId")
     private Collection<MovItens> movitensCollection;
+    */
     @JoinColumn(name = "enderecoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Endereco enderecoid;
@@ -130,7 +132,7 @@ public class CliFor implements Serializable {
         this.celular = celular;
         this.tipocliente = tipocliente;
     }
-
+/*
     @XmlTransient
     public Collection<CentroCusto> getCentroCustoCollection() {
         return CentroCustoCollection;
@@ -229,7 +231,7 @@ public class CliFor implements Serializable {
     public void setMovItensCollection(Collection<MovItens> movitensCollection) {
         this.movitensCollection = movitensCollection;
     }
-
+*/  
     public Endereco getEnderecoid() {
         return enderecoid;
     }
