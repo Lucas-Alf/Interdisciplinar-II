@@ -34,13 +34,16 @@
                                     <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
                                         
                                         <h:outputText value="Id: " />
-                                        <p:inputText style="width: 540px;" id="id" value="#{cliforBean.cliFor.id}" />
+                                        <p:inputText style="width: 540px;" id="id" value="#{cliforBean.clientForn.id}" />
+
+                                        <h:outputText value="Cnpj: " />
+                                        <p:inputText style="width: 540px;" id="cnpj" value="#{cliforBean.clientForn.cnpj}" />
                                         
                                     </h:panelGrid>  
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{cliforBean.Insert()}">
+                                        action="#{cliForBean.Insert()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
@@ -55,32 +58,32 @@
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 300px;" id="pesquisa" binding="#{pesquisa}"/>                              
                         <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value=""
-                        action="#{cliforBean.Pesquisar(pesquisa.value)}">
+                        action="#{cliForBean.Pesquisar(pesquisa.value)}">
                             <f:ajax execute="@form" render="@form" />
                             <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                         </h:commandLink><br />
                     </div>
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{cliforBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{cliForBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
-                        action="#{cliforBean.AbreAlterar(item.id)}">
+                        action="#{cliForBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                        action="#{cliforBean.Remove(item.id)}">
+                        action="#{cliForBean.Remove(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{cliforBean.clifors}" style="margin-top: 10px; height: 550px;"
+                        value="#{cliForBean.clifors}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="text-align: center; width: 15%;">

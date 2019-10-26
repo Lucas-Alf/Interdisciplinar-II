@@ -21,7 +21,7 @@ public class CliForBean implements Serializable {
 
     @Autowired
     private CliForRepository cliforRepository;
-    private CliFor cliFor = new CliFor();
+    private CliFor clientForn = new CliFor();
 
     private List<CliFor> clifors;
 
@@ -29,13 +29,13 @@ public class CliForBean implements Serializable {
     }
 
     public void Insert() {
-        if (this.cliFor.getNome().equals("")) {
+        if (this.clientForn.getNome().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um nome!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
-            cliforRepository.save(this.cliFor);
+            cliforRepository.save(this.clientForn);
             this.AtualizarTable();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }
@@ -68,13 +68,13 @@ public class CliForBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            cliFor = cliforRepository.getOne(id);
+            clientForn = cliforRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('show');");
         }
     }
 
     public void Alterar() {
-        cliforRepository.save(cliFor);
+        cliforRepository.save(clientForn);
         this.AtualizarTable();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
     }
@@ -84,7 +84,7 @@ public class CliForBean implements Serializable {
     }
 
     public void AbrirModal() {
-        this.cliFor = new CliFor();
+        this.clientForn = new CliFor();
         PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('show');");
     }
 

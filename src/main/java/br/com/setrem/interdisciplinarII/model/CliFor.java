@@ -33,8 +33,8 @@ public class CliFor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 5)
+    //@NotNull
+    //@Size(min = 1, max = 5)
     @Column(name = "id")
     private String id;
     @Basic(optional = false)
@@ -128,86 +128,6 @@ public class CliFor implements Serializable {
         this.email = email;
         this.telefone = telefone;
         this.celular = celular;
-        this.tipocliente = tipocliente;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public Character getTipopessoa() {
-        return tipopessoa;
-    }
-
-    public void setTipopessoa(Character tipopessoa) {
-        this.tipopessoa = tipopessoa;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNomefantasia() {
-        return nomefantasia;
-    }
-
-    public void setNomefantasia(String nomefantasia) {
-        this.nomefantasia = nomefantasia;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getTipocliente() {
-        return tipocliente;
-    }
-
-    public void setTipocliente(String tipocliente) {
         this.tipocliente = tipocliente;
     }
 
@@ -352,4 +272,86 @@ public class CliFor implements Serializable {
     public String toString() {
         return id;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Character getTipopessoa() {
+        return tipopessoa;
+    }
+
+    public void setTipopessoa(Character tipopessoa) {
+        this.tipopessoa = tipopessoa;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNomefantasia() {
+        return nomefantasia;
+    }
+
+    public void setNomefantasia(String nomefantasia) {
+        this.nomefantasia = nomefantasia;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getTipocliente() {
+        return tipocliente;
+    }
+
+    public void setTipocliente(String tipocliente) {
+        this.tipocliente = tipocliente;
+    }
+
+    
 }
