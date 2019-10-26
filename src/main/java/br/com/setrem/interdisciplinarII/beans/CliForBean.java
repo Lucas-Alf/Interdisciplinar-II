@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.CliFor;
@@ -20,24 +21,24 @@ public class CliForBean implements Serializable {
 
     @Autowired
     private CliForRepository cliforRepository;
+    private CliFor cliFor = new CliFor();
+
+    private List<CliFor> clifors;
 
     public CliForBean() {
     }
 
-    public void Insert(String cnpj, String cpf, Character tipopessoa, String nome, String nomefantasia,
-            String email, String telefone, String celular, String tipocliente) {
-        CliFor clifor = new CliFor();
-        clifor.setCnpj(cnpj);
-        clifor.setCpf(cpf);
-        clifor.setTipopessoa(tipopessoa);
-        clifor.setNome(nome);
-        clifor.setNomefantasia(nomefantasia);
-        clifor.setEmail(email);
-        clifor.setTelefone(telefone);
-        clifor.setCelular(celular);
-        clifor.setTipocliente(tipocliente);
-
-        cliforRepository.save(clifor);
+    public void Insert() {
+        if (this.cliFor.getNome().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um nome!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        } else {
+            cliforRepository.save(this.cliFor);
+            this.AtualizarTable();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        }
     }
 
     public List<CliFor> AtualizarTable() {
@@ -59,4 +60,41 @@ public class CliForBean implements Serializable {
             cliforRepository.deleteById(id);
         }
     }
+
+    public void AbreAlterar(String id) {
+        if (id.equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Alterar.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        } else {
+            cliFor = cliforRepository.getOne(id);
+            PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('show');");
+        }
+    }
+
+    public void Alterar() {
+        cliforRepository.save(cliFor);
+        this.AtualizarTable();
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+    }
+
+    public void Pesquisar(String nome) {
+         this.clifors = cliforRepository.pesquisar(nome);
+    }
+
+    public void AbrirModal() {
+        this.cliFor = new CliFor();
+        PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('show');");
+    }
+
+    public List<CliFor> getClifors() {
+        return clifors;
+    }
+
+    public void setClifors(List<CliFor> clifors) {
+        this.clifors = clifors;
+    }
+
+    
 }
