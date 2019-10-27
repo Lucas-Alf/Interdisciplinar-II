@@ -6,7 +6,6 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import br.com.setrem.interdisciplinarII.model.FiltroRelatorio;
-import br.com.setrem.interdisciplinarII.model.GrupoBem;
 import br.com.setrem.interdisciplinarII.repository.FiltroRelatorioRepository;
 import java.io.Serializable;
 import java.util.List;
@@ -25,15 +24,13 @@ public class FiltroRelatorioBean implements Serializable {
     @Autowired
     private FiltroRelatorioRepository filtroRelatorioRepository;
 
-    private String nome;
-    
     private List<FiltroRelatorio> filtroRelatorio;
 
     public FiltroRelatorioBean() {
 
     }
 
-    public void AtualizarTabela(String nome, Integer relatorioId) {
-        this.filtroRelatorio = filtroRelatorioRepository.listar(nome, relatorioId);
+    public void AtualizarTabela(Integer relatorioId) {
+        this.filtroRelatorio = filtroRelatorioRepository.listar(relatorioId);
     }
 }

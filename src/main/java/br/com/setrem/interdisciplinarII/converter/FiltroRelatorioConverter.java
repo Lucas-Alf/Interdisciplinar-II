@@ -5,33 +5,34 @@
  */
 package br.com.setrem.interdisciplinarII.converter;
 
-import br.com.setrem.interdisciplinarII.model.CliFor;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import br.com.setrem.interdisciplinarII.model.FiltroRelatorio;
+
 /**
  *
  * @author lukin
  */
-@FacesConverter(value = "CliForConverter")
+@FacesConverter(value = "FiltroRelatorioConverter")
 
-public class CliForConverter implements Converter<Object> {
+public class FiltroRelatorioConverter implements Converter<Object> {
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
         if (value != null && !value.isEmpty()) {
-            return (CliFor) uiComponent.getAttributes().get(value);
+            return (FiltroRelatorio) uiComponent.getAttributes().get(value);
         }
         return null;
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if (value instanceof CliFor) {
-            CliFor entity = (CliFor) value;
-            if (entity != null && entity instanceof CliFor && entity.getId() != null) {
+        if (value instanceof FiltroRelatorio) {
+            FiltroRelatorio entity = (FiltroRelatorio) value;
+            if (entity != null && entity instanceof FiltroRelatorio && entity.getId() != null) {
                 uiComponent.getAttributes().put(entity.getId().toString(), entity);
                 return entity.getId().toString();
             }

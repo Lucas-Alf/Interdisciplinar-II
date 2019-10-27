@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FiltroRelatorioRepository extends JpaRepository<FiltroRelatorio, Integer> {
-    @Query(value = "SELECT * FROM filtrorelatorio WHERE nome LIKE %?1% and relatorioid = ?2", nativeQuery = true)
-    public List<FiltroRelatorio> listar(String descricao, Integer relatorioId);
+    @Query(value = "select * from filtrorelatorio where excluido = false and relatorioid = ?1", nativeQuery = true)
+    public List<FiltroRelatorio> listar(Integer relatorioId);
 }
