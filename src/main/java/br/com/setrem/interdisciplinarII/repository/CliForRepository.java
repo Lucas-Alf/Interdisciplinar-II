@@ -11,6 +11,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface CliForRepository extends JpaRepository<CliFor, String> {
     @Query(value = "SELECT * FROM clifor WHERE tipocliente = 'E'", nativeQuery = true)
     List<CliFor> ListaEmpresa();
+
+    @Query(value = "SELECT * FROM clifor WHERE tipocliente = 'F'", nativeQuery = true)
+    List<CliFor> ListaFornecedor();
     
     @Query(value = "SELECT * FROM clifor WHERE id = ?", nativeQuery = true)
     CliFor BuscaPorId(String id);

@@ -33,7 +33,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 650px;"
+                            <div style="margin-top: 60%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 600px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Produto</h4>
@@ -48,8 +48,35 @@
                                         <p:inputText style="width: 450px; margin-right: 20px;" id="nome" value="#{produtoBean.produto.nome}" /><br/><br/>
                                         <h:outputText value="Descrição: " style="margin-right: 20px;" />
                                         <p:inputText style="width: 450px;" id="descricao" value="#{produtoBean.produto.descricao}" /><br/><br/>
-                                        <h:outputText value="Quantidade Miníma: " style="margin-right: 5px;" />
-                                        <p:inputText style="width: 200px;" id="quantidademinima" value="#{produtoBean.produto.quantidademinima}" /><br/><br/>
+                                        <h:outputText value="Qtde Miníma: " style="margin-right: 5px;" />
+                                        <p:inputNumber id="quantidademinima" style="width: 200px;" minValue="0" value="#{produtoBean.produto.quantidademinima}"></p:inputNumber><br/><br/>
+
+                                        <h:outputText value="Marca: " style="width: 450px; margin-right: 20px;" />
+                                        <p:selectOneMenu id="marca" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.marcaid}" style="width: 542px;" converter="MarcaConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione uma Marca" />
+                                        <f:selectItems value="#{marcaBean.marcas}" var="marca" 
+                                            itemValue="#{marca}" itemLabel="#{marca.nome}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Categoria: " style="width: 450px; margin-right: 20px;" />
+                                        <p:selectOneMenu id="grupo" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.grupoid}" style="width: 500px;" converter="GrupoConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione uma Categoria" />
+                                        <f:selectItems value="#{grupoBean.grupos}" var="grupo" 
+                                            itemValue="#{grupo}" itemLabel="#{grupo.descricao}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Und. Medida: " style="width: 450px; margin-right: 20px;" />
+                                        <p:selectOneMenu id="unidadeMedida" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.unidademedidaid}" style="width: 500px;" converter="UnidadeMedidaConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione uma Unidade Medida" />
+                                        <f:selectItems value="#{unidadeMedidaBean.unidadeMedidas}" var="unidadeMedida" itemValue="#{unidadeMedida}" itemLabel="#{unidadeMedida.descricao}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Fornecedor: " style="width: 450px; margin-right: 20px;" />                                   
+                                        <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{produtoBean.produto}" style="width: 500px;" converter="CliForConverter">
+                                            <f:selectItem itemValue="null" itemLabel="Selecione um Fornecedor"/>
+                                            <f:selectItems value="#{cliforBean.listaFornecedores()}" var="for" itemValue="#{for}" itemLabel="#{for.nome}"/>
+                                        </p:selectOneMenu>
+
                                     </span>
                                 </div>
                                 <div class="modal-footer">
@@ -99,13 +126,13 @@
                         <p:column headerText="Código" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>
-                        <p:column headerText="Nome" style="width: 50%; text-align: left">
+                        <p:column headerText="Nome" style="width: 40%; text-align: left">
                             <h:outputText value="#{item.nome}" />
                         </p:column>
-                        <p:column headerText="Descrição" style="width: 15%; text-align: center">
+                        <p:column headerText="Descrição" style="width: 15%; text-align: left">
                             <h:outputText value="#{item.descricao}" />
                         </p:column>
-                        <p:column headerText="Quantidade Miníma" style="width: 15%; text-align: center">
+                        <p:column headerText="Qtde Miníma" style="width: 15%; text-align: center">
                             <h:outputText value="#{item.quantidademinima}" />
                         </p:column>
                     </p:dataTable>
@@ -116,5 +143,7 @@
     </ui:composition>
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
-
+<f:metadata>
+    <f:viewAction action="#{produtoBean.AtualizarTabela()}" />
+</f:metadata>
 </html>

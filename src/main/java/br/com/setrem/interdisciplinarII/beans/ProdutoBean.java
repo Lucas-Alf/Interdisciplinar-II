@@ -11,7 +11,11 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Grupo;
+import br.com.setrem.interdisciplinarII.model.Marca;
 import br.com.setrem.interdisciplinarII.model.Produto;
+import br.com.setrem.interdisciplinarII.model.UnidadeMedida;
 import br.com.setrem.interdisciplinarII.repository.ProdutoRepository;
 
 @Named(value = "produtoBean")
@@ -21,11 +25,15 @@ public class ProdutoBean implements Serializable {
     @Autowired
     private ProdutoRepository produtoRepository;
     private Produto produto = new Produto();
+    private Marca marca = new Marca();
+    private Grupo grupo = new Grupo();
+    private UnidadeMedida unidadeMedida = new UnidadeMedida();
+    private CliFor cliFor = new CliFor();
 
-    private int id;
-    private String descricao;
-    private String nome;
-    private double quantidademinima;
+    // private int id;
+    // private String descricao;
+    // private String nome;
+    // private double quantidademinima;
     private List<Produto> produtos;
 
     public ProdutoBean() {
@@ -59,7 +67,8 @@ public class ProdutoBean implements Serializable {
 
     public void Deletar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
@@ -94,8 +103,6 @@ public class ProdutoBean implements Serializable {
         this.produto = produto;
     }
 
-
-
     public List<Produto> getProdutos() {
         if (this.produtos == null) {
             this.produtos = produtoRepository.findAll();
@@ -106,7 +113,6 @@ public class ProdutoBean implements Serializable {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
-
 
     /**
      * @return ProdutoRepository return the produtoRepository
@@ -122,53 +128,44 @@ public class ProdutoBean implements Serializable {
         this.produtoRepository = produtoRepository;
     }
 
-    /**
-     * @return int return the id
-     */
-    public int getId() {
-        return id;
+    public Marca getMarca() {
+        return marca;
     }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
-    /**
-     * @param descricao the descricao to set
-     */
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public Grupo getGrupo() {
+        return grupo;
     }
 
-    /**
-     * @return String return the nome
-     */
-    public String getNome() {
-        return nome;
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
+    public UnidadeMedida getUnidadeMedida() {
+        return unidadeMedida;
     }
 
-    /**
-     * @return double return the quantidademinima
-     */
-    public double getQuantidademinima() {
-        return quantidademinima;
+    public void setUnidadeMedida(UnidadeMedida unidadeMedida) {
+        this.unidadeMedida = unidadeMedida;
     }
 
-    /**
-     * @param quantidademinima the quantidademinima to set
-     */
-    public void setQuantidademinima(double quantidademinima) {
-        this.quantidademinima = quantidademinima;
+    public CliFor getCliFor() {
+        return cliFor;
     }
+
+    public void setCliFor(CliFor cliFor) {
+        this.cliFor = cliFor;
+    }
+
+    /*public List<CliFor> getFornecedores() {
+        return fornecedores;
+    }
+
+    public void setFornecedores(List<CliFor> fornecedores) {
+        this.fornecedores = fornecedores;
+    }*/
 
 }

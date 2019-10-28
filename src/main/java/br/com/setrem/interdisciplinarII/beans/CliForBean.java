@@ -88,6 +88,11 @@ public class CliForBean implements Serializable {
         return lista;
     }
 
+    public List<CliFor> listaFornecedores() {
+        List<CliFor> lista = cliforRepository.ListaFornecedor();
+        return lista;
+    }
+
     public void AtualizarTable() {
         this.clifors = cliforRepository.findAll();
     }
