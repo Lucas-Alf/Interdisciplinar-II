@@ -36,9 +36,9 @@
                         </h:commandLink><br />
                     </div>
 
-                    <p:dataTable scrollable="true" scrollHeight="70%" var="item" value="#{relatorioBean.listaRelatorio}"
-                        style="margin-top: 10px" rowKey="#{item.id}" selection="#{item}" selectionMode="single"
-                        emptyMessage="Não há registros na tabela.">
+                    <p:dataTable scrollable="true" scrollHeight="80%" var="item" value="#{relatorioBean.listaRelatorio}"
+                        style="margin-top: 10px; height: 550px;" rowKey="#{item.id}" selection="#{item}"
+                        selectionMode="single" emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="width: 15%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>

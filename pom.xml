@@ -102,11 +102,18 @@
             <artifactId>bootbox.js</artifactId>
             <version>5.3.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>mdbootstrap-bootstrap-material-design</artifactId>
             <version>4.8.8</version>
         </dependency>
+
+        <dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.10.0</version>
+		</dependency>
     </dependencies>
 
     <build>
