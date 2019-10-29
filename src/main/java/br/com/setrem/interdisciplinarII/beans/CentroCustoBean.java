@@ -73,8 +73,11 @@ public class CentroCustoBean implements Serializable {
         } else {
             centroCustoRepository.deleteById(id);
             this.AtualizarTable();
-        }
 
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        }
     }
 
     public void AbreAlterar(int id) {
@@ -93,6 +96,10 @@ public class CentroCustoBean implements Serializable {
         centroCustoRepository.save(centroCusto);
         this.AtualizarTable();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public void Pesquisar(String nome) {
