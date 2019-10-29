@@ -49,6 +49,10 @@ public class MarcaBean implements Serializable {
            marcaRepository.save(this.marca);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -60,6 +64,10 @@ public class MarcaBean implements Serializable {
         } else {
             marcaRepository.deleteById(id);
             this.AtualizarTabela();
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -79,6 +87,10 @@ public class MarcaBean implements Serializable {
         marcaRepository.save(marca);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public Marca getMarca() {

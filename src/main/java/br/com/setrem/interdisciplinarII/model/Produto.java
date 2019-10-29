@@ -23,10 +23,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "produto")
 
 public class Produto implements Serializable {
@@ -57,7 +53,7 @@ public class Produto implements Serializable {
     private Collection<Patrimonio> patrimonioCollection;
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CliFor CliForid;
+    private CliFor cliforid;
     @JoinColumn(name = "grupoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Grupo grupoid;
@@ -67,9 +63,9 @@ public class Produto implements Serializable {
     @JoinColumn(name = "unidademedidaid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private UnidadeMedida unidademedidaid;
-    @JoinColumn(name = "precoid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Preco precoid;
+    //@JoinColumn(name = "precoid", referencedColumnName = "id")
+    //@ManyToOne(optional = false)
+    //private Preco precoid;
 
     public Produto() {
     }
@@ -126,13 +122,6 @@ public class Produto implements Serializable {
         this.patrimonioCollection = patrimonioCollection;
     }
 
-    public CliFor getCliForid() {
-        return CliForid;
-    }
-
-    public void setCliForid(CliFor CliForid) {
-        this.CliForid = CliForid;
-    }
 
     public Grupo getGrupoid() {
         return grupoid;
@@ -181,6 +170,14 @@ public class Produto implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.Produto[ id=" + id + " ]";
+    }
+
+    public CliFor getCliforid() {
+        return cliforid;
+    }
+
+    public void setCliforid(CliFor cliforid) {
+        this.cliforid = cliforid;
     }
 
 }

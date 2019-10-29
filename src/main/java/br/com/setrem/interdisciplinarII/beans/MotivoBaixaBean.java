@@ -67,6 +67,10 @@ public class MotivoBaixaBean implements Serializable {
         } else {
             motivoBaixaRepository.deleteById(id);
             this.AtualizarTabela();
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -85,6 +89,10 @@ public class MotivoBaixaBean implements Serializable {
         motivoBaixaRepository.save(motivoBaixa);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public MotivoBaixa getMotivoBaixa() {

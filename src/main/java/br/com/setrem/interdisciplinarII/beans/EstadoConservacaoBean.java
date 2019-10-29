@@ -67,6 +67,10 @@ public class EstadoConservacaoBean implements Serializable {
         } else {
             estadoConservacaoRepository.deleteById(id);
             this.AtualizarTabela();
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -86,6 +90,10 @@ public class EstadoConservacaoBean implements Serializable {
         estadoConservacaoRepository.save(estadoConservacao);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public EstadoConservacao getEstadoConservacao() {

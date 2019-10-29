@@ -52,6 +52,10 @@ public class GrupoBean implements Serializable {
             grupoRepository.save(this.grupo);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -63,6 +67,10 @@ public class GrupoBean implements Serializable {
         } else {
             grupoRepository.deleteById(id);
             this.AtualizarTabela();
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -82,6 +90,10 @@ public class GrupoBean implements Serializable {
         grupoRepository.save(grupo);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public Grupo getGrupo() {

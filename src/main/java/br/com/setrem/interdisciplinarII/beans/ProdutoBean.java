@@ -30,10 +30,6 @@ public class ProdutoBean implements Serializable {
     private UnidadeMedida unidadeMedida = new UnidadeMedida();
     private CliFor cliFor = new CliFor();
 
-    // private int id;
-    // private String descricao;
-    // private String nome;
-    // private double quantidademinima;
     private List<Produto> produtos;
 
     public ProdutoBean() {
@@ -54,7 +50,11 @@ public class ProdutoBean implements Serializable {
     }
 
     public void Salvar() {
-        if (this.produto.getDescricao().equals("")) {
+        if (this.produto.getNome().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        } else if (this.produto.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
@@ -62,6 +62,10 @@ public class ProdutoBean implements Serializable {
             produtoRepository.save(this.produto);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -74,6 +78,10 @@ public class ProdutoBean implements Serializable {
         } else {
             produtoRepository.deleteById(id);
             this.AtualizarTabela();
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
     }
 
@@ -93,6 +101,10 @@ public class ProdutoBean implements Serializable {
         produtoRepository.save(produto);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public Produto getProduto() {

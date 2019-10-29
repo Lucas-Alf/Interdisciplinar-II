@@ -70,6 +70,10 @@ public class CidadeBean implements Serializable {
             } else {
                 cidadeRepository.deleteById(id);
                 this.AtualizarTabela();
+
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, fm);
             }
         } catch (Exception e) {
             if (e.getMessage().contains("could not extract ResultSet")) {
@@ -95,6 +99,10 @@ public class CidadeBean implements Serializable {
         cidadeRepository.save(cidade);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public Cidade getCidade() {

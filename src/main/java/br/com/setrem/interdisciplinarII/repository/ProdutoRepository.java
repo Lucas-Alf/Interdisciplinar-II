@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
-    @Query("SELECT e FROM produto e WHERE e.descricao LIKE %?1%")
+    @Query("SELECT e FROM produto e WHERE e.nome LIKE %?1%")
     public List<Produto> pesquisar(String descricao);
 
 }
