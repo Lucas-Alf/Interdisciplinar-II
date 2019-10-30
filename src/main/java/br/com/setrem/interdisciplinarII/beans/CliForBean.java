@@ -75,6 +75,10 @@ public class CliForBean implements Serializable {
                 cliforRepository.save(this.cliFor);
                 this.AtualizarTable();
                 PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, fm);
             }
         } 
     }
@@ -89,8 +93,8 @@ public class CliForBean implements Serializable {
     }
 
     public List<CliFor> listaFornecedores() {
-        List<CliFor> lista = cliforRepository.ListaFornecedor();
-        return lista;
+        List<CliFor> listaFornecedores = cliforRepository.ListaFornecedor();
+        return listaFornecedores;
     }
 
     public void AtualizarTable() {
