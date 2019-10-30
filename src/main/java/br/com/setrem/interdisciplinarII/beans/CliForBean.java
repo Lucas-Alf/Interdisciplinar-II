@@ -44,7 +44,7 @@ public class CliForBean implements Serializable {
     }
 
     public void Insert() {
-        if(!this.cliFor.getNome().isEmpty()){
+        if(this.cliFor.getNome() != null){
             if(this.cliFor.getNome().equals("")){
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome!");
                 FacesContext context = FacesContext.getCurrentInstance();
@@ -60,7 +60,7 @@ public class CliForBean implements Serializable {
                 this.AtualizarTable();
                 PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             }
-        } else if (!this.cliFor.getNomefantasia().isEmpty()) {
+        } else if (this.cliFor.getNomefantasia() != null) {
             if(this.cliFor.getNomefantasia().equals("")){
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome Fantasia!");
                 FacesContext context = FacesContext.getCurrentInstance();
@@ -89,8 +89,8 @@ public class CliForBean implements Serializable {
     }
 
     public List<CliFor> listaFornecedores() {
-        List<CliFor> listaFornecedores = cliforRepository.ListaFornecedor();
-        return listaFornecedores;
+        List<CliFor> lista = cliforRepository.ListaFornecedor();
+        return lista;
     }
 
     public void AtualizarTable() {

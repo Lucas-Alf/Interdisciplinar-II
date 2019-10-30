@@ -22,7 +22,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 550px;"
+                            <div style="margin-top: 60%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 575px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Empresa/Fornecedor</h4>
@@ -34,7 +34,7 @@
 
                                     <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
                                         <h:panelGroup>
-                                            <h:outputText value="Id: " />
+                                            <h:outputText value="Código: " />
                                             <p:inputText style="width: 75px;" id="id" value="#{cliforBean.cliFor.id}" />
                                         </h:panelGroup>
 
@@ -59,18 +59,18 @@
                                             <p:inputText rendered="#{checkbox.value}" style="width: 200px;" id="cpf" value="#{cliforBean.cliFor.cpf}" />
                                         </h:panelGroup>
 
+                                        <h:panelGroup id="nome1">
+                                            <h:outputText value="Nome: " />
+                                        </h:panelGroup>
+                                        <h:panelGroup id="nome2">
+                                            <p:inputText style="width: 450px;" id="nome" value="#{cliforBean.cliFor.nome}" />
+                                        </h:panelGroup>
+
                                         <h:panelGroup id="nomeFant1">
                                             <h:outputText rendered="#{!checkbox.value}" value="Nome Fantasia: " />
                                         </h:panelGroup>
                                         <h:panelGroup id="nomeFant2">
                                             <p:inputText rendered="#{!checkbox.value}" style="width: 450px;" id="nomefantasia" value="#{cliforBean.cliFor.nomefantasia}" />
-                                        </h:panelGroup>
-
-                                        <h:panelGroup id="nome1">
-                                            <h:outputText rendered="#{checkbox.value}" value="Nome: " />
-                                        </h:panelGroup>
-                                        <h:panelGroup id="nome2">
-                                            <p:inputText rendered="#{checkbox.value}" style="width: 450px;" id="nome" value="#{cliforBean.cliFor.nome}" />
                                         </h:panelGroup>
 
                                         <h:outputText value="Email: " />
@@ -157,11 +157,11 @@
                         <p:column headerText="CPF" style="text-align: center; width: 15%;">
                             <h:outputText value="#{item.cpf}" />
                         </p:column>
-                        <p:column headerText="Nome" style="text-align: center; width: 25%;">
-                            <h:outputText value="#{item.nome}" />
-                        </p:column>
                         <p:column headerText="Nome Fant." style="text-align: center; width: 25%;">
                             <h:outputText value="#{item.nomefantasia}" />
+                        </p:column>
+                        <p:column headerText="Nome" style="text-align: center; width: 25%;">
+                            <h:outputText value="#{item.nome}" />
                         </p:column>
                         <p:column headerText="Tipo Pessoa" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.tipopessoa}" />
