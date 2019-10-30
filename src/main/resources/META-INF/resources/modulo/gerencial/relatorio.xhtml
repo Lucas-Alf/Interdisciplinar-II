@@ -17,7 +17,7 @@
                 <h:form>
                     <h:commandLink class="btn btn-primary btn-sm" value="Imprimir"
                         action="#{relatorioBean.AbreImpressao(item.id)}">
-                        <f:ajax execute="@form" render="@form" />
+                        <f:ajax disabled="true" />
                         <i class="far fas fa-print crud-btn"></i>
                     </h:commandLink>
                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
