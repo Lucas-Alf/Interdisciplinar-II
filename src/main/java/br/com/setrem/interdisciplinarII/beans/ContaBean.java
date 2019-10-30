@@ -75,6 +75,10 @@ public class ContaBean implements Serializable {
         } else {
             contaRepository.deleteById(id);
             this.AtualizarTable();
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
         }
 
     }
@@ -94,6 +98,10 @@ public class ContaBean implements Serializable {
         contaRepository.save(conta);
         this.AtualizarTable(); 
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public void Pesquisar(String nome) {

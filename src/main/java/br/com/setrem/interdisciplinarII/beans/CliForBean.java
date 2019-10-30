@@ -109,6 +109,10 @@ public class CliForBean implements Serializable {
         } else {
             cliforRepository.deleteById(id);
             this.AtualizarTable();
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro deletado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
         }
 
     }
@@ -128,6 +132,10 @@ public class CliForBean implements Serializable {
         cliforRepository.save(cliFor);
         this.AtualizarTable(); 
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, fm);
     }
 
     public void Pesquisar(String nome) {
