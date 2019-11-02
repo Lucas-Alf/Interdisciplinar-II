@@ -103,15 +103,9 @@ public class RelatorioBean implements Serializable {
         } else {
             this.listaFiltroRelatorio = filtroRelatorioRepository.listar(relatorioId);
             if (listaFiltroRelatorio.size() == 0) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
-                        "Nenhum filtro encontrado para o relatório.");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
                 this.listaFiltroRelatorioSelecionados = new ArrayList<FiltroRelatorio>();
-                ImprimirRelatorio(relatorioId);
-            } else {
-                PrimeFaces.current().executeScript("$('#impressaoModal').modal('show');");
             }
+            PrimeFaces.current().executeScript("$('#impressaoModal').modal('show');");
         }
     }
 

@@ -140,8 +140,7 @@
                                 <div class="modal-footer">
                                     <p:growl id="growlImpressao" showDetail="true" />
                                     <h:commandLink class="btn btn-primary btn-sm" value="Imprimir"
-                                        action="#{solicitacaoRelatorioBean.Salvar()}">
-                                        <f:ajax execute="@form" render="@form" />
+                                        actionListener="#{relatorioBean.ImprimirRelatorio(item.id)}" target="_blank">
                                         <i class="fas far fa-print crud-btn"></i>
                                     </h:commandLink>
                                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
