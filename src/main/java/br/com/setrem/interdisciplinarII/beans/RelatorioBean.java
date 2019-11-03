@@ -5,12 +5,12 @@
  */
 package br.com.setrem.interdisciplinarII.beans;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +35,7 @@ import br.com.setrem.interdisciplinarII.model.Relatorio;
 import br.com.setrem.interdisciplinarII.repository.FiltroRelatorioRepository;
 import br.com.setrem.interdisciplinarII.repository.RelatorioRepository;
 import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -57,7 +57,6 @@ public class RelatorioBean implements Serializable {
     private List<Relatorio> listaRelatorio = new ArrayList<Relatorio>();
     private List<FiltroRelatorio> listaFiltroRelatorio = new ArrayList<FiltroRelatorio>();
     private List<FiltroRelatorio> listaFiltroRelatorioSelecionados = new ArrayList<FiltroRelatorio>();
-    private Connection conexao = null;
 
     public String getDescricaoBusca() {
         return descricaoBusca;
@@ -78,7 +77,7 @@ public class RelatorioBean implements Serializable {
     public RelatorioBean() {
     }
 
-    public void Lista() {
+    public void lista() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.listaRelatorio = relatorioRepository.Lista(this.descricaoBusca, empresa.getId());
     }
@@ -99,7 +98,7 @@ public class RelatorioBean implements Serializable {
         this.listaFiltroRelatorioSelecionados = listaFiltroRelatorioSelecionados;
     }
 
-    public void AbreImpressao(int relatorioId) {
+    public void abreImpressao(int relatorioId) {
         if (relatorioId == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
                     "Selecione um relatório para imprimir.");
@@ -114,24 +113,25 @@ public class RelatorioBean implements Serializable {
         }
     }
 
-    private void AbreConexao() {
+    private Connection abreConexao() {
         try {
             String url = "jdbc:postgresql://ec2-50-19-95-77.compute-1.amazonaws.com:5432/d43v5g6nfkagp";
             String usuario = "pnbqtudcpohwgn";
             String senha = "c3265949766568e312fdc45e956de4aa8eec60121034cf0871821674bce06027";
-            this.conexao = DriverManager.getConnection(url, usuario, senha);
+            return DriverManager.getConnection(url, usuario, senha);
         } catch (Exception e) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
                     "Não foi possível abrir uma conexão com o banco de dados!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
             System.err.println(e.getMessage());
+            return null;
         }
     }
 
-    private void FechaConexao() {
+    private void fechaConexao(Connection conexao) {
         try {
-            this.conexao.close();
+            conexao.close();
         } catch (Exception e) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
                     "Não foi possível fechar a conexão com o banco de dados!");
@@ -141,16 +141,52 @@ public class RelatorioBean implements Serializable {
         }
     }
 
-    public JasperPrint exportPdfFile(Relatorio relatorio) {
+    private String gerarConsulta(Relatorio relatorio, List<FiltroRelatorio> filtrosList) {
+        String sql = relatorio.getSqlquery();
+        FiltroRelatorio[] filtros = filtrosList.toArray(new FiltroRelatorio[filtrosList.size()]);
+        if (filtros.length > 0) {
+            sql += " WHERE ";
+            for (int i = 0; i < filtros.length; i++) {
+                if (i == 0) {
+                    sql += filtros[i].getSqlwhere();
+                } else {
+                    sql += (" AND " + filtros[i].getSqlwhere());
+                }
+            }
+        }
+        return sql;
+    }
+
+    private JRResultSetDataSource gerarDataSource(String consulta) {
+        Connection conexao = abreConexao();
         try {
-            AbreConexao();
-            Resource resource = resourceLoader.getResource("classpath:/META-INF/resources/reports/"+relatorio.getNome()+".jrxml");
+            PreparedStatement statement = conexao.prepareStatement(consulta);
+            ResultSet result = statement.executeQuery();
+            return new JRResultSetDataSource(result);
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+                    "Não foi possível gerar o ResultSet para o relatório!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            System.err.println(e.getMessage());
+            return null;
+        } finally {
+            fechaConexao(conexao);
+        }
+    }
+
+    private JasperPrint exportPdfFile(Relatorio relatorio) {
+        try {
+            Resource resource = resourceLoader
+                    .getResource("classpath:/META-INF/resources/reports/" + relatorio.getNome() + ".jrxml");
             URI uri = resource.getURI();
             String path = uri.getPath();
             JasperReport jasperReport = JasperCompileManager.compileReport(path);
             Map<String, Object> parameters = new HashMap<String, Object>();
-            // JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, this.conexao);
-            JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            // JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters,
+            // this.conexao);
+            JRResultSetDataSource resultSet = gerarDataSource(gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
+            JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, resultSet);
             return print;
         } catch (Exception e) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
@@ -159,12 +195,10 @@ public class RelatorioBean implements Serializable {
             context.addMessage(null, fm);
             System.err.println(e.getMessage());
             return null;
-        } finally {
-            FechaConexao();
         }
     }
 
-    public void ImprimirRelatorio(int relatorioId) {
+    public void imprimirRelatorio(int relatorioId) {
         Optional<Relatorio> relatorio = relatorioRepository.findById(relatorioId);
         if (relatorio.isPresent()) {
             try {

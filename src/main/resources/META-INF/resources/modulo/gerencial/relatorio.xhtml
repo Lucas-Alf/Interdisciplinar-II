@@ -16,7 +16,7 @@
                 <h3 style="margin-top: 10px;"><b>Relatórios Gerenciais</b></h3>
                 <h:form>
                     <h:commandLink class="btn btn-primary btn-sm" value="Imprimir"
-                        action="#{relatorioBean.AbreImpressao(item.id)}">
+                        action="#{relatorioBean.abreImpressao(item.id)}">
                         <f:ajax disabled="true" />
                         <i class="far fas fa-print crud-btn"></i>
                     </h:commandLink>
@@ -25,12 +25,12 @@
 
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
-                        <p:remoteCommand name="executaBusca" actionListener="#{relatorioBean.Lista()}" />
+                        <p:remoteCommand name="executaBusca" actionListener="#{relatorioBean.lista()}" />
                         <p:inputText style="width: 250px;" id="pesquisa" value="#{relatorioBean.descricaoBusca}"
                             onkeypress="if (event.keyCode == 13) { executaBusca(); return false; }" />
                         <h:commandLink id="botaoPesquisar"
                             style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;"
-                            class="btn btn-info btn-sm" value="" action="#{relatorioBean.Lista()}">
+                            class="btn btn-info btn-sm" value="" action="#{relatorioBean.lista()}">
                             <f:ajax execute="@form" render="@form" />
                             <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                         </h:commandLink><br />
@@ -140,7 +140,7 @@
                                 <div class="modal-footer">
                                     <p:growl id="growlImpressao" showDetail="true" />
                                     <h:commandLink class="btn btn-primary btn-sm" value="Imprimir"
-                                        actionListener="#{relatorioBean.ImprimirRelatorio(item.id)}" target="_blank">
+                                        actionListener="#{relatorioBean.imprimirRelatorio(item.id)}" target="_blank">
                                         <i class="fas far fa-print crud-btn"></i>
                                     </h:commandLink>
                                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
@@ -156,7 +156,7 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
-    <f:viewAction action="#{relatorioBean.Lista()}" />
+    <f:viewAction action="#{relatorioBean.lista()}" />
 </f:metadata>
 
 </html>
