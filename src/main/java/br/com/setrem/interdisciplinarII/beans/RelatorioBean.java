@@ -6,10 +6,11 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,19 +26,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.FiltroRelatorio;
 import br.com.setrem.interdisciplinarII.model.Relatorio;
 import br.com.setrem.interdisciplinarII.repository.FiltroRelatorioRepository;
 import br.com.setrem.interdisciplinarII.repository.RelatorioRepository;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperRunManager;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import net.sf.jasperreports.engine.JasperReport;
 
 @Named(value = "relatorioBean")
 @SessionScoped
@@ -47,6 +50,8 @@ public class RelatorioBean implements Serializable {
     private RelatorioRepository relatorioRepository;
     @Autowired
     private FiltroRelatorioRepository filtroRelatorioRepository;
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     private String descricaoBusca = "";
     private List<Relatorio> listaRelatorio = new ArrayList<Relatorio>();
@@ -109,56 +114,76 @@ public class RelatorioBean implements Serializable {
         }
     }
 
+    private void AbreConexao() {
+        try {
+            String url = "jdbc:postgresql://ec2-50-19-95-77.compute-1.amazonaws.com:5432/d43v5g6nfkagp";
+            String usuario = "pnbqtudcpohwgn";
+            String senha = "c3265949766568e312fdc45e956de4aa8eec60121034cf0871821674bce06027";
+            this.conexao = DriverManager.getConnection(url, usuario, senha);
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+                    "Não foi possível abrir uma conexão com o banco de dados!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void FechaConexao() {
+        try {
+            this.conexao.close();
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+                    "Não foi possível fechar a conexão com o banco de dados!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public JasperPrint exportPdfFile(Relatorio relatorio) {
+        try {
+            AbreConexao();
+            Resource resource = resourceLoader.getResource("classpath:/META-INF/resources/reports/"+relatorio.getNome()+".jrxml");
+            URI uri = resource.getURI();
+            String path = uri.getPath();
+            JasperReport jasperReport = JasperCompileManager.compileReport(path);
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            // JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, this.conexao);
+            JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            return print;
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+                    "Ocorreu um erro ao imprimir o relatório!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            System.err.println(e.getMessage());
+            return null;
+        } finally {
+            FechaConexao();
+        }
+    }
+
     public void ImprimirRelatorio(int relatorioId) {
         Optional<Relatorio> relatorio = relatorioRepository.findById(relatorioId);
         if (relatorio.isPresent()) {
-
-            // Abre conexão com o banco
-            try {
-                String url = "jdbc:postgresql://ec2-50-19-95-77.compute-1.amazonaws.com:5432/d43v5g6nfkagp";
-                String usuario = "pnbqtudcpohwgn";
-                String senha = "c3265949766568e312fdc45e956de4aa8eec60121034cf0871821674bce06027";
-                this.conexao = DriverManager.getConnection(url, usuario, senha);
-            } catch (Exception e) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-                        "Não foi possível abrir uma conexão com o banco de dados!");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
-                System.err.println(e.getMessage());
-            }
-
-            // JASPER
             try {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-                InputStream reportStream = facesContext.getExternalContext()
-                        .getResourceAsStream("/reports/" + relatorio.get().getNome() + ".jasper");
                 ServletOutputStream outputStream = response.getOutputStream();
-                Map<String, Object> parametros = new HashMap<String, Object>();
-                JasperRunManager.runReportToPdfStream(reportStream, outputStream, parametros, this.conexao);
                 response.setContentType("application/pdf");
-                facesContext.responseComplete();
-                outputStream.flush();
-                outputStream.close();
-                facesContext.renderResponse();
-
+                response.setHeader("Content-Disposition", "attachment; filename=" + relatorio.get().getNome() + ".pdf");
+                JasperPrint jasperPrint = exportPdfFile(relatorio.get());
+                if (jasperPrint == null) {
+                    throw new Exception("Erro ao exportar o relatório! (jasperPrint is null)");
+                }
+                JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
             } catch (Exception e) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
                         "Ocorreu um erro ao imprimir o relatório!");
                 FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null, fm);
                 System.err.println(e.getMessage());
-            } finally {
-                try {
-                    // Fecha a conexão com o banco
-                    this.conexao.close();
-                } catch (Exception e) {
-                    FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-                            "Não foi possível fechar a conexão com o banco de dados!");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage(null, fm);
-                    System.err.println(e.getMessage());
-                }
             }
         } else {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Relatório não encontrado!");
