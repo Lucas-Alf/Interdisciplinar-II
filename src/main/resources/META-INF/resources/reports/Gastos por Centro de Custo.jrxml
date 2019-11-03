@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="abacoTeste" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
+	<parameter name="REPORTS_DIR" class="java.lang.String"/>
+	<parameter name="EMPRESA_NOME" class="java.lang.String"/>
+	<parameter name="RELATORIO_NOME" class="java.lang.String"/>
+	<parameter name="EMPRESA_CNPJ" class="java.lang.String"/>
+	<parameter name="EMPRESA_ID" class="java.lang.String"/>
+	<parameter name="EMPRESA_CELULAR" class="java.lang.String"/>
+	<parameter name="EMPRESA_EMAIL" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="net.sf.jasperreports.sql.field.column.name" value="nome"/>
+	</field>
+	<field name="totalCentroCusto" class="java.lang.Double">
+		<property name="net.sf.jasperreports.sql.field.column.name" value="totalCentroCusto"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="18" width="50" height="18" uuid="db21b1b6-c56e-4114-8371-c6b6ba52c300"/>
+				<text><![CDATA[Relatório:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="11" width="170" height="67" uuid="1b4d8e1c-eef6-48fb-a664-dd60eef41b7b"/>
+				<imageExpression class="java.lang.String">
+      				<![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]>
+				</imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="180" y="36" width="50" height="15" uuid="43e2d87c-cabc-4757-a411-8a086e130db8"/>
+				<text><![CDATA[Empresa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="54" width="70" height="20" uuid="c0fe0318-58e2-491d-a423-7ff0d4f81308"/>
+				<text><![CDATA[Data emissão:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="250" y="54" width="100" height="20" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="5" y="83" width="544" height="1" uuid="ae5aafeb-e112-4fc3-8c99-fd585f334f8a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="226" y="36" width="319" height="15" uuid="d64cb109-a15e-484f-9f23-1778d39cea9f"/>
+				<textFieldExpression><![CDATA[$P{EMPRESA_NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="18" width="314" height="18" uuid="e36f35ed-56ee-4d67-8615-8a512c642428"/>
+				<textFieldExpression><![CDATA[$P{RELATORIO_NOME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="246" splitType="Stretch">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="5" y="0" width="544" height="170" uuid="4daad025-e80d-49f3-8739-a2c65d7b98c2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[0]]></categoryExpression>
+						<valueExpression><![CDATA[$F{totalCentroCusto}]]></valueExpression>
+						<labelExpression><![CDATA[$F{nome}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

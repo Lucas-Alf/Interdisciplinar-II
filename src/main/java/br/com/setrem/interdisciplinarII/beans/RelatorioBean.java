@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -143,6 +145,8 @@ public class RelatorioBean implements Serializable {
 
     private String gerarConsulta(Relatorio relatorio, List<FiltroRelatorio> filtrosList) {
         String sql = relatorio.getSqlquery();
+        String gropBy = sql;// Implementar groupby
+        String orderBy = sql; // Implementar orderby
         FiltroRelatorio[] filtros = filtrosList.toArray(new FiltroRelatorio[filtrosList.size()]);
         if (filtros.length > 0) {
             sql += " WHERE ";
@@ -182,10 +186,23 @@ public class RelatorioBean implements Serializable {
             URI uri = resource.getURI();
             String path = uri.getPath();
             JasperReport jasperReport = JasperCompileManager.compileReport(path);
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                    .get("empresa");
+            final String regex = "(.+\\/META-INF\\/resources\\/reports\\/).+";
+            final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+            final Matcher matcher = pattern.matcher(path);
+            final String classpath = matcher.replaceAll("$1");
+
             Map<String, Object> parameters = new HashMap<String, Object>();
-            // JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters,
-            // this.conexao);
-            JRResultSetDataSource resultSet = gerarDataSource(gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
+            parameters.put("REPORTS_DIR", classpath);
+            parameters.put("EMPRESA_NOME", empresa.getNome());
+            parameters.put("EMPRESA_CNPJ", empresa.getCnpj());
+            parameters.put("EMPRESA_ID", empresa.getId());
+            parameters.put("EMPRESA_CELULAR", empresa.getCelular());
+            parameters.put("EMPRESA_EMAIL", empresa.getEmail());
+            parameters.put("RELATORIO_NOME", relatorio.getNome());
+            JRResultSetDataSource resultSet = gerarDataSource(
+                    gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
             JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, resultSet);
             return print;
         } catch (Exception e) {
