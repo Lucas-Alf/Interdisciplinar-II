@@ -45,24 +45,32 @@ public class LancamentoContabil implements Serializable {
     @NotNull
     @Column(name = "valor")
     private BigDecimal valor;
+
     @Basic(optional = false)
     @NotNull
-    @Column(name = "data")
+    @Column(name = "datahora")
     @Temporal(TemporalType.DATE)
-    private Date data;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
+    private Date datahora;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
     @Column(name = "historico")
     private String historico;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "tipo")
+    private String tipo;
+
+    @JoinColumn(name = "idconta", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Conta IdConta;
+
     @JoinColumn(name = "centrocustoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CentroCusto CentroCustoid;
+    
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
@@ -74,12 +82,13 @@ public class LancamentoContabil implements Serializable {
         this.id = id;
     }
 
-    public LancamentoContabil(Integer id, BigDecimal valor, Date data, Date hora, String historico) {
+    public LancamentoContabil(Integer id, BigDecimal valor, Date datahora, String historico, String tipo, Conta conta) {
         this.id = id;
         this.valor = valor;
-        this.data = data;
-        this.hora = hora;
+        this.datahora = datahora;
         this.historico = historico;
+        this.tipo = tipo;
+        this.IdConta = conta;
     }
 
     public Integer getId() {
@@ -98,20 +107,28 @@ public class LancamentoContabil implements Serializable {
         this.valor = valor;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDatahora() {
+        return datahora;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDatahora(Date datahora) {
+        this.datahora = datahora;
     }
 
-    public Date getHora() {
-        return hora;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setHora(Date hora) {
-        this.hora = hora;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Conta getIdConta() {
+        return IdConta;
+    }
+
+    public void setIdConta(Conta idConta) {
+        IdConta = idConta;
     }
 
     public String getHistorico() {
@@ -162,5 +179,6 @@ public class LancamentoContabil implements Serializable {
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.LancamentoContabil[ id=" + id + " ]";
     }
+
 
 }
