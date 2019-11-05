@@ -40,6 +40,7 @@ public class ContaBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
         } if(!this.conta.isSintetica() && this.conta.getContapai() == null){
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Quando a conta for analítica, é obrigatório informar o Pai!");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -108,8 +109,8 @@ public class ContaBean implements Serializable {
          this.contas = contaRepository.pesquisar(nome);
     }
 
-    public void PesquisarAnalitica() {
-        this.contasSint = contaRepository.pesquisarAnalit();
+    public void PesquisarSintetica() {
+        this.contasSint = contaRepository.pesquisarSint();
     }
 
     public void AbrirModal() {

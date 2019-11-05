@@ -42,24 +42,24 @@ public class LancamentoContabil implements Serializable {
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "valor")
     private BigDecimal valor;
 
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "datahora")
     @Temporal(TemporalType.DATE)
     private Date datahora;
 
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 150)
+    //@NotNull
+    //@Size(min = 1, max = 150)
     @Column(name = "historico")
     private String historico;
 
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "tipo")
     private String tipo;
 

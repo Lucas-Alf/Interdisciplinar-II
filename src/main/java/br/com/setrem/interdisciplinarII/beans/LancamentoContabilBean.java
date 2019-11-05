@@ -1,6 +1,9 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -11,6 +14,8 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Conta;
 import br.com.setrem.interdisciplinarII.model.LancamentoContabil;
 import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 
@@ -22,38 +27,74 @@ public class LancamentoContabilBean implements Serializable {
     private LancamentoContabilRepository lancamentoContabilRepository;
     private LancamentoContabil lancamentoContabil = new LancamentoContabil();
 
+    private List<Conta> contasAnalit;
+
     private List<LancamentoContabil> lancamentoContabils;
+    private String datahora;
 
     public LancamentoContabilBean() {
     }
 
-    public void Insert() {
-        // if (this.conta.getDescricao().equals("")) {
-        // FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
-        // "Informe uma descriçao!");
-        // FacesContext context = FacesContext.getCurrentInstance();
-        // context.addMessage(null, fm);
-        // PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        // } if(!this.conta.isSintetica() && this.conta.getContapai() == null){
-        // FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
-        // "Quando a conta for analítica, é obrigatório informar o Pai!");
-        // FacesContext context = FacesContext.getCurrentInstance();
-        // context.addMessage(null, fm);
-        // PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        // PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
-        // } else {
-        // CliFor empresa = (CliFor)
-        // FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        // this.conta.setCliforid(empresa);
-        // contaRepository.save(this.conta);
-        // this.AtualizarTable();
-        // PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+    public void Insert() throws ParseException {
+        if(this.lancamentoContabil.getHistorico().equals("")){
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Histórico!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        } if(this.lancamentoContabil.getValor().equals("")){
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Valor!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        } if(getDatahora().equals("")){
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Data!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        } if(this.lancamentoContabil.getTipo().equals("")){
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Tipo!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        } if(this.lancamentoContabil.getCentrocustoid().equals("")){
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Centro de Custo!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        } if(this.lancamentoContabil.getIdconta().equals("")){
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Conta!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        } else {
+            CliFor empresa = (CliFor)
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            this.lancamentoContabil.setCliforid(empresa);
 
-        // FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
-        // "Salvo com sucesso.");
-        // FacesContext context = FacesContext.getCurrentInstance();
-        // context.addMessage(null, fm);
-        // }
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            datahora = format.format( new Date()  );  
+            Date   date       = format.parse ( datahora);
+            this.lancamentoContabil.setDatahora(date);
+
+            lancamentoContabilRepository.save(this.lancamentoContabil);
+            this.AtualizarTable();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+    
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
+            "Salvo com sucesso.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        }
+    }
+
+    public void PesquisarAnalitica() {
+        this.contasAnalit = lancamentoContabilRepository.pesquisarAnalit();
     }
 
     public List<LancamentoContabil> ListarTable() {
@@ -129,6 +170,22 @@ public class LancamentoContabilBean implements Serializable {
 
     public void setLancamentoContabils(List<LancamentoContabil> lancamentoContabils) {
         this.lancamentoContabils = lancamentoContabils;
+    }
+
+    public List<Conta> getContasAnalit() {
+        return contasAnalit;
+    }
+
+    public void setContasAnalit(List<Conta> contasAnalit) {
+        this.contasAnalit = contasAnalit;
+    }
+
+    public String getDatahora() {
+        return datahora;
+    }
+
+    public void setDatahora(String datahora) {
+        this.datahora = datahora;
     }
 
     

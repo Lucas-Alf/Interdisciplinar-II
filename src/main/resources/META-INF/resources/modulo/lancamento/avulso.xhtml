@@ -22,7 +22,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 400px;"
+                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 480px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Avulso de Lançamento Contábil</h4>
@@ -34,6 +34,39 @@
                                     <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
 
                                         <h:inputHidden  id="id" value="#{lancamentoContabilBean.lancamentoContabil.id}" />
+                                        <h:inputHidden  id="CliForid" value="#{lancamentoContabilBean.lancamentoContabil.cliforid}" converter = "CliForConverter"/>
+
+                                        <h:outputText value="Histórico: " />
+                                        <p:inputText style="width: 240px;" id="histotico" value="#{lancamentoContabilBean.lancamentoContabil.historico}" />
+
+                                        <h:outputText value="Valor: " />
+                                        <p:inputText style="width: 240px;" id="valor" value="#{lancamentoContabilBean.lancamentoContabil.valor}" />
+
+                                        <h:outputText value="Data\Hora: " />
+                                        <p:inputText style="width: 240px;" id="datahora" value="#{lancamentoContabilBean.datahora}" />
+
+                                        <h:outputText value="Tipo: " />
+                                        <p:selectOneMenu id="tipo" value="#{lancamentoContabilBean.lancamentoContabil.tipo}"
+                                        style="width: 85%;" appendTo="@this">
+                                            <f:selectItem itemValue="" itemLabel="Selecione um Tipo" />
+                                            <f:selectItem itemValue="C" itemLabel="Crédito" />
+                                            <f:selectItem itemValue="D" itemLabel="Débito" />
+                                        </p:selectOneMenu>
+
+                                        <h:outputText value="Centro de Custo: "  />
+                                        <p:selectOneMenu filter="true" filterMatchMode="contains" id="centrocusto" binding="#{centrocusto}" style="width: 85%; margin-top: 10px;"
+                                                converter="CentroCustoConverter" appendTo="@this" value="#{lancamentoContabilBean.lancamentoContabil.centrocustoid}">    
+                                            <f:selectItem itemValue="" itemLabel="Selecione um Centro de Custo"/>
+                                            <f:selectItems value="#{centroCustoBean.centrosCustos}" var="centrocusto" itemValue="#{centrocusto}" itemLabel="#{centrocusto.nome}"/>
+                                        </p:selectOneMenu>
+
+                                        <h:outputText value="Conta: "  />
+                                        <p:selectOneMenu filter="true" filterMatchMode="contains" id="conta" binding="#{conta}" style="width: 85%; margin-top: 10px;"
+                                                converter="ContaConverter" appendTo="@this" value="#{lancamentoContabilBean.lancamentoContabil.idconta}">    
+                                            <f:selectItem itemValue="" itemLabel="Selecione uma Conta"/>
+                                            <f:selectItems value="#{lancamentoContabilBean.contasAnalit}" var="conta" itemValue="#{conta}" itemLabel="#{conta.descricao}"/>
+                                        </p:selectOneMenu>
+
 
                                     </h:panelGrid>  
                                 </div>
@@ -112,6 +145,8 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+    <f:viewAction action="#{lancamentoContabilBean.PesquisarAnalitica()}" />
+    <f:viewAction action="#{lancamentoContabilBean.AtualizarTable()}" />
 </f:metadata>
 
 </html>
