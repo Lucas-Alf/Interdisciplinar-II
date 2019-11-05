@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Integer> {
 
-    @Query("SELECT c FROM compra c WHERE c.nome LIKE %?1%")
-    public List<Movimentacao> pesquisar(String nome);
+   // @Query("SELECT c FROM movimentacao c WHERE c.nome LIKE %?1%")
+   // public List<Movimentacao> pesquisar(String nome);
    
 }
