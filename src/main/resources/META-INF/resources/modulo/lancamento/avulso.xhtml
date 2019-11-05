@@ -15,55 +15,31 @@
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
             <div class="container">
-                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro Conta</h3>
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro Avulso de Lançamento Contábil</h3>
                 <h:form>
 
-                    <div class="modal fade" id="CadastrarConta" widgetVar="CadastrarConta"
+                    <div class="modal fade" id="CadastrarLancamento" widgetVar="CadastrarLancamento"
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
                             <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 400px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Conta</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Avulso de Lançamento Contábil</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                                                            
+                                <div class="modal-body">                                   
                                     <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
 
-                                        <h:inputHidden  id="id" value="#{contaBean.conta.id}" />
-        
-                                        <h:inputHidden  id="CliForid" value="#{contaBean.conta.cliforid}" converter = "CliForConverter"/>
+                                        <h:inputHidden  id="id" value="#{lancamentoContabilBean.lancamentoContabil.id}" />
 
-                                        <h:outputText value="Conta Sintética? " />
-                                        <h:selectBooleanCheckbox id="checkbox" value="#{contaBean.conta.sintetica}" binding="#{checkbox}">
-                                            <!--<p:ajax update="panel panel2"/>-->
-                                        </h:selectBooleanCheckbox>
-
-                                        <h:outputText value="Ordem: " />
-                                        <p:inputText style="width: 540px;" id="ordem" value="#{contaBean.conta.ordem}" />
-                                                    
-                                        <h:outputText value="Descrição: " />
-                                        <p:inputText style="width: 540px;" id="descricao" value="#{contaBean.conta.descricao}" />
-
-                                        <h:panelGroup id="panel">
-                                            <h:outputText id="txtAnalt"  value="Pai: "  />
-                                        </h:panelGroup>
-                                        <h:panelGroup id="panel2">
-                                            <p:selectOneMenu filter="true" filterMatchMode="contains" id="contapai" binding="#{contapai}" style="width: 85%; margin-top: 10px;"
-                                                converter="ContaConverter" appendTo="@this" value="#{contaBean.conta.contapai}">    
-                                                <f:selectItem itemValue="null" itemLabel="Selecione uma conta"/>
-                                                <f:selectItems value="#{contaBean.contasSint}" var="contapai" itemValue="#{contapai}" itemLabel="#{contapai.descricao}"/>
-                                            </p:selectOneMenu>
-                                        </h:panelGroup>
                                     </h:panelGrid>  
                                 </div>
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{contaBean.Insert()}">
+                                        action="#{lancamentoContabilBean.Insert()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
@@ -78,43 +54,54 @@
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 300px;" id="pesquisa" binding="#{pesquisa}"/>                              
                         <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value=""
-                        action="#{contaBean.Pesquisar(pesquisa.value)}">
+                        action="#{lancamentoContabilBean.Pesquisar(pesquisa.value)}">
                             <f:ajax execute="@form" render="@form" />
                             <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                         </h:commandLink><br />
                     </div>
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{contaBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{lancamentoContabilBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
-                        action="#{contaBean.AbreAlterar(item.id)}">
+                        action="#{lancamentoContabilBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                        action="#{contaBean.Remove(item.id)}">
+                        action="#{lancamentoContabilBean.Remove(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{contaBean.contas}" style="margin-top: 10px; height: 550px;"
+                        value="#{lancamentoContabilBean.lancamentoContabils}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
-                        <p:column headerText="Ordem" style="text-align: center; width: 10%;">
-                            <h:outputText value="#{item.ordem}" />
+                        <p:column headerText="Histórico" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.historico}" />
                         </p:column>
-                        <p:column headerText="Conta Pai" style="text-align: center; width: 10%;">
-                            <h:outputText value="#{item.contapai}" />
+                        <p:column headerText="Valor" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.valor}" />
                         </p:column>
-                        <p:column headerText="Descrição" style="width: 65%; text-align: left">
-                            <h:outputText value="#{item.descricao}" />
+                        <p:column headerText="Data/Hora" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.datahora}" />
                         </p:column>
+                        <p:column headerText="Tipo" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.tipo}" />
+                        </p:column>
+
+                        <p:column headerText="Centro de Custo" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.centrocustoid}" />
+                        </p:column>
+                        <p:column headerText="Conta" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.idconta}" />
+                        </p:column>
+                        
                     </p:dataTable>
 
                 </h:form>
@@ -125,8 +112,6 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
-    <f:viewAction action="#{contaBean.PesquisarAnalitica()}" />
-    <f:viewAction action="#{contaBean.AtualizarTable()}" />
 </f:metadata>
 
 </html>

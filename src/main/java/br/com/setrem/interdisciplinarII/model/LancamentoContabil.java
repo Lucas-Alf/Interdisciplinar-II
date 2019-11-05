@@ -65,15 +65,15 @@ public class LancamentoContabil implements Serializable {
 
     @JoinColumn(name = "idconta", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Conta IdConta;
+    private Conta idconta;
 
     @JoinColumn(name = "centrocustoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CentroCusto CentroCustoid;
+    private CentroCusto centrocustoid;
     
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CliFor CliForid;
+    private CliFor cliforid;
 
     public LancamentoContabil() {
     }
@@ -88,7 +88,7 @@ public class LancamentoContabil implements Serializable {
         this.datahora = datahora;
         this.historico = historico;
         this.tipo = tipo;
-        this.IdConta = conta;
+        this.idconta = conta;
     }
 
     public Integer getId() {
@@ -123,14 +123,6 @@ public class LancamentoContabil implements Serializable {
         this.tipo = tipo;
     }
 
-    public Conta getIdConta() {
-        return IdConta;
-    }
-
-    public void setIdConta(Conta idConta) {
-        IdConta = idConta;
-    }
-
     public String getHistorico() {
         return historico;
     }
@@ -139,20 +131,28 @@ public class LancamentoContabil implements Serializable {
         this.historico = historico;
     }
 
-    public CentroCusto getCentroCustoid() {
-        return CentroCustoid;
+    public CentroCusto getCentrocustoid() {
+        return centrocustoid;
     }
 
-    public void setCentroCustoid(CentroCusto CentroCustoid) {
-        this.CentroCustoid = CentroCustoid;
+    public void setCentrocustoid(CentroCusto centrocustoid) {
+        this.centrocustoid = centrocustoid;
     }
 
-    public CliFor getCliForid() {
-        return CliForid;
+    public Conta getIdconta() {
+        return idconta;
     }
 
-    public void setCliForid(CliFor CliForid) {
-        this.CliForid = CliForid;
+    public void setIdconta(Conta idconta) {
+        this.idconta = idconta;
+    }
+
+    public CliFor getCliforid() {
+        return cliforid;
+    }
+
+    public void setCliforid(CliFor cliforid) {
+        this.cliforid = cliforid;
     }
 
     @Override
@@ -179,6 +179,5 @@ public class LancamentoContabil implements Serializable {
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.LancamentoContabil[ id=" + id + " ]";
     }
-
 
 }

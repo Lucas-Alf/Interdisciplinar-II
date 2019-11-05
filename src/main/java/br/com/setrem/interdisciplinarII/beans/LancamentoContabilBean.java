@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.setrem.interdisciplinarII.model.LancamentoContabil;
 import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 
-@Named(value = "lancamentoContabil")
+@Named(value = "lancamentoContabilBean")
 @SessionScoped
 public class LancamentoContabilBean implements Serializable {
 
@@ -89,7 +89,7 @@ public class LancamentoContabilBean implements Serializable {
             context.addMessage(null, fm);
         } else {
             lancamentoContabil = lancamentoContabilRepository.getOne(id);
-            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+            PrimeFaces.current().executeScript("$('#CadastrarLancamento').modal('show');");
         }
     }
 
@@ -103,13 +103,34 @@ public class LancamentoContabilBean implements Serializable {
         context.addMessage(null, fm);
     }
 
-    public void Pesquisar(String nome) {
-        this.lancamentoContabils = lancamentoContabilRepository.pesquisar(nome);
+    public void Pesquisar(String historico) {
+        this.lancamentoContabils = lancamentoContabilRepository.pesquisar(historico);
     }
 
     public void AbrirModal() {
         this.lancamentoContabil = new LancamentoContabil();
-        PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        PrimeFaces.current().executeScript("$('#CadastrarLancamento').modal('show');");
     }
+
+    public LancamentoContabil getLancamentoContabil() {
+        return lancamentoContabil;
+    }
+
+    public void setLancamentoContabil(LancamentoContabil lancamentoContabil) {
+        this.lancamentoContabil = lancamentoContabil;
+    }
+
+    public List<LancamentoContabil> getLancamentoContabils() {
+        if (this.lancamentoContabils == null) {
+            this.lancamentoContabils = lancamentoContabilRepository.findAll();
+        }
+        return lancamentoContabils;
+    }
+
+    public void setLancamentoContabils(List<LancamentoContabil> lancamentoContabils) {
+        this.lancamentoContabils = lancamentoContabils;
+    }
+
+    
 
 }

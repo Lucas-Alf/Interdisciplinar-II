@@ -123,7 +123,7 @@ public class CentroCusto implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.setrem.interdisciplinarII.model.CentroCusto[ id=" + id + " ]";
+        return nome;
     }
 
     public CliFor getCliforid() {
