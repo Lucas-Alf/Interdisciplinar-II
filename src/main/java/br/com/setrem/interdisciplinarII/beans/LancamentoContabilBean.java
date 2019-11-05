@@ -77,7 +77,7 @@ public class LancamentoContabilBean implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.lancamentoContabil.setCliforid(empresa);
 
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
             datahora = format.format( new Date()  );  
             Date   date       = format.parse ( datahora);
             this.lancamentoContabil.setDatahora(date);
