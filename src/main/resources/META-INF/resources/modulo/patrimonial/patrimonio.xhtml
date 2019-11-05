@@ -21,36 +21,75 @@
     <title>Ábaco</title>
 </h:head>
 <h:body style="overflow: hidden; background-color:white; margin: 0px">
+
     <ui:composition template="/layout.xhtml">
         <ui:define name="content">
             <div class="container">
-                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Lançamento de Patrimônio</h3>
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro de Patrimônio</h3>
                 <h:form>
 
-                    <div class="modal fade" id="CadastrarPatrimonio" widgetVar="CadastrarPatrimonio" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal fade" id="CadastrarPatrimonio" widgetVar="CadastrarPatrimonio" tabindex="-1"
+                        role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 260px;"
+                            <div style="margin-top: 65%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 630px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Lançamento de Patrimônio</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro de Patrimônio</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body" >
+                                <div class="modal-body">
                                     <span class="ui-float-label">
                                         <h:inputHidden id="id" value="#{patrimonioBean.patrimonio.id}" />
-                                        <p:outputLabel for="button" value="Button:" />
-                                        <p:datePicker id="button" value="#{patrimonioBean.patrimonio.da}" showIcon="true" />
+                                        <p:outputLabel for="button" value="Data Aquisição: " style="margin-right: 50px;" />
+                                        <p:datePicker id="button" value="#{patrimonioBean.patrimonio.dataaquisicao}" showIcon="true" style="width: 50px; text-align: center;" /><br/><br/>
                                         
+                                        <h:outputText value="Produto: " style="width: 300px; margin-right: 35px;" />
+                                        <p:selectOneMenu id="produto" filter="true" filterMatchMode="contains" value="#{patrimonioBean.patrimonio.produtoid}" style="width: 520px;" converter="ProdutoConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione um Produto" />
+                                        <f:selectItems value="#{produtoBean.produtos}" var="produto"  itemValue="#{produto}" itemLabel="#{produto.nome}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Valor: " style="width: 20px; margin-right: 55px;" />
+                                        <p:inputNumber id="valor" value="#{patrimonioBean.patrimonio.valor}"></p:inputNumber><br/><br/>
+
+                                        <h:outputText value="Fornecedor: " style="width: 450px; margin-right: 12px;" />                                   
+                                        <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{patrimonioBean.patrimonio.fornecedorid}" style="width: 517px;" converter="CliForConverter" appendTo="@this">
+                                            <f:selectItem itemValue="null" itemLabel="Selecione um Fornecedor"/>
+                                            <f:selectItems value="#{cliforBean.listaFornecedores()}" var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}"/>
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Grupo Bem: " style="width: 460px; margin-right: 14px;" />
+                                        <p:selectOneMenu id="grupoBem" filter="true" filterMatchMode="contains" value="#{patrimonioBean.patrimonio.grupoBemid}" style="width: 516px;" converter="GrupoBemConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione um Gupo de Bem" />
+                                        <f:selectItems value="#{grupoBemBean.grupoBens}" var="grupoBem"  itemValue="#{grupoBem}" itemLabel="#{grupoBem.descricao}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Est. Conserv.: " style="margin-right: 4px;" />
+                                        <p:selectOneMenu id="estadoConservacao" filter="true" filterMatchMode="contains" value="#{patrimonioBean.patrimonio.estadoConservacaoid}" style="width: 515px;" converter="EstadoConservacaoConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione um Estado Conservação" />
+                                        <f:selectItems value="#{estadoConservacaoBean.estadoConservacoes}" var="estadoConservacao"  itemValue="#{estadoConservacao}" itemLabel="#{estadoConservacao.descricao}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Centro Custo: " style="width: 460px; margin-right: 5px;" />
+                                        <p:selectOneMenu id="centroCusto" filter="true" filterMatchMode="contains" value="#{patrimonioBean.patrimonio.centroCustoid}" style="width: 512px;" converter="CentroCustoConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione um Centro Custo" />
+                                        <f:selectItems value="#{centroCustoBean.centrosCustos}" var="centroCusto"  itemValue="#{centroCusto}" itemLabel="#{centroCusto.nome}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Observação: " style="margin-right: 14px;" />
+                                        <p:inputText style="width: 512px;" id="observacao" value="#{patrimonioBean.patrimonio.observacao}" />
                                     </span>
                                 </div>
                                 <div class="modal-footer">
-                                    <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{patrimonioBean.Salvar()}">
+                                    <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
+                                        action="#{patrimonioBean.Salvar()}">
                                         <f:ajax execute="@form" render="@form" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
-                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
+                                            class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +98,9 @@
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
-                        <h:commandLink id="botaoPesquisar" style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;" class="btn btn-info btn-sm" value="" action="#{patrimonioBean.Pesquisar(pesquisa.value)}">
+                        <h:commandLink id="botaoPesquisar"
+                            style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;"
+                            class="btn btn-info btn-sm" value="" action="#{patrimonioBean.Pesquisar(pesquisa.value)}">
                             <f:ajax execute="@form" render="@form" />
                             <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
                         </h:commandLink><br />
@@ -70,25 +111,34 @@
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
-                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar" action="#{patrimonioBean.AbreAlterar(item.id)}">
+                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
+                        action="#{patrimonioBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
                     <p:growl id="messages" showDetail="true" closable="true" />
-                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#{patrimonioBean.Deletar(item.id)}">
+                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
+                        action="#{patrimonioBean.Deletar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="70%" id="tabela1" var="item"
-                        value="#{patrimonioBean.patrimonios}" style="margin-top: 10px; height: 550px;"
-                        rowKey="#{item.id}" selection="#{item}" selectionMode="single"
-                        emptyMessage="Não há registros na tabela.">
+                        value="#{patrimonioBean.patrimonios}" style="margin-top: 10px; height: 550px;" rowKey="#{item.id}"
+                        selection="#{item}" selectionMode="single" emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>
-
+                        <p:column headerText="Data" style="width: 10%; text-align: left">
+                            <h:outputText value="#{item.dataaquisicao}" />
+                        </p:column>
+                        <p:column headerText="Patrimônio" style="width: 30%; text-align: left">
+                            <h:outputText value="#{item.produtoid.nome}" />
+                        </p:column>
+                        <p:column headerText="Valor" style="width: 10%; text-align: left">
+                            <h:outputText value="#{item.valor}" />
+                        </p:column>
                     </p:dataTable>
 
                 </h:form>
@@ -99,6 +149,7 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{patrimonioBean.AtualizarTabela()}" />
+    <f:viewAction action="#{grupoBemBean.AtualizarTabela()}" />
 </f:metadata>
 
 </html>

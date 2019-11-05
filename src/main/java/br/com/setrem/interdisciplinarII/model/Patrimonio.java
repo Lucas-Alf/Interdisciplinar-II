@@ -156,22 +156,6 @@ public class Patrimonio implements Serializable {
         this.CliForid = CliForid;
     }
 
-    public EstadoConservacao getEstadoConservacaoid() {
-        return EstadoConservacaoid;
-    }
-
-    public void setEstadoConservacaoid(EstadoConservacao EstadoConservacaoid) {
-        this.EstadoConservacaoid = EstadoConservacaoid;
-    }
-
-    public GrupoBem getGrupoBemid() {
-        return GrupoBemid;
-    }
-
-    public void setGrupoBemid(GrupoBem GrupoBemid) {
-        this.GrupoBemid = GrupoBemid;
-    }
-
     public Produto getProdutoid() {
         return produtoid;
     }
@@ -203,6 +187,22 @@ public class Patrimonio implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.Patrimonio[ id=" + id + " ]";
+    }
+
+    public EstadoConservacao getEstadoConservacaoid() {
+        return EstadoConservacaoid;
+    }
+
+    public void setEstadoConservacaoid(EstadoConservacao estadoConservacaoid) {
+        EstadoConservacaoid = estadoConservacaoid;
+    }
+
+    public GrupoBem getGrupoBemid() {
+        return GrupoBemid;
+    }
+
+    public void setGrupoBemid(GrupoBem grupoBemid) {
+        GrupoBemid = grupoBemid;
     }
 
 }

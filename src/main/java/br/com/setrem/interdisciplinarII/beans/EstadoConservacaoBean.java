@@ -12,6 +12,7 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.EstadoConservacao;
+import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.repository.EstadoConservacaoRepository;
 
 @Named(value = "estadoConservacaoBean")
@@ -21,6 +22,7 @@ public class EstadoConservacaoBean implements Serializable {
     @Autowired
     private EstadoConservacaoRepository estadoConservacaoRepository;
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
+    private Patrimonio patrimonio = new Patrimonio();
 
     private int id;
     private String descricao;
@@ -61,7 +63,8 @@ public class EstadoConservacaoBean implements Serializable {
 
     public void Deletar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
@@ -131,4 +134,12 @@ public class EstadoConservacaoBean implements Serializable {
         this.estadoConservacoes = estadoConservacoes;
     }
 
+    public Patrimonio getPatrimonio() {
+        return patrimonio;
+    }
+
+    public void setPatrimonio(Patrimonio patrimonio) {
+        this.patrimonio = patrimonio;
+    }
+    
 }

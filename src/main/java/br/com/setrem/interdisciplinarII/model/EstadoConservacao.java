@@ -13,14 +13,26 @@ public class EstadoConservacao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String descricao;
 
-    public int getId() {
+    public EstadoConservacao() {
+    }
+
+    public EstadoConservacao(Integer id) {
+        this.id = id;
+    }
+
+    public EstadoConservacao(Integer id, String descricao) {
+        this.id = id;
+        this.descricao = descricao;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -30,6 +42,18 @@ public class EstadoConservacao implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "br.com.setrem.interdisciplinarII.model.EstadoConservacao[ id=" + id + " ]";
     }
 
 }
