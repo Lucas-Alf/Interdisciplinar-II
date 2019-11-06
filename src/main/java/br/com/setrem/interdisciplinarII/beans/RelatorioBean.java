@@ -36,7 +36,6 @@ import br.com.setrem.interdisciplinarII.model.FiltroRelatorio;
 import br.com.setrem.interdisciplinarII.model.Relatorio;
 import br.com.setrem.interdisciplinarII.repository.FiltroRelatorioRepository;
 import br.com.setrem.interdisciplinarII.repository.RelatorioRepository;
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;

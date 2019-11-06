@@ -23,25 +23,32 @@
 	<title>
 		<band height="93" splitType="Stretch">
 			<staticText>
-				<reportElement x="180" y="18" width="50" height="18" uuid="db21b1b6-c56e-4114-8371-c6b6ba52c300"/>
+				<reportElement x="181" y="21" width="47" height="13" uuid="db21b1b6-c56e-4114-8371-c6b6ba52c300"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Relatório:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="6" y="11" width="170" height="67" uuid="1b4d8e1c-eef6-48fb-a664-dd60eef41b7b"/>
-				<imageExpression class="java.lang.String">
-      				<![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]>
-				</imageExpression>
+				<reportElement x="15" y="16" width="156" height="59" uuid="1b4d8e1c-eef6-48fb-a664-dd60eef41b7b"/>
+				<imageExpression><![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="180" y="36" width="50" height="15" uuid="43e2d87c-cabc-4757-a411-8a086e130db8"/>
+				<reportElement x="181" y="39" width="46" height="15" uuid="43e2d87c-cabc-4757-a411-8a086e130db8"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Empresa:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="54" width="70" height="20" uuid="c0fe0318-58e2-491d-a423-7ff0d4f81308"/>
+				<reportElement x="181" y="57" width="70" height="14" uuid="c0fe0318-58e2-491d-a423-7ff0d4f81308"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Data emissão:]]></text>
 			</staticText>
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="250" y="54" width="100" height="20" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="251" y="57" width="100" height="14" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
@@ -50,11 +57,11 @@
 				</reportElement>
 			</line>
 			<textField>
-				<reportElement x="226" y="36" width="319" height="15" uuid="d64cb109-a15e-484f-9f23-1778d39cea9f"/>
+				<reportElement x="227" y="39" width="317" height="15" uuid="d64cb109-a15e-484f-9f23-1778d39cea9f"/>
 				<textFieldExpression><![CDATA[$P{EMPRESA_NOME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="230" y="18" width="314" height="18" uuid="e36f35ed-56ee-4d67-8615-8a512c642428"/>
+				<reportElement x="228" y="21" width="317" height="13" uuid="e36f35ed-56ee-4d67-8615-8a512c642428"/>
 				<textFieldExpression><![CDATA[$P{RELATORIO_NOME}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -69,15 +76,15 @@
 		<band height="246" splitType="Stretch">
 			<barChart>
 				<chart evaluationTime="Report">
-					<reportElement x="5" y="0" width="544" height="170" uuid="4daad025-e80d-49f3-8739-a2c65d7b98c2"/>
+					<reportElement x="5" y="0" width="544" height="170" uuid="1cfd0159-47a3-4b1f-8d73-4c8076a5ee5b"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-						<categoryExpression><![CDATA[0]]></categoryExpression>
+						<seriesExpression><![CDATA[$F{nome}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nome}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{totalCentroCusto}]]></valueExpression>
 						<labelExpression><![CDATA[$F{nome}]]></labelExpression>
 					</categorySeries>
