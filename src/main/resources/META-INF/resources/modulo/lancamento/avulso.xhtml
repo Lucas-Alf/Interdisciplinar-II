@@ -42,8 +42,8 @@
                                         <h:outputText value="Valor: " />
                                         <p:inputText style="width: 240px;" id="valor" value="#{lancamentoContabilBean.lancamentoContabil.valor}" />
 
-                                        <h:outputText value="Data\Hora: " />
-                                        <p:inputText style="width: 240px;" id="datahora" value="#{lancamentoContabilBean.datahora}" />
+                                        <p:outputLabel for="button" value="Data: " style="margin-right: 50px;" />
+                                        <p:datePicker id="button" value="#{lancamentoContabilBean.lancamentoContabil.datahora}" showIcon="true" style="width: 50px;" />
 
                                         <h:outputText value="Tipo: " />
                                         <p:selectOneMenu id="tipo" value="#{lancamentoContabilBean.lancamentoContabil.tipo}"

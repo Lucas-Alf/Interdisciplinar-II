@@ -30,7 +30,6 @@ public class LancamentoContabilBean implements Serializable {
     private List<Conta> contasAnalit;
 
     private List<LancamentoContabil> lancamentoContabils;
-    private String datahora;
 
     public LancamentoContabilBean() {
     }
@@ -48,7 +47,7 @@ public class LancamentoContabilBean implements Serializable {
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
-        } if(getDatahora().equals("")){
+        } if(this.lancamentoContabil.getDatahora().equals("")){
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Data!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
@@ -76,18 +75,12 @@ public class LancamentoContabilBean implements Serializable {
             CliFor empresa = (CliFor)
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.lancamentoContabil.setCliforid(empresa);
-
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-            datahora = format.format( new Date()  );  
-            Date   date       = format.parse ( datahora);
-            this.lancamentoContabil.setDatahora(date);
-
             lancamentoContabilRepository.save(this.lancamentoContabil);
             this.AtualizarTable();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-    
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
             "Salvo com sucesso.");
+
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         }
@@ -179,15 +172,5 @@ public class LancamentoContabilBean implements Serializable {
     public void setContasAnalit(List<Conta> contasAnalit) {
         this.contasAnalit = contasAnalit;
     }
-
-    public String getDatahora() {
-        return datahora;
-    }
-
-    public void setDatahora(String datahora) {
-        this.datahora = datahora;
-    }
-
-    
 
 }
