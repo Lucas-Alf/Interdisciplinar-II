@@ -1,11 +1,13 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.BigDecimalConverter;
 import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
@@ -13,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.BaixaBem;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
+import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
 
-@Named(value = "baixabemBean")
+@Named(value = "baixaBemBean")
 @SessionScoped
 public class BaixaBemBean implements Serializable {
 
     @Autowired
     private BaixaBemRepository baixaBemRepository;
+    private PatrimonioRepository patrimonioRepository;
     private BaixaBem baixaBem = new BaixaBem();
 
     private List<BaixaBem> baixaBens;
@@ -29,7 +33,8 @@ public class BaixaBemBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.baixaBens = baixaBemRepository.findAll();
+        //this.baixaBens = baixaBemRepository.findAll();
+        this.baixaBens = baixaBemRepository.AtualizarTabela();
     }
 
     /*public void Pesquisar(String descricao) {

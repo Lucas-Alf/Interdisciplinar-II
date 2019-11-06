@@ -13,4 +13,8 @@ public interface PatrimonioRepository extends JpaRepository<Patrimonio, Integer>
 
     @Query("SELECT e FROM patrimonio e INNER JOIN e.produtoid t where t.nome LIKE %?1%")
     public List<Patrimonio> pesquisar(String descricao);
+
+    @Query("SELECT e FROM patrimonio e INNER JOIN e.produtoid")
+    public List<Patrimonio> listaPatrimonio();
+
 }

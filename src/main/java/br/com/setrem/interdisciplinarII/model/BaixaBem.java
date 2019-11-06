@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ColumnDefault;
+
 /**
  *
  * 
@@ -37,19 +39,19 @@ public class BaixaBem implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "valor")
-    private BigDecimal valor;
+    private double valor;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 300)
+    //@NotNull
+    //@Size(min = 1, max = 300)
     @Column(name = "observacao")
     private String observacao;
     @JoinColumn(name = "motivobaixaid", referencedColumnName = "id")
@@ -66,7 +68,7 @@ public class BaixaBem implements Serializable {
         this.id = id;
     }
 
-    public BaixaBem(Integer id, Date data, BigDecimal valor, String observacao) {
+    public BaixaBem(Integer id, Date data, double valor, String observacao) {
         this.id = id;
         this.data = data;
         this.valor = valor;
@@ -89,11 +91,11 @@ public class BaixaBem implements Serializable {
         this.data = data;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
