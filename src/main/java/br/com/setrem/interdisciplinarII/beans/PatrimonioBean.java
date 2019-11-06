@@ -29,8 +29,6 @@ public class PatrimonioBean implements Serializable {
     private GrupoBem grupoBem = new GrupoBem();
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
 
-    // private int id;
-    // private String descricao;
     private List<Patrimonio> patrimonios;
 
     public PatrimonioBean() {
@@ -41,10 +39,9 @@ public class PatrimonioBean implements Serializable {
         this.patrimonios = patrimonioRepository.findAll();
     }
 
-    /*
-     * public void Pesquisar(String descricao) { this.patrimonios =
-     * patrimonioRepository.pesquisar(descricao); }
-     */
+    public void Pesquisar(String descricao) {
+        this.patrimonios = patrimonioRepository.pesquisar(descricao);
+    }
 
     public void AbrirModal() {
         this.patrimonio = new Patrimonio();
