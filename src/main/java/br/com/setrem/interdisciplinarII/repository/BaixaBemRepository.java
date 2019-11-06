@@ -13,7 +13,7 @@ public interface BaixaBemRepository extends JpaRepository<BaixaBem, Integer> {
 
     @Query("SELECT e FROM baixabem e INNER JOIN e.patrimonioid t inner join t.produtoid i")
     public List<BaixaBem> AtualizarTabela();
-
+    
     // @Query("SELECT e FROM baixabem e INNER JOIN e.patrimonioid t t.produtoid i where i.nome LIKE %?1%")
     // public List<BaixaBem> pesquisar(String descricao);
 

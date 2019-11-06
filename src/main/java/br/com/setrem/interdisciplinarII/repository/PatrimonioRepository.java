@@ -3,6 +3,7 @@ package br.com.setrem.interdisciplinarII.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +17,8 @@ public interface PatrimonioRepository extends JpaRepository<Patrimonio, Integer>
 
     @Query("SELECT e FROM patrimonio e INNER JOIN e.produtoid")
     public List<Patrimonio> listaPatrimonio();
+    
+    @Query("update patrimonio e set e.baixado = 1 where e.id = ?1")
+    public void BaixarBem(int id);
 
 }

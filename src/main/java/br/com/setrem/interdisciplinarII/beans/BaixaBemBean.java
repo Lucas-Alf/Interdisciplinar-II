@@ -14,6 +14,7 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.BaixaBem;
+import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
 
@@ -25,6 +26,7 @@ public class BaixaBemBean implements Serializable {
     private BaixaBemRepository baixaBemRepository;
     private PatrimonioRepository patrimonioRepository;
     private BaixaBem baixaBem = new BaixaBem();
+    private Patrimonio patrimonio = new Patrimonio();
 
     private List<BaixaBem> baixaBens;
 
@@ -47,6 +49,14 @@ public class BaixaBemBean implements Serializable {
     }
 
     public void Salvar() {
+        //patrimonio.setBaixado(1);
+        //patrimonioRepository.save(this.patrimonio);
+        //patrimonioRepository.BaixarBem(baixaBem.getPatrimonioid());
+        //patrimonioRepository.BaixarBem(id);
+        
+        patrimonio = patrimonioRepository.getOne(baixaBem.getPatrimonioid().getId());
+        patrimonio.setBaixado(1);
+        patrimonioRepository.save(this.patrimonio);
         baixaBemRepository.save(this.baixaBem);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
@@ -112,6 +122,22 @@ public class BaixaBemBean implements Serializable {
 
     public void setBaixaBens(List<BaixaBem> baixaBens) {
         this.baixaBens = baixaBens;
+    }
+
+    public PatrimonioRepository getPatrimonioRepository() {
+        return patrimonioRepository;
+    }
+
+    public void setPatrimonioRepository(PatrimonioRepository patrimonioRepository) {
+        this.patrimonioRepository = patrimonioRepository;
+    }
+
+    public Patrimonio getPatrimonio() {
+        return patrimonio;
+    }
+
+    public void setPatrimonio(Patrimonio patrimonio) {
+        this.patrimonio = patrimonio;
     }
 
 }

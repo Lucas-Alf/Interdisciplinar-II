@@ -83,7 +83,7 @@ public class PatrimonioBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            patrimonio = patrimonioRepository.getOne(id);
+            this.patrimonio = patrimonioRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         }
     }
