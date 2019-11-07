@@ -31,7 +31,7 @@
 
                     <div class="modal fade" id="CadastrarCompra" widgetVar="CadastrarCompra" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
+                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 500px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Compra</h4>
@@ -43,11 +43,11 @@
                                     <span class="ui-float-label">
                                         <h:inputHidden  id="id" value="#{compraBean.movimentacao.id}" />
                                         <p:outputLabel for="button" value="Data: " style="margin-right: 50px;" />
-                                        <p:datePicker id="button" value="#{compraBean.movimentacao.data}" showIcon="true" style="width: 50px; text-align: center;" /><br/><br/>
+                                        <p:datePicker id="button" value="#{compraBean.movimentacao.data}" showIcon="true" style="width: 50px; text-align: center;" />
                                         <h:outputText value="Nota Fiscal: " />
-                                        <p:inputText style="width: 540px;" id="notafiscal" value="#{compraBean.movimentacao.notaFiscal}" /><br/><br/>
-                                        <h:outputText value="Fornecedor: " style="width: 450px; margin-right: 12px;" />                                   
-                                        <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{compraBean.movimentacao.cliforid}" style="width: 517px;" converter="CliForConverter" appendTo="@this">
+                                        <p:inputText style="width: 300px;" id="notafiscal" value="#{compraBean.movimentacao.notafiscal}" /><br></br>
+                                        <h:outputText value="Fornecedor: " style="width: 150px; margin-right: 8px;" />                                   
+                                        <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{compraBean.movimentacao.cliForid}" style="width: 300px;" converter="CliForConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um Fornecedor"/>
                                             <f:selectItems value="#{cliforBean.listaFornecedores()}" var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}"/>
                                         </p:selectOneMenu><br/><br/>
@@ -99,11 +99,20 @@
                         value="#{compraBean.movItenss}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
-                        <p:column headerText="Código" style="text-align: center; width: 15%;">
-                            <h:outputText value="#{item.id}" />
+                        <p:column headerText="Nota Fiscal" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.movimentacaoid.notafiscal}" />
                         </p:column>
-                        <p:column headerText="Produto" style="width: 70%; text-align: left">
-                            <h:outputText value="#{item.produtoid.descricao}" />
+                        <p:column headerText="Produto" style="width: 30%; text-align: left">
+                            <h:outputText value="#{item.produtoid.nome}" />
+                        </p:column>
+                        <p:column headerText="Local estocado" style="width: 15%; text-align: left">
+                            <h:outputText value="#{item.local}" />
+                        </p:column>
+                        <p:column headerText="Quantidade" style="width: 10%; text-align: left">
+                            <h:outputText value="#{item.quantidade}" />
+                        </p:column>
+                        <p:column headerText="valor" style="width: 10%; text-align: left">
+                            <h:outputText value="#{item.valor}" />
                         </p:column>
                     </p:dataTable>
 

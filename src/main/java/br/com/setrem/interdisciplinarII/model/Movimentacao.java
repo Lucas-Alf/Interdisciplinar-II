@@ -40,22 +40,22 @@ public class Movimentacao implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "notafiscal")
     private Character notafiscal;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "tipo")
     private Character tipo;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "data")
     private Date data;
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "valortotal")
     private BigDecimal valortotal;
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
@@ -73,11 +73,12 @@ public class Movimentacao implements Serializable {
         this.id = id;
     }
 
-    public Movimentacao(Integer id, Character tipo, Date data, BigDecimal valortotal) {
+    public Movimentacao(Integer id, Character tipo, Date data, BigDecimal valortotal, Character notafiscal){
         this.id = id;
         this.tipo = tipo;
         this.data = data;
         this.valortotal = valortotal;
+        this.notafiscal = notafiscal;
     }
 
     public Integer getId() {
