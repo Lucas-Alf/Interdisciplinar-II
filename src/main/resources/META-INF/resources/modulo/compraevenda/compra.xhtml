@@ -45,13 +45,30 @@
                                         <p:outputLabel for="button" value="Data: " style="margin-right: 50px;" />
                                         <p:datePicker id="button" value="#{compraBean.movimentacao.data}" showIcon="true" style="width: 50px; text-align: center;" />
                                         <h:outputText value="Nota Fiscal: " />
-                                        <p:inputText style="width: 300px;" id="notafiscal" value="#{compraBean.movimentacao.notafiscal}" /><br></br>
-                                        <h:outputText value="Fornecedor: " style="width: 150px; margin-right: 8px;" />                                   
+                                        <p:inputText style="width: 300px; margin-bottom: 5px;" id="notafiscal" value="#{compraBean.movimentacao.notafiscal}" /><br/>
+                                        <h:outputText value="Fornecedor: " style="width: 150px; margin-right: 6px;" />                                   
                                         <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{compraBean.movimentacao.cliForid}" style="width: 300px;" converter="CliForConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um Fornecedor"/>
                                             <f:selectItems value="#{cliforBean.listaFornecedores()}" var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}"/>
                                         </p:selectOneMenu><br/><br/>
+                                        
+                                        <h:outputText value="Produto: " style="width: 300px; margin-right: 12px;" />
+                                        <p:selectOneMenu id="produto" filter="true" filterMatchMode="contains"
+                                            value="#{compraBean.movItens.produtoId}" style="width: 300px;"
+                                            converter="ProdutoConverter" appendTo="@this">
+                                            <f:selectItem itemValue="null" itemLabel="Selecione um Produto" />
+                                            <f:selectItems value="#{produtoBean.produtos}" var="produto"
+                                                itemValue="#{produto}" itemLabel="#{produto.nome}" />
+                                        </p:selectOneMenu><br/>
 
+                                        <h:outputText value="Local: " style="width: 300px; margin-right: 12px; " />
+                                        <p:selectOneMenu id="local" filter="true" filterMatchMode="contains"
+                                            value="#{compraBean.movItens.localId}" style="width: 300px;"
+                                            converter="LocalConverter" appendTo="@this">
+                                            <f:selectItem itemValue="null" itemLabel="Selecione um local" />
+                                            <f:selectItems value="#{localBean.locais}" var="local"
+                                                itemValue="#{local}" itemLabel="#{local.nome}" />
+                                        </p:selectOneMenu>
 
                                     </span>
                                 </div>
