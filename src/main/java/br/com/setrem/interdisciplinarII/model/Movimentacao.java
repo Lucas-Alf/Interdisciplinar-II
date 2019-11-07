@@ -138,4 +138,28 @@ public class Movimentacao implements Serializable {
         return "br.com.setrem.interdisciplinarII.model.Movimentacao[ id=" + id + " ]";
     }
 
+    public Character getNotafiscal() {
+        return notafiscal;
+    }
+
+    public void setNotafiscal(Character notafiscal) {
+        this.notafiscal = notafiscal;
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
+    }
+
+    public CliFor getEmpresaId() {
+        return EmpresaId;
+    }
+
+    public void setEmpresaId(CliFor empresaId) {
+        EmpresaId = empresaId;
+    }
+
 }
