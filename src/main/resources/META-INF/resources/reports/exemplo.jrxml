@@ -67,10 +67,10 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="209" splitType="Stretch">
+		<band height="182" splitType="Stretch">
 			<barChart>
 				<chart evaluationTime="Report">
-					<reportElement x="5" y="15" width="544" height="178" uuid="d79343ed-8fc5-4ac2-a591-b378f72fda1e"/>
+					<reportElement x="5" y="4" width="544" height="178" uuid="d79343ed-8fc5-4ac2-a591-b378f72fda1e"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -110,6 +110,9 @@
 	<columnHeader>
 		<band height="73" splitType="Stretch"/>
 	</columnHeader>
+	<detail>
+		<band height="203" splitType="Stretch"/>
+	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>

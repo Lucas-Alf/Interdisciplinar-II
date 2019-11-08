@@ -144,17 +144,30 @@ public class RelatorioBean implements Serializable {
 
     private String gerarConsulta(Relatorio relatorio, List<FiltroRelatorio> filtrosList) {
         String sql = relatorio.getSqlquery();
-        String gropBy = sql;// Implementar groupby
-        String orderBy = sql; // Implementar orderby
         FiltroRelatorio[] filtros = filtrosList.toArray(new FiltroRelatorio[filtrosList.size()]);
+        String sqlWhere = "";
         if (filtros.length > 0) {
-            sql += " WHERE ";
+            sqlWhere += " WHERE ";
             for (int i = 0; i < filtros.length; i++) {
                 if (i == 0) {
-                    sql += filtros[i].getSqlwhere();
+                    sqlWhere = sqlWhere + " " + filtros[i].getSqlwhere();
                 } else {
-                    sql += (" AND " + filtros[i].getSqlwhere());
+                    sqlWhere = sqlWhere + " " + ("AND " + filtros[i].getSqlwhere());
                 }
+            }
+        }
+        final Pattern pattern1 = Pattern.compile("(select.+)(group\\W+by.+)\\W+(order\\W+by.+)", Pattern.MULTILINE);
+        final Matcher matcher1 = pattern1.matcher(sql);
+        if (matcher1.matches()) {
+            sql = matcher1.replaceAll("$1 " + sqlWhere + " $2 $3");
+        } else {
+            final Pattern pattern2 = Pattern.compile("(select.+)((order\\W+by.+)|\\W+(group\\W+by.+))",
+                    Pattern.MULTILINE);
+            final Matcher matcher2 = pattern2.matcher(sql);
+            if (matcher2.matches()) {
+                sql = matcher2.replaceAll("$1 " + sqlWhere + " $2");
+            } else {
+                sql = sql + " " + sqlWhere;
             }
         }
         return sql;
@@ -185,13 +198,10 @@ public class RelatorioBean implements Serializable {
             URI uri = resource.getURI();
             String path = uri.getPath();
             JasperReport jasperReport = JasperCompileManager.compileReport(path);
+            final String classpath = Pattern.compile("(.+\\/META-INF\\/resources\\/reports\\/).+", Pattern.MULTILINE)
+                    .matcher(path).replaceAll("$1");
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                     .get("empresa");
-            final String regex = "(.+\\/META-INF\\/resources\\/reports\\/).+";
-            final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
-            final Matcher matcher = pattern.matcher(path);
-            final String classpath = matcher.replaceAll("$1");
-
             Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("REPORTS_DIR", classpath);
             parameters.put("EMPRESA_NOME", empresa.getNome());
@@ -221,13 +231,17 @@ public class RelatorioBean implements Serializable {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
                 ServletOutputStream outputStream = response.getOutputStream();
-                response.setContentType("application/pdf");
-                response.setHeader("Content-Disposition", "attachment; filename=" + relatorio.get().getNome() + ".pdf");
                 JasperPrint jasperPrint = exportPdfFile(relatorio.get());
                 if (jasperPrint == null) {
                     throw new Exception("Erro ao exportar o relatório! (jasperPrint is null)");
                 }
                 JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+                response.setContentType("application/pdf");
+                facesContext.responseComplete();
+                outputStream.flush();
+                outputStream.close();
+                facesContext.renderResponse();
+                response.setHeader("Content-Disposition", "attachment; filename=" + relatorio.get().getNome() + ".pdf");
             } catch (Exception e) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
                         "Ocorreu um erro ao imprimir o relatório!");
