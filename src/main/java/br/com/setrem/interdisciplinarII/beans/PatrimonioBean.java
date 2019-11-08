@@ -29,8 +29,6 @@ public class PatrimonioBean implements Serializable {
     private GrupoBem grupoBem = new GrupoBem();
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
 
-    // private int id;
-    // private String descricao;
     private List<Patrimonio> patrimonios;
 
     public PatrimonioBean() {
@@ -41,10 +39,13 @@ public class PatrimonioBean implements Serializable {
         this.patrimonios = patrimonioRepository.findAll();
     }
 
-    /*
-     * public void Pesquisar(String descricao) { this.patrimonios =
-     * patrimonioRepository.pesquisar(descricao); }
-     */
+    public void Pesquisar(String descricao) {
+        this.patrimonios = patrimonioRepository.pesquisar(descricao);
+    }
+
+    public void ListaPatrimonio() {
+        this.patrimonios = patrimonioRepository.listaPatrimonio();
+    }
 
     public void AbrirModal() {
         this.patrimonio = new Patrimonio();
@@ -52,18 +53,11 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void Salvar() {
-        /*
-         * if (this.patrimonio.getDescricao().equals("")) { FacesMessage fm = new
-         * FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
-         * "Informe uma Descrição!"); FacesContext context =
-         * FacesContext.getCurrentInstance(); context.addMessage(null, fm); } else {
-         */
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         patrimonio.setCliForid(empresa);
         patrimonioRepository.save(this.patrimonio);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        // }
     }
 
     public void Deletar(int id) {
@@ -89,7 +83,7 @@ public class PatrimonioBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            patrimonio = patrimonioRepository.getOne(id);
+            this.patrimonio = patrimonioRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         }
     }

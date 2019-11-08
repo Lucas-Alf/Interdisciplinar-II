@@ -45,7 +45,7 @@ public class CompraBean implements Serializable {
     public void AbrirModal() {
         this.movItens = new MovItens();
         this.movimentacao = new Movimentacao();
-        PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
+        PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
     }
 
     public void Salvar() {
@@ -84,7 +84,7 @@ public class CompraBean implements Serializable {
             context.addMessage(null, fm);
         } else {
             // grupoBem = grupoBemRepository.getOne(id);
-            PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
         }
     }
 
