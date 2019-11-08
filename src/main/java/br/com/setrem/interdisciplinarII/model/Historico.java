@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  *
  * 
  */
-@Entity(name = "marca")
+@Entity(name = "historico")
 
 public class Historico implements Serializable {
 
