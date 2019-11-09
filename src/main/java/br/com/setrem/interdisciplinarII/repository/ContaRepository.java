@@ -15,4 +15,7 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
     @Query("SELECT c FROM conta c WHERE c.sintetica = true")
     public List<Conta> pesquisarSint();
+
+    @Query(value="SELECT * FROM conta c WHERE c.cliforid = ?1", nativeQuery = true)
+    public List<Conta> findByCliForid(String id);
 }

@@ -37,13 +37,13 @@
                                         <h:inputHidden  id="CliForid" value="#{lancamentoContabilBean.lancamentoContabil.cliforid}" converter = "CliForConverter"/>
 
                                         <h:outputText value="Histórico: " />
-                                        <p:inputText style="width: 240px;" id="histotico" value="#{lancamentoContabilBean.lancamentoContabil.historico}" />
+                                        <p:inputText style="width: 300px;" id="histotico" value="#{lancamentoContabilBean.lancamentoContabil.historico}" />
 
                                         <h:outputText value="Valor: " />
-                                        <p:inputText style="width: 240px;" id="valor" value="#{lancamentoContabilBean.lancamentoContabil.valor}" />
+                                        <p:inputText style="width: 300px;" id="valor" value="#{lancamentoContabilBean.lancamentoContabil.valor}" />
 
                                         <p:outputLabel for="button" value="Data: " style="margin-right: 50px;" />
-                                        <p:datePicker id="button" value="#{lancamentoContabilBean.lancamentoContabil.datahora}" showIcon="true" style="width: 50px;" />
+                                        <p:datePicker id="button" value="#{lancamentoContabilBean.lancamentoContabil.datahora}" showIcon="true" style="width: 100px;" />
 
                                         <h:outputText value="Tipo: " />
                                         <p:selectOneMenu id="tipo" value="#{lancamentoContabilBean.lancamentoContabil.tipo}"

@@ -91,11 +91,13 @@ public class LancamentoContabilBean implements Serializable {
     }
 
     public List<LancamentoContabil> ListarTable() {
-        return lancamentoContabilRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        return lancamentoContabilRepository.findByCliForid(empresa.getId());
     }
 
     public void AtualizarTable() {
-        this.lancamentoContabils = lancamentoContabilRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.lancamentoContabils = lancamentoContabilRepository.findByCliForid(empresa.getId());
     }
 
     public void Remove(int id) {

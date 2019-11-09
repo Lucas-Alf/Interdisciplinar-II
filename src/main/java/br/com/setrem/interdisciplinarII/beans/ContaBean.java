@@ -61,11 +61,13 @@ public class ContaBean implements Serializable {
     }
 
     public List<Conta> ListarTable() {
-        return contaRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        return contaRepository.findByCliForid(empresa.getId());
     }
 
     public void AtualizarTable() {
-        this.contas = contaRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.contas = contaRepository.findByCliForid(empresa.getId());
     }
 
     public void Remove(int id) {
