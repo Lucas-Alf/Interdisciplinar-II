@@ -47,7 +47,7 @@
                                         <h:outputText value="Patrimônio: " style="width: 300px; margin-right: 17px;" />
                                         <p:selectOneMenu id="patrimonio" filter="true" filterMatchMode="contains" value="#{baixaBemBean.baixaBem.patrimonioid}" style="width: 515px;" converter="PatrimonioConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um Patrimônio" />
-                                            <f:selectItems value="#{patrimonioBean.patrimonios}" var="patrimonio" itemValue="#{patrimonio}" itemLabel="#{patrimonio.produtoid.nome}" />
+                                            <f:selectItems value="#{patrimonioBean.patrimonios}" var="patrimonio" itemValue="#{patrimonio}" itemLabel="#{patrimonio.id} - #{patrimonio.produtoid.nome}" />
                                         </p:selectOneMenu><br /><br />
 
                                         <h:outputText value="Motivo Baixa: " style="margin-right: 4px;" />
@@ -60,7 +60,7 @@
                                         <p:inputNumber id="valor" style="width: 200px;" minValue="0" value="#{baixaBemBean.baixaBem.valor}"></p:inputNumber><br/><br/>  
 
                                         <h:outputText value="Observação: " style="margin-right: 12px;" />
-                                        <p:inputText style="width: 515px;" id="vidautil" value="#{baixaBemBean.baixaBem.observacao}" />                                                  
+                                        <p:inputText style="width: 515px;" id="observacao" value="#{baixaBemBean.baixaBem.observacao}" />                               
                                     </span>
                                 </div>
                                 <div class="modal-footer">

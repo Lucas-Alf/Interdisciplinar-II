@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -24,11 +25,13 @@ public class BaixaBemBean implements Serializable {
 
     @Autowired
     private BaixaBemRepository baixaBemRepository;
-    private PatrimonioRepository patrimonioRepository;
     private BaixaBem baixaBem = new BaixaBem();
     private Patrimonio patrimonio = new Patrimonio();
+    @Autowired
+    private PatrimonioRepository patrimonioRepository;
 
     private List<BaixaBem> baixaBens;
+    //private List<Patrimonio> patrimonios;
 
     public BaixaBemBean() {
 
@@ -53,10 +56,13 @@ public class BaixaBemBean implements Serializable {
         //patrimonioRepository.save(this.patrimonio);
         //patrimonioRepository.BaixarBem(baixaBem.getPatrimonioid());
         //patrimonioRepository.BaixarBem(id);
-        
-        patrimonio = patrimonioRepository.getOne(baixaBem.getPatrimonioid().getId());
-        patrimonio.setBaixado(1);
-        patrimonioRepository.save(this.patrimonio);
+
+        //patrimonioRepository.BaixarBem(this.baixaBem.getPatrimonioid().getId());
+        //patrimonioBean.BaixarBem(this.baixaBem.getPatrimonioid().getId());
+
+        this.patrimonio = patrimonioRepository.getOne(this.baixaBem.getPatrimonioid().getId());
+        this.patrimonio.setBaixado(1);
+        patrimonioRepository.save(patrimonio);
         baixaBemRepository.save(this.baixaBem);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
@@ -124,14 +130,6 @@ public class BaixaBemBean implements Serializable {
         this.baixaBens = baixaBens;
     }
 
-    public PatrimonioRepository getPatrimonioRepository() {
-        return patrimonioRepository;
-    }
-
-    public void setPatrimonioRepository(PatrimonioRepository patrimonioRepository) {
-        this.patrimonioRepository = patrimonioRepository;
-    }
-
     public Patrimonio getPatrimonio() {
         return patrimonio;
     }
@@ -140,4 +138,12 @@ public class BaixaBemBean implements Serializable {
         this.patrimonio = patrimonio;
     }
 
+    public PatrimonioRepository getPatrimonioRepository() {
+        return patrimonioRepository;
+    }
+
+    public void setPatrimonioRepository(PatrimonioRepository patrimonioRepository) {
+        this.patrimonioRepository = patrimonioRepository;
+    }
+    
 }

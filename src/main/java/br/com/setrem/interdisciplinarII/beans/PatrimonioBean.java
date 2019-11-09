@@ -11,11 +11,13 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.BaixaBem;
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.EstadoConservacao;
 import br.com.setrem.interdisciplinarII.model.GrupoBem;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.model.Produto;
+import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
 
 @Named(value = "patrimonioBean")
@@ -29,6 +31,9 @@ public class PatrimonioBean implements Serializable {
     private GrupoBem grupoBem = new GrupoBem();
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
 
+    //private BaixaBemRepository baixaBemRepository;
+    //private BaixaBem baixaBem = new BaixaBem();
+
     private List<Patrimonio> patrimonios;
 
     public PatrimonioBean() {
@@ -36,7 +41,11 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.patrimonios = patrimonioRepository.findAll();
+        this.patrimonios = patrimonioRepository.listaPatrimonio();
+    }
+
+    public void BaixarBem(int id) {
+        patrimonioRepository.BaixarBem(id);
     }
 
     public void Pesquisar(String descricao) {
@@ -144,4 +153,23 @@ public class PatrimonioBean implements Serializable {
         this.estadoConservacao = estadoConservacao;
     }
 
+    public void SalvarBaixa(int id) {
+        //patrimonio.setBaixado(1);
+        //patrimonioRepository.save(this.patrimonio);
+        //patrimonioRepository.BaixarBem(baixaBem.getPatrimonioid());
+        //patrimonioRepository.BaixarBem(id);
+
+        //patrimonioRepository.BaixarBem(this.baixaBem.getPatrimonioid().getId());
+
+        //patrimonioBean.BaixarBem(this.baixaBem.getPatrimonioid().getId());
+
+
+        this.patrimonio = patrimonioRepository.getOne(id);
+        this.patrimonio.setBaixado(1);
+        patrimonioRepository.save(patrimonio);
+        //baixaBemRepository.save(this.baixaBem);
+        this.AtualizarTabela();
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+    }
+    
 }
