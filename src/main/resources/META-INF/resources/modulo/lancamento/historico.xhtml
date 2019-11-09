@@ -45,6 +45,10 @@
                                         <h:outputText value="Descrição: " />
                                         <p:inputText style="width: 540px;" id="descricao"
                                             value="#{historicoBean.historico.descricao}" />
+                                        <h:outputText value="Histórico: " />
+                                        <h:inputText   value="*Coloque &&CODIGOMOVIMENTO&& para preencher com o código do movimento..." />
+                                        <p:inputText style="width: 540px; height:250px" id="historico"
+                                            value="#{historicoBean.historico.historico}" />
                                     </span>
                                 </div>
                                 <div class="modal-footer">
@@ -88,7 +92,7 @@
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{historicoBean.estadoConservacoes}" style="margin-top: 10px; height: 550px;"
+                        value="#{historicoBean.historicos}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Código" style="text-align: center; width: 15%;">
