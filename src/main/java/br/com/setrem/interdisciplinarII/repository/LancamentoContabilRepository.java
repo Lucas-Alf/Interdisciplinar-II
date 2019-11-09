@@ -18,5 +18,8 @@ public interface LancamentoContabilRepository extends JpaRepository<LancamentoCo
 
     @Query("SELECT c FROM conta c WHERE c.sintetica = false")
     public List<Conta> pesquisarAnalit();
+
+    @Query(value="SELECT * FROM lancamentocontabil c WHERE c.cliforid = ?1", nativeQuery = true)
+    public List<LancamentoContabil> findByCliForid(String id);
    
 }

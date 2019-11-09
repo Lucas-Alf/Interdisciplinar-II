@@ -57,11 +57,13 @@ public class CentroCustoBean implements Serializable {
     }
 
     public List<CentroCusto> ListarTable() {
-        return centroCustoRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        return centroCustoRepository.findByCliForid(empresa.getId());
     }
 
     public void AtualizarTable() {
-        this.centrosCustos = centroCustoRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.centrosCustos = centroCustoRepository.findByCliForid(empresa.getId());
     }
 
     public void Remove(int id) {

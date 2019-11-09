@@ -58,6 +58,8 @@ public class Patrimonio implements Serializable {
     private String observacao;
     @Column(name = "baixado")
     private int baixado;
+    @Column(name = "depreciavel")
+    private int depreciavel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patrimonioid")
     private Collection<BaixaBem> baixabemCollection;
     @JoinColumn(name = "centrocustoid", referencedColumnName = "id")
@@ -213,6 +215,14 @@ public class Patrimonio implements Serializable {
 
     public void setBaixado(int baixado) {
         this.baixado = baixado;
+    }
+
+    public int getDepreciavel() {
+        return depreciavel;
+    }
+
+    public void setDepreciavel(int depreciavel) {
+        this.depreciavel = depreciavel;
     }
     
 }

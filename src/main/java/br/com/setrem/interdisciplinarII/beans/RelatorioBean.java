@@ -121,10 +121,6 @@ public class RelatorioBean implements Serializable {
             String senha = "c3265949766568e312fdc45e956de4aa8eec60121034cf0871821674bce06027";
             return DriverManager.getConnection(url, usuario, senha);
         } catch (Exception e) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-                    "Não foi possível abrir uma conexão com o banco de dados!");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
             System.err.println(e.getMessage());
             return null;
         }
@@ -134,10 +130,6 @@ public class RelatorioBean implements Serializable {
         try {
             conexao.close();
         } catch (Exception e) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-                    "Não foi possível fechar a conexão com o banco de dados!");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
             System.err.println(e.getMessage());
         }
     }
@@ -180,10 +172,6 @@ public class RelatorioBean implements Serializable {
             ResultSet result = statement.executeQuery();
             return new JRResultSetDataSource(result);
         } catch (Exception e) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-                    "Não foi possível gerar o ResultSet para o relatório!");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
             System.err.println(e.getMessage());
             return null;
         } finally {
@@ -215,10 +203,6 @@ public class RelatorioBean implements Serializable {
             JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, resultSet);
             return print;
         } catch (Exception e) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-                    "Ocorreu um erro ao imprimir o relatório!");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
             System.err.println(e.getMessage());
             return null;
         }
@@ -228,13 +212,13 @@ public class RelatorioBean implements Serializable {
         Optional<Relatorio> relatorio = relatorioRepository.findById(relatorioId);
         if (relatorio.isPresent()) {
             try {
-                FacesContext facesContext = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-                ServletOutputStream outputStream = response.getOutputStream();
                 JasperPrint jasperPrint = exportPdfFile(relatorio.get());
                 if (jasperPrint == null) {
                     throw new Exception("Erro ao exportar o relatório! (jasperPrint is null)");
                 }
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+                ServletOutputStream outputStream = response.getOutputStream();
                 JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
                 response.setContentType("application/pdf");
                 facesContext.responseComplete();
@@ -243,16 +227,10 @@ public class RelatorioBean implements Serializable {
                 facesContext.renderResponse();
                 response.setHeader("Content-Disposition", "attachment; filename=" + relatorio.get().getNome() + ".pdf");
             } catch (Exception e) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-                        "Ocorreu um erro ao imprimir o relatório!");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
                 System.err.println(e.getMessage());
             }
         } else {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Relatório não encontrado!");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            System.err.println("Relatório não encontrado!");
         }
     }
 }
