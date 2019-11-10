@@ -31,7 +31,7 @@
 
                     <div class="modal fade" id="CadastrarHistorico" widgetVar="CadastrarHistorico" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 510px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Histórico Padrão</h4>
@@ -45,10 +45,17 @@
                                         <h:outputText value="Descrição: " />
                                         <p:inputText style="width: 540px;" id="descricao"
                                             value="#{historicoBean.historico.descricao}" />
-                                        <h:outputText value="Histórico: " />
-                                        <h:inputText   value="*Coloque &&CODIGOMOVIMENTO&& para preencher com o código do movimento..." />
-                                        <p:inputText style="width: 540px; height:250px" id="historico"
-                                            value="#{historicoBean.historico.historico}" />
+                                        <br /> <br /> 
+                                        <h:outputText  style="margin-right: 7px;" value="Histórico: " />
+                                        <br />
+                                        <p:inputTextarea style="width: 620px;" id="historico"  value="#{historicoBean.historico.historico}" rows="3" cols="30" counter="display" maxlength="350" counterTemplate="{0} caracteres faltantes." autoResize="false" />
+                                        <h:outputText id="display" /><br />
+                                        <h:outputText value="Tags" style="font-weight: bold;" /><br />
+                                        <h:outputText value="* Coloque {CODIGOMOVIMENTO} para preencher com o código do movimento." /><br />
+                                        <h:outputText value="* Coloque {TIPOMOVIMENTO} para preencher com o tipo do movimento.." /><br />
+                                        <h:outputText value="* Coloque {DATA} para preencher com a data atual." /><br />
+                                        <h:outputText value="* Coloque {HORA} para preencher com a hora atual." /><br />
+                                        <h:outputText value="* Coloque {MODULO} para preencher com o módulo." /><br />
                                     </span>
                                 </div>
                                 <div class="modal-footer">
@@ -95,11 +102,14 @@
                         value="#{historicoBean.historicos}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
-                        <p:column headerText="Código" style="text-align: center; width: 15%;">
+                        <p:column headerText="Código" style="text-align: center; width: 5%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>
-                        <p:column headerText="Descrição" style="width: 70%; text-align: left">
+                        <p:column headerText="Descrição" style="width: 15%; text-align: left">
                             <h:outputText value="#{item.descricao}" />
+                        </p:column>
+                        <p:column headerText="Histórico" style="width: 65%; text-align: left">
+                            <h:outputText value="#{item.historico}" />
                         </p:column>
                     </p:dataTable>
 
