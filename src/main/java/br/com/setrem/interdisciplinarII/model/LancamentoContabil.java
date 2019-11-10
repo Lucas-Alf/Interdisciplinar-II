@@ -44,7 +44,7 @@ public class LancamentoContabil implements Serializable {
     @Basic(optional = false)
     //@NotNull
     @Column(name = "valor")
-    private BigDecimal valor;
+    private double valor;
 
     @Basic(optional = false)
     //@NotNull
@@ -78,15 +78,16 @@ public class LancamentoContabil implements Serializable {
     public LancamentoContabil() {
     }
 
-    public LancamentoContabil(Integer id) {
-        this.id = id;
-    }
-
-    public LancamentoContabil(Integer id, BigDecimal valor, Date datahora, String historico, String tipo, Conta conta) {
+    public LancamentoContabil(Integer id, double valor, Conta conta, CentroCusto centrocusto) {
         this.id = id;
         this.valor = valor;
+        this.idconta = conta;
+        this.centrocustoid = centrocusto;
+    }
+
+    public LancamentoContabil(double valor, Date datahora, String tipo, Conta conta) {
+        this.valor = valor;
         this.datahora = datahora;
-        this.historico = historico;
         this.tipo = tipo;
         this.idconta = conta;
     }
@@ -99,11 +100,11 @@ public class LancamentoContabil implements Serializable {
         this.id = id;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
