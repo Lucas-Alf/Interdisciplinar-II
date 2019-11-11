@@ -59,7 +59,7 @@ public class Patrimonio implements Serializable {
     @Column(name = "baixado")
     private int baixado;
     @Column(name = "depreciavel")
-    private int depreciavel;
+    private boolean depreciavel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patrimonioid")
     private Collection<BaixaBem> baixabemCollection;
     @JoinColumn(name = "centrocustoid", referencedColumnName = "id")
@@ -217,11 +217,11 @@ public class Patrimonio implements Serializable {
         this.baixado = baixado;
     }
 
-    public int getDepreciavel() {
+    public boolean isDepreciavel() {
         return depreciavel;
     }
 
-    public void setDepreciavel(int depreciavel) {
+    public void setDepreciavel(boolean depreciavel) {
         this.depreciavel = depreciavel;
     }
     

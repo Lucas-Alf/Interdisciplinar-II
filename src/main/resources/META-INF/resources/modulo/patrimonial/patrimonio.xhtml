@@ -42,10 +42,13 @@
                                 <div class="modal-body">
                                     <span class="ui-float-label">
                                         <h:inputHidden id="id" value="#{patrimonioBean.patrimonio.id}" />
-                                        <p:outputLabel for="button" value="Data Aquisição: "
-                                            style="margin-right: 50px;" />
-                                        <p:datePicker id="button" value="#{patrimonioBean.patrimonio.dataaquisicao}"
-                                            showIcon="true" style="width: 50px; text-align: center;" /><br /><br />
+                                        <p:outputLabel for="button" value="Data Aquisição: " style="margin-right: 50px;" />
+                                        <p:datePicker id="button" value="#{patrimonioBean.patrimonio.dataaquisicao}" showIcon="true" style="width: 50px; text-align: center;" />
+                                        
+                                        <h:outputText value="Depreciável?" />
+                                        <h:selectBooleanCheckbox id="checkbox" value="#{patrimonioBean.patrimonio.depreciavel}" binding="#{checkbox}">
+                                            
+                                        </h:selectBooleanCheckbox><br /><br />
 
                                         <h:outputText value="Patrimônio: " style="width: 300px; margin-right: 12px;" />
                                         <p:selectOneMenu id="produto" filter="true" filterMatchMode="contains"
@@ -57,7 +60,7 @@
                                         </p:selectOneMenu><br /><br />
 
                                         <h:outputText value="Valor: " style="width: 20px; margin-right: 55px;" />
-                                        <p:inputNumber id="valor" value="#{patrimonioBean.patrimonio.valor}">
+                                        <p:inputNumber widgetVar="valor" id="valor" value="#{patrimonioBean.patrimonio.valor}">
                                         </p:inputNumber><br /><br />
 
                                         <h:outputText value="Fornecedor: " style="width: 450px; margin-right: 12px;" />
