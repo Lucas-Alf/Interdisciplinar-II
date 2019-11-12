@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/simple-sidebar.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/webjars/font-awesome/5.11.2/css/all.min.css" />
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css" />
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js"></script>
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/modules/treeview.js"></script>
+    <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
+    <title>Ábaco</title>
+</h:head>
+<h:body style="overflow: hidden; background-color:white; margin: 0px">
+
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <div class="container">
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Lançamento de Despesa/Investimento</h3>
+                <h:form>
+
+                    <div class="modal fade" id="CadastrarDespesaInvestimento" widgetVar="CadastrarDespesaInvestimento" tabindex="-1"
+                        role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div style="margin-top: 65%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 420px;"
+                                class="modal-content">
+                                <div class="modal-header">
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Lançamento de Despesa/Investimento</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="ui-float-label">
+                                        <h:inputHidden id="id" value="#{despesaInvestimentoBean.despesaInvestimento.id}" />
+                                        
+                                        <p:selectOneRadio id="console" value="#{despesaInvestimentoBean.despesaInvestimento.tipo}" unselectable="true">
+                                            <f:selectItem itemLabel="Despesa" itemValue="D" />
+                                            <f:selectItem itemLabel="Investimento" itemValue="I" />
+                                        </p:selectOneRadio>
+
+                                        <p:outputLabel for="button" value="Data: " style="margin-right: 50px;" />
+                                        <p:datePicker id="button" value="#{despesaInvestimentoBean.despesaInvestimento.data}" showIcon="true" style="width: 50px; text-align: center;" /><br /><br />
+
+                                        <h:outputText value="Patrimônio: " style="width: 300px; margin-right: 17px;" />
+                                        <p:selectOneMenu id="patrimonio" filter="true" filterMatchMode="contains" value="#{despesaInvestimentoBean.despesaInvestimento.patrimonioid}" style="width: 515px;" converter="PatrimonioConverter" appendTo="@this">
+                                            <f:selectItem itemValue="null" itemLabel="Selecione um Patrimônio" />
+                                            <f:selectItems value="#{patrimonioBean.patrimonios}" var="patrimonio" itemValue="#{patrimonio}" itemLabel="#{patrimonio.id} - #{patrimonio.produtoid.nome}" />
+                                        </p:selectOneMenu><br /><br />
+
+                                        <h:outputText value="Valor: " style="width: 20px; margin-right: 55px;" />
+                                        <p:inputNumber widgetVar="valor" id="valor" value="#{despesaInvestimentoBean.despesaInvestimento.valor}">
+                                        </p:inputNumber><br /><br />
+
+                                        <h:outputText value="Observação: " style="margin-right: 14px;" />
+                                        <p:inputText style="width: 512px;" id="observacao"
+                                            value="#{despesaInvestimentoBean.despesaInvestimento.observacao}" />
+                                    </span>
+                                </div>
+                                <div class="modal-footer">
+                                    <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
+                                        action="#{despesaInvestimentoBean.Salvar()}">
+                                        <f:ajax execute="@form" render="@form" />
+                                        <i class="far fa-save crud-btn"></i>
+                                    </h:commandLink>
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
+                                            class="fas fa-ban"></i> Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="float-right">
+                        <h:outputText style="font-weight:bold" value="Pesquisar: " />
+                        <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
+                        <h:commandLink id="botaoPesquisar"
+                            style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;"
+                            class="btn btn-info btn-sm" value="" action="#{despesaInvestimentoBean.Pesquisar(pesquisa.value)}">
+                            <f:ajax execute="@form" render="@form" />
+                            <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
+                        </h:commandLink><br />
+                    </div>
+
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir"
+                        action="#{despesaInvestimentoBean.AbrirModal()}">
+                        <f:ajax execute="@form" render="@form" />
+                        <i class="far fa-edit crud-btn"></i>
+                    </h:commandLink>
+
+                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
+                        action="#{despesaInvestimentoBean.AbreAlterar(item.id)}">
+                        <f:ajax execute="@form" render="@form" />
+                        <i class="far fa-edit crud-btn"></i>
+                    </h:commandLink>
+
+                    <p:growl id="messages" showDetail="true" closable="true" />
+                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
+                        action="#{despesaInvestimentoBean.Deletar(item.id)}">
+                        <f:ajax execute="@form" render="@form" />
+                        <i class="far fa-trash-alt crud-btn"></i>
+                    </h:commandLink>
+
+                    <p:dataTable scrollable="true" scrollHeight="70%" id="tabela1" var="item"
+                        value="#{despesaInvestimentoBean.despesaInvestimentos}" style="margin-top: 10px; height: 550px;"
+                        rowKey="#{item.id}" selection="#{item}" selectionMode="single"
+                        emptyMessage="Não há registros na tabela.">
+                        <p:column headerText="Código" style="text-align: center; width: 5%;">
+                            <h:outputText value="#{item.id}" />
+                        </p:column>
+                        <p:column headerText="Data" style="width: 5%; text-align: center">
+                            <h:outputText value="#{item.data}" />
+                        </p:column>
+                        <p:column headerText="Patrimônio" style="width: 30%; text-align: left">
+                            <h:outputText value="#{item.patrimonioid.produtoid.nome}" />
+                        </p:column>
+                        <p:column headerText="Valor" style="width: 10%; text-align: right">
+                            <h:outputText value="#{item.valor}" />
+                        </p:column>
+                        <p:column headerText="Tipo" style="width: 10%; text-align: right">
+                            <h:outputText value="#{item.tipo}" />
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
+</h:body>
+<f:metadata>
+    <f:viewAction action="#{despesaInvestimentoBean.AtualizarTabela()}" />
+    <f:viewAction action="#{patrimonioBean.ListaPatrimonio()}" />
+</f:metadata>
+
+</html>

@@ -24,12 +24,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
 
-/**
- *
- * 
- */
-
-@Entity(name = "despesaInvestimento")
+@Entity(name = "despesainvestimento")
 public class DespesaInvestimento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +45,7 @@ public class DespesaInvestimento implements Serializable {
     @Column(name = "valor")
     private double valor;
     @Column(name = "tipo")
-    private Integer tipo;
+    private String tipo;
     @JoinColumn(name = "patrimonioid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Patrimonio patrimonioid;
@@ -62,7 +57,7 @@ public class DespesaInvestimento implements Serializable {
         this.id = id;
     }
 
-    public DespesaInvestimento(Integer id, Date data, String observacao, double valor, Integer tipo) {
+    public DespesaInvestimento(Integer id, Date data, String observacao, double valor, String tipo) {
         this.id = id;
         this.data = data;
         this.valor = valor;
@@ -126,14 +121,6 @@ public class DespesaInvestimento implements Serializable {
         this.valor = valor;
     }
 
-    public Integer getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
-    }
-
     public Patrimonio getPatrimonioid() {
         return patrimonioid;
     }
@@ -142,4 +129,12 @@ public class DespesaInvestimento implements Serializable {
         this.patrimonioid = patrimonioid;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
 }
