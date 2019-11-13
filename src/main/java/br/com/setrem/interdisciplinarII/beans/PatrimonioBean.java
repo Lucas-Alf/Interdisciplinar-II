@@ -1,6 +1,8 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -13,11 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.BaixaBem;
 import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Depreciacao;
 import br.com.setrem.interdisciplinarII.model.EstadoConservacao;
 import br.com.setrem.interdisciplinarII.model.GrupoBem;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.model.Produto;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
+import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
 
 @Named(value = "patrimonioBean")
@@ -26,13 +30,15 @@ public class PatrimonioBean implements Serializable {
 
     @Autowired
     private PatrimonioRepository patrimonioRepository;
+
+    @Autowired
+    private DepreciacaoRepository depreciacaoRepository;
+
+    private Depreciacao depreciacao = new Depreciacao();
     private Patrimonio patrimonio = new Patrimonio();
     private Produto produto = new Produto();
     private GrupoBem grupoBem = new GrupoBem();
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
-
-    //private BaixaBemRepository baixaBemRepository;
-    //private BaixaBem baixaBem = new BaixaBem();
 
     private List<Patrimonio> patrimonios;
 
@@ -41,6 +47,7 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void AtualizarTabela() {
+        this.patrimonios = patrimonioRepository.listaPatrimonio();
         this.patrimonios = patrimonioRepository.listaPatrimonio();
     }
 
@@ -61,12 +68,69 @@ public class PatrimonioBean implements Serializable {
         PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
     }
 
+    public void LancarDepreciacao() {
+        if (patrimonio.isDepreciavel() == true) {
+            if (depreciacaoRepository.VerificaDepreciacao(patrimonio.getId()) == 0) {
+                Date data = new Date();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(data);
+                int mes = cal.get(Calendar.MONTH);
+                int ano = cal.get(Calendar.YEAR);
+    
+                double valor = patrimonio.getValor();
+                double depreciacaoTaxa = patrimonio.getGrupoBemid().getTaxadepreciacao();
+                double vidaUtil = patrimonio.getGrupoBemid().getVidautil();
+                double meses = vidaUtil * 12;
+                //double taxaAnual = 100 / vidaUtil;
+                //double taxaMensal = 100 / (vidaUtil * 12);
+                //double valorMensal = valor / (vidaUtil * 12);
+                //double valorAnual = valor / vidaUtil;
+
+                double taxaAnual = depreciacaoTaxa;
+                double taxaMensal = depreciacaoTaxa / 12;
+                double valorMensal = valor * (taxaMensal / 100);
+                double valorAnual = valorMensal * 12;
+    
+                double valorAtualizado;
+    
+                for (int i = 1; i <= meses; i++) {
+                    if (mes > 12) {
+                        mes = 1;
+                        ano++;
+                    }
+                    valorAtualizado = valor - (valorMensal * i);
+    
+                    if (valorAtualizado == 0 || valorAtualizado < 0) {
+                        break;
+                    } else {
+                        Depreciacao dep = new Depreciacao();
+                        dep.setMes(mes);
+                        dep.setAno(ano);
+                        dep.setValordepreciado(valor - valorAtualizado);
+                        dep.setValorreavaliado(0);
+                        dep.setVidautil(vidaUtil);
+                        dep.setTaxadepreciacaomensal(taxaMensal);
+                        dep.setTaxadepreciacaoanual(taxaAnual);
+                        dep.setValoratualizado(valorAtualizado);
+                        dep.setDepreciacao(0);
+                        dep.setValoranual(valorAnual);
+                        dep.setValormes(valorMensal);
+                        dep.setPatrimonioid(patrimonio);
+                        depreciacaoRepository.save(dep);
+                        mes++;
+                    }
+                }
+            }
+        }
+    }
+
     public void Salvar() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         patrimonio.setCliForid(empresa);
         patrimonioRepository.save(this.patrimonio);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        this.LancarDepreciacao();
     }
 
     public void Deletar(int id) {
@@ -170,6 +234,14 @@ public class PatrimonioBean implements Serializable {
         //baixaBemRepository.save(this.baixaBem);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+    }
+
+    public Depreciacao getDepreciacao() {
+        return depreciacao;
+    }
+
+    public void setDepreciacao(Depreciacao depreciacao) {
+        this.depreciacao = depreciacao;
     }
     
 }

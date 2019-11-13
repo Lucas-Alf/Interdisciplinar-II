@@ -42,8 +42,8 @@ public class Depreciacao implements Serializable {
     private double valorreavaliado;
     @Column(name = "Vidautil")
     private double vidautil;
-    @Column(name = "taxadepreciacao")
-    private double taxadepreciacao;
+    @Column(name = "taxadepreciacaomensal")
+    private double taxadepreciacaomensal;
     @Column(name = "taxadepreciacaoanual")
     private double taxadepreciacaoanual;
     @Column(name = "valoratualizado")
@@ -69,7 +69,7 @@ public class Depreciacao implements Serializable {
     }
 
     public Depreciacao(Integer id, Integer mes, Integer ano, double valordepreciado, double valorreavaliado,
-    double vidautil, double taxadepreciacao, double taxadepreciacaoanual, double valoratualizado, Integer depreciacao,
+    double vidautil, double taxadepreciacaomensal, double taxadepreciacaoanual, double valoratualizado, Integer depreciacao,
     Date datadepreciacao, double valoranual, double valormes) {
         this.id = id;
         this.mes = mes;
@@ -77,7 +77,7 @@ public class Depreciacao implements Serializable {
         this.valordepreciado = valordepreciado;
         this.valorreavaliado = valorreavaliado;
         this.vidautil = vidautil;
-        this.taxadepreciacao = taxadepreciacao;
+        this.taxadepreciacaomensal = taxadepreciacaomensal;
         this.taxadepreciacaoanual = taxadepreciacaoanual;
         this.valoratualizado = valoratualizado;
         this.depreciacao = depreciacao;
@@ -159,14 +159,6 @@ public class Depreciacao implements Serializable {
         this.vidautil = vidautil;
     }
 
-    public double getTaxadepreciacao() {
-        return taxadepreciacao;
-    }
-
-    public void setTaxadepreciacao(double taxadepreciacao) {
-        this.taxadepreciacao = taxadepreciacao;
-    }
-
     public double getTaxadepreciacaoanual() {
         return taxadepreciacaoanual;
     }
@@ -221,6 +213,14 @@ public class Depreciacao implements Serializable {
 
     public void setPatrimonioid(Patrimonio patrimonioid) {
         this.patrimonioid = patrimonioid;
+    }
+
+    public double getTaxadepreciacaomensal() {
+        return taxadepreciacaomensal;
+    }
+
+    public void setTaxadepreciacaomensal(double taxadepreciacaomensal) {
+        this.taxadepreciacaomensal = taxadepreciacaomensal;
     }
     
 }

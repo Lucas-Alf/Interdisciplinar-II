@@ -50,7 +50,7 @@ public class Patrimonio implements Serializable {
     @Basic(optional = false)
     //@NotNull
     //@Column(name = "valor")
-    private BigDecimal valor;
+    private double valor;
     @Basic(optional = false)
     //@NotNull
     //@Size(min = 1, max = 500)
@@ -88,7 +88,7 @@ public class Patrimonio implements Serializable {
         this.id = id;
     }
 
-    public Patrimonio(Integer id, Date dataaquisicao, BigDecimal valor, String observacao) {
+    public Patrimonio(Integer id, Date dataaquisicao, double valor, String observacao) {
         this.id = id;
         this.dataaquisicao = dataaquisicao;
         this.valor = valor;
@@ -109,14 +109,6 @@ public class Patrimonio implements Serializable {
 
     public void setDataaquisicao(Date dataaquisicao) {
         this.dataaquisicao = dataaquisicao;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
     }
 
     public String getObservacao() {
@@ -193,14 +185,6 @@ public class Patrimonio implements Serializable {
         return "br.com.setrem.interdisciplinarII.model.Patrimonio[ id=" + id + " ]";
     }
 
-    public EstadoConservacao getEstadoConservacaoid() {
-        return EstadoConservacaoid;
-    }
-
-    public void setEstadoConservacaoid(EstadoConservacao estadoConservacaoid) {
-        EstadoConservacaoid = estadoConservacaoid;
-    }
-
     public GrupoBem getGrupoBemid() {
         return GrupoBemid;
     }
@@ -224,5 +208,21 @@ public class Patrimonio implements Serializable {
     public void setDepreciavel(boolean depreciavel) {
         this.depreciavel = depreciavel;
     }
-    
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public EstadoConservacao getEstadoConservacaoid() {
+        return EstadoConservacaoid;
+    }
+
+    public void setEstadoConservacaoid(EstadoConservacao estadoConservacaoid) {
+        EstadoConservacaoid = estadoConservacaoid;
+    }
+
 }

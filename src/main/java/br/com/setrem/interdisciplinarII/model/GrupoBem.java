@@ -41,11 +41,11 @@ public class GrupoBem implements Serializable {
     @Basic(optional = false)
     //@NotNull
     @Column(name = "taxadepreciacao")
-    private BigDecimal taxadepreciacao;
+    private double taxadepreciacao;
     @Basic(optional = false)
     //@NotNull
     @Column(name = "vidautil")
-    private BigDecimal vidautil;
+    private double vidautil;
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "GrupoBemid")
     //private Collection<Patrimonio> patrimonioCollection;
 
@@ -56,7 +56,7 @@ public class GrupoBem implements Serializable {
         this.id = id;
     }
 
-    public GrupoBem(Integer id, String descricao, BigDecimal taxadepreciacao, BigDecimal vidautil) {
+    public GrupoBem(Integer id, String descricao, double taxadepreciacao, double vidautil) {
         this.id = id;
         this.descricao = descricao;
         this.taxadepreciacao = taxadepreciacao;
@@ -79,21 +79,6 @@ public class GrupoBem implements Serializable {
         this.descricao = descricao;
     }
 
-    public BigDecimal getTaxadepreciacao() {
-        return taxadepreciacao;
-    }
-
-    public void setTaxadepreciacao(BigDecimal taxadepreciacao) {
-        this.taxadepreciacao = taxadepreciacao;
-    }
-
-    public BigDecimal getVidautil() {
-        return vidautil;
-    }
-
-    public void setVidautil(BigDecimal vidautil) {
-        this.vidautil = vidautil;
-    }
 
     /*@XmlTransient
     public Collection<Patrimonio> getPatrimonioCollection() {
@@ -128,6 +113,22 @@ public class GrupoBem implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.GrupoBem[ id=" + id + " ]";
+    }
+
+    public double getTaxadepreciacao() {
+        return taxadepreciacao;
+    }
+
+    public void setTaxadepreciacao(double taxadepreciacao) {
+        this.taxadepreciacao = taxadepreciacao;
+    }
+
+    public double getVidautil() {
+        return vidautil;
+    }
+    
+    public void setVidautil(double vidautil) {
+        this.vidautil = vidautil;
     }
 
 }
