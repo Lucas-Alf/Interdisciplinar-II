@@ -18,6 +18,6 @@ public interface CliForRepository extends JpaRepository<CliFor, String> {
     @Query(value = "SELECT * FROM clifor WHERE id = ?", nativeQuery = true)
     CliFor BuscaPorId(String id);
 
-    @Query(value = "SELECT c FROM clifor c WHERE c.nome or c.nomefantasia LIKE %?1%", nativeQuery = true)
+    @Query(value = "SELECT * FROM clifor c WHERE c.nome LIKE %?1% or c.nomefantasia LIKE %?1%", nativeQuery = true)
     List<CliFor> pesquisar(String nome);
 }
