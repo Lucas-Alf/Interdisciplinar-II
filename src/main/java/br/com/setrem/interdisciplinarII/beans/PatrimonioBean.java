@@ -100,7 +100,7 @@ public class PatrimonioBean implements Serializable {
                     }
                     valorAtualizado = valor - (valorMensal * i);
     
-                    if (valorAtualizado == 0 || valorAtualizado < 0) {
+                    if (valorAtualizado < 0) {
                         break;
                     } else {
                         Depreciacao dep = new Depreciacao();
