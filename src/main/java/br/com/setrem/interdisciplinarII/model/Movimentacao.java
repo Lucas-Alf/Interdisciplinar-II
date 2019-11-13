@@ -36,13 +36,13 @@ public class Movimentacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    //@Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     //@NotNull
     @Column(name = "notafiscal")
-    private Character notafiscal;
+    private String notafiscal;
     @Basic(optional = false)
     //@NotNull
     @Column(name = "tipo")
@@ -57,7 +57,7 @@ public class Movimentacao implements Serializable {
     @Basic(optional = false)
     //@NotNull
     @Column(name = "valortotal")
-    private BigDecimal valortotal;
+    private double valortotal;
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
@@ -73,7 +73,7 @@ public class Movimentacao implements Serializable {
         this.id = id;
     }
 
-    public Movimentacao(Integer id, Character tipo, Date data, BigDecimal valortotal, Character notafiscal){
+    public Movimentacao(Integer id, Character tipo, Date data, double valortotal, String notafiscal){
         this.id = id;
         this.tipo = tipo;
         this.data = data;
@@ -81,13 +81,7 @@ public class Movimentacao implements Serializable {
         this.notafiscal = notafiscal;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Character getTipo() {
         return tipo;
@@ -105,13 +99,7 @@ public class Movimentacao implements Serializable {
         this.data = data;
     }
 
-    public BigDecimal getValortotal() {
-        return valortotal;
-    }
 
-    public void setValortotal(BigDecimal valortotal) {
-        this.valortotal = valortotal;
-    }
 
 
     @Override
@@ -139,13 +127,6 @@ public class Movimentacao implements Serializable {
         return "br.com.setrem.interdisciplinarII.model.Movimentacao[ id=" + id + " ]";
     }
 
-    public Character getNotafiscal() {
-        return notafiscal;
-    }
-
-    public void setNotafiscal(Character notafiscal) {
-        this.notafiscal = notafiscal;
-    }
 
     public CliFor getCliForid() {
         return CliForid;
@@ -161,6 +142,30 @@ public class Movimentacao implements Serializable {
 
     public void setEmpresaId(CliFor empresaId) {
         EmpresaId = empresaId;
+    }
+
+    public double getValortotal() {
+        return valortotal;
+    }
+
+    public void setValortotal(double valortotal) {
+        this.valortotal = valortotal;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNotafiscal() {
+        return notafiscal;
+    }
+
+    public void setNotafiscal(String notafiscal) {
+        this.notafiscal = notafiscal;
     }
 
 }

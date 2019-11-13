@@ -45,9 +45,10 @@ public class LocalBean implements Serializable {
 
     public void Salvar() {
         if (this.local.getDescricao().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descricao!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
             localRepository.save(this.local);
             this.AtualizarTabela();

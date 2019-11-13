@@ -54,10 +54,12 @@ public class ProdutoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else if (this.produto.getNome().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Nome!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
             produtoRepository.save(this.produto);
             this.AtualizarTabela();

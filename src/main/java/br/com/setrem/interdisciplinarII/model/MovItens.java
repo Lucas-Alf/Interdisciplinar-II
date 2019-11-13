@@ -51,12 +51,12 @@ public class MovItens implements Serializable {
     private Movimentacao LocalId;
 
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "quantidade")
     private int qtde;
 
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "valor")
     private BigDecimal valor;
 

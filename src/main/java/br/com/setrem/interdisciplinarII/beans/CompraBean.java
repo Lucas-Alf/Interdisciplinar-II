@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.MovItens;
 import br.com.setrem.interdisciplinarII.model.Movimentacao;
 import br.com.setrem.interdisciplinarII.repository.MovItensRepository;
@@ -24,10 +25,12 @@ public class CompraBean implements Serializable {
     private MovItensRepository movItensRepository;
     private MovItens movItens = new MovItens();
 
+    @Autowired
     private MovimentacaoRepository movimentacaoRepository;
     private Movimentacao movimentacao = new Movimentacao();
 
     private List<MovItens> movItenss;
+    private List<MovItens> produtos;
 
     public CompraBean() {
 
@@ -48,16 +51,32 @@ public class CompraBean implements Serializable {
         PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
     }
 
-    public void Salvar() {
-
-        // grupoBemRepository.save(this.grupoBem);
-        this.AtualizarTabela();
+    /*public void SalvarMovimentacao() {
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        movimentacao.setEmpresaId(empresa);
+        movimentacao.setTipo('C');
+        movimentacao.setValortotal(0.0);
+        movimentacao.setId(movimentacaoRepository.maxId());
+        movimentacaoRepository.save(this.movimentacao);
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+    }*/
 
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
+    public void SalvarEstoque() {
 
+        this.produtos = this.movItenss;
+    }
+
+    public void SalvarMovimentacao() {
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        movimentacao.setEmpresaId(empresa);
+        movimentacao.setTipo('C');
+        movimentacao.setValortotal(0.0);
+        movimentacao.setId(movimentacaoRepository.maxId());
+        movimentacaoRepository.save(this.movimentacao);
+
+        //PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        //PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
     }
 
     public void Deletar(int id) {
@@ -166,6 +185,14 @@ public class CompraBean implements Serializable {
      */
     public void setMovItenss(List<MovItens> movItenss) {
         this.movItenss = movItenss;
+    }
+
+    public List<MovItens> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<MovItens> produtos) {
+        this.produtos = produtos;
     }
 
 }

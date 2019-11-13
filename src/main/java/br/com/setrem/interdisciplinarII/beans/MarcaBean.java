@@ -45,6 +45,7 @@ public class MarcaBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Nome!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
            marcaRepository.save(this.marca);
             this.AtualizarTabela();

@@ -47,7 +47,8 @@ public class UnidadeMedidaBean implements Serializable {
         if (this.unidadeMedida.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage(null, fm); 
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
             unidadeMedidaRepository.save(this.unidadeMedida);
             this.AtualizarTabela();
