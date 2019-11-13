@@ -10,11 +10,11 @@ import br.com.setrem.interdisciplinarII.model.Conta;
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
-    @Query("SELECT c FROM conta c WHERE c.descricao LIKE %?1%")
-    public List<Conta> pesquisar(String nome);
+    @Query(value="SELECT * FROM conta c WHERE c.descricao LIKE %?1% AND c.cliforid = ?2", nativeQuery = true)
+    public List<Conta> pesquisar(String nome, String id);
 
-    @Query("SELECT c FROM conta c WHERE c.sintetica = true")
-    public List<Conta> pesquisarSint();
+    @Query(value="SELECT * FROM conta c WHERE c.sintetica = true AND c.cliforid = ?1", nativeQuery = true)
+    public List<Conta> pesquisarSint(String id);
 
     @Query(value="SELECT * FROM conta c WHERE c.cliforid = ?1", nativeQuery = true)
     public List<Conta> findByCliForid(String id);

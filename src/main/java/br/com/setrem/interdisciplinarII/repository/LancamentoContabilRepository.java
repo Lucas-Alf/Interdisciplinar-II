@@ -13,11 +13,11 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface LancamentoContabilRepository extends JpaRepository<LancamentoContabil, Integer> {
 
-    @Query("SELECT c FROM lancamentocontabil c WHERE c.historico LIKE %?1%")
-    public List<LancamentoContabil> pesquisar(String historico);
+    @Query(value="SELECT * FROM lancamentocontabil c WHERE c.historico LIKE %?1% AND c.cliforid = ?2", nativeQuery = true)
+    public List<LancamentoContabil> pesquisar(String historico,String id);
 
-    @Query("SELECT c FROM conta c WHERE c.sintetica = false")
-    public List<Conta> pesquisarAnalit();
+    @Query(value="SELECT * FROM conta c WHERE c.sintetica = false AND c.cliforid = ?1", nativeQuery = true)
+    public List<Conta> pesquisarAnalit(String id);
 
     @Query(value="SELECT * FROM lancamentocontabil c WHERE c.cliforid = ?1", nativeQuery = true)
     public List<LancamentoContabil> findByCliForid(String id);

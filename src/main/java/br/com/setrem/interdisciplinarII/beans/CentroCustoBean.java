@@ -105,7 +105,8 @@ public class CentroCustoBean implements Serializable {
     }
 
     public void Pesquisar(String nome) {
-         this.centrosCustos = centroCustoRepository.pesquisar(nome);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+         this.centrosCustos = centroCustoRepository.pesquisar(nome, empresa.getId());
     }
 
     public void AbrirModal() {

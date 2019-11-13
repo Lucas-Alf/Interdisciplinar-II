@@ -108,11 +108,13 @@ public class ContaBean implements Serializable {
     }
 
     public void Pesquisar(String nome) {
-         this.contas = contaRepository.pesquisar(nome);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.contas = contaRepository.pesquisar(nome, empresa.getId());
     }
 
     public void PesquisarSintetica() {
-        this.contasSint = contaRepository.pesquisarSint();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.contasSint = contaRepository.pesquisarSint(empresa.getId());
     }
 
     public void AbrirModal() {

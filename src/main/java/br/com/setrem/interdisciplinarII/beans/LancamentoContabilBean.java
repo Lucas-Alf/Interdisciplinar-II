@@ -97,7 +97,8 @@ public class LancamentoContabilBean implements Serializable {
     }
 
     public void PesquisarAnalitica() {
-        this.contasAnalit = lancamentoContabilRepository.pesquisarAnalit();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.contasAnalit = lancamentoContabilRepository.pesquisarAnalit(empresa.getId());
     }
 
     public List<LancamentoContabil> ListarTable() {
@@ -150,7 +151,8 @@ public class LancamentoContabilBean implements Serializable {
     }
 
     public void Pesquisar(String historico) {
-        this.lancamentoContabils = lancamentoContabilRepository.pesquisar(historico);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.lancamentoContabils = lancamentoContabilRepository.pesquisar(historico,empresa.getId());
     }
 
     public void AbrirModal() {
