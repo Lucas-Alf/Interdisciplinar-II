@@ -28,27 +28,15 @@ public class GrupoBem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    //@NotNull
-    //@Size(min = 1, max = 100)
     @Column(name = "descricao")
     private String descricao;
-    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
-    // consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    //@NotNull
     @Column(name = "taxadepreciacao")
     private double taxadepreciacao;
-    @Basic(optional = false)
-    //@NotNull
     @Column(name = "vidautil")
     private double vidautil;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "GrupoBemid")
-    //private Collection<Patrimonio> patrimonioCollection;
-
+    
     public GrupoBem() {
     }
 

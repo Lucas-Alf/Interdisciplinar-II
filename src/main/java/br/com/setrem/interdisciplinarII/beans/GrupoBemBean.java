@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.GrupoBem;
 import br.com.setrem.interdisciplinarII.repository.GrupoBemRepository;
 
@@ -22,10 +23,6 @@ public class GrupoBemBean implements Serializable {
     private GrupoBemRepository grupoBemRepository;
     private GrupoBem grupoBem = new GrupoBem();
 
-    private int id;
-    private String descricao;
-    private double taxadepreciacao;
-    private double vidautil;
     private List<GrupoBem> grupoBens;
 
     public GrupoBemBean() {
@@ -47,9 +44,23 @@ public class GrupoBemBean implements Serializable {
 
     public void Salvar() {
         if (this.grupoBem.getDescricao().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
+        } else if (this.grupoBem.getTaxadepreciacao() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Taxa de Depreciação.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
+        } else if (this.grupoBem.getVidautil() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Vida Útil.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
         } else {
             grupoBemRepository.save(this.grupoBem);
             this.AtualizarTabela();
@@ -57,7 +68,7 @@ public class GrupoBemBean implements Serializable {
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -65,14 +76,14 @@ public class GrupoBemBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             grupoBemRepository.deleteById(id);
             this.AtualizarTabela();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -80,21 +91,11 @@ public class GrupoBemBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
-            grupoBem = grupoBemRepository.getOne(id);
+            this.grupoBem = grupoBemRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        grupoBemRepository.save(grupoBem);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public GrupoBem getGrupoBem() {
@@ -105,38 +106,6 @@ public class GrupoBemBean implements Serializable {
         this.grupoBem = grupoBem;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public double getTaxadepreciacao() {
-        return taxadepreciacao;
-    }
-
-    public void setTaxadepreciacao(double taxadepreciacao) {
-        this.taxadepreciacao = taxadepreciacao;
-    }
-
-    public double getVidautil() {
-        return vidautil;
-    }
-
-    public void setVidautil(double vidautil) {
-        this.vidautil = vidautil;
-    }
-
     public List<GrupoBem> getGrupoBens() {
         return grupoBens;
     }
@@ -144,5 +113,5 @@ public class GrupoBemBean implements Serializable {
     public void setGrupoBens(List<GrupoBem> grupoBens) {
         this.grupoBens = grupoBens;
     }
-    
+
 }
