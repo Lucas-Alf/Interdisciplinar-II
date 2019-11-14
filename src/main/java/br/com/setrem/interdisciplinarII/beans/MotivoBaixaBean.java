@@ -47,7 +47,7 @@ public class MotivoBaixaBean implements Serializable {
         if (this.motivoBaixa.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao", fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarMotivoBaixa').modal('show');");
         } else {
@@ -57,7 +57,7 @@ public class MotivoBaixaBean implements Serializable {
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -65,14 +65,14 @@ public class MotivoBaixaBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             motivoBaixaRepository.deleteById(id);
             this.AtualizarTabela();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -80,7 +80,7 @@ public class MotivoBaixaBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             motivoBaixa = motivoBaixaRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarMotivoBaixa').modal('show');");

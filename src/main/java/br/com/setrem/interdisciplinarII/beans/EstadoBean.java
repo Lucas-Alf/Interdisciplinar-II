@@ -46,11 +46,16 @@ public class EstadoBean implements Serializable {
     }
 
     public void Salvar() {
-        if (this.estado.getDescricao().equals("") || this.estado.getSigla().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe Todos os Campos.");
+        if (this.estado.getDescricao().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Descrição.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
+        } else if (this.estado.getSigla().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Sigla.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
         } else {
@@ -60,7 +65,7 @@ public class EstadoBean implements Serializable {
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -68,14 +73,14 @@ public class EstadoBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             estadoRepository.deleteById(id);
             this.AtualizarTabela();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -83,21 +88,11 @@ public class EstadoBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             estado = estadoRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        estadoRepository.save(estado);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public Estado getEstado() {

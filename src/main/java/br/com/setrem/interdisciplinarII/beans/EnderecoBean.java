@@ -46,10 +46,42 @@ public class EnderecoBean implements Serializable {
     }
 
     public void Salvar() {
-        if (this.endereco.getRua().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+        if (this.endereco.getCep().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um CEP.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
+        } else if (this.endereco.getNumero() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Número.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
+        } else if (this.endereco.getRua().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Rua.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
+        } else if (this.endereco.getBairro().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Bairro.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
+        } else if (this.endereco.getComplemento().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Complemento.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
+        } else if (this.endereco.getCidadeid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Cidade.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         } else {
             enderecoRepository.save(this.endereco);
             this.AtualizarTabela();
@@ -57,7 +89,7 @@ public class EnderecoBean implements Serializable {
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -66,20 +98,20 @@ public class EnderecoBean implements Serializable {
             if (id == 0) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             } else {
                 enderecoRepository.deleteById(id);
                 this.AtualizarTabela();
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             }
         } catch (Exception e) {
             if (e.getMessage().contains("could not extract ResultSet")) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!","Não é possível excluir este registro, pois está relacionado!");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             }
         }
     }
@@ -88,21 +120,11 @@ public class EnderecoBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             endereco = enderecoRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        enderecoRepository.save(endereco);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public Endereco getEndereco() {

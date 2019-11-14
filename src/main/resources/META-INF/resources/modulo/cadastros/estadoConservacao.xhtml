@@ -30,37 +30,38 @@
                 <h:form>
 
                     <div class="modal fade" id="CadastrarEstadoConservacao" widgetVar="CadastrarEstadoConservacao" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
-                        <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
-                                class="modal-content">
-                                <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Estado de Conservação</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <span class="ui-float-label">
-                                        <p:messages id="validacao" showDetail="true" closable="true" />                                   
-                                        <h:inputHidden  id="id" value="#{estadoConservacaoBean.estadoConservacao.id}" />
-                                        <h:outputText value="Descrição: " />
-                                        <p:inputText style="width: 540px;" id="descricao" value="#{estadoConservacaoBean.estadoConservacao.descricao}" />
-                                    </span>
-                                </div>
-                                <div class="modal-footer">
-                                    <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
-                                        action="#{estadoConservacaoBean.Salvar()}">
-                                        <f:ajax execute="@form" render="@form" />
-                                        <i class="far fa-save crud-btn"></i>
-                                    </h:commandLink>
-                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
-                                            class="fas fa-ban"></i> Cancelar</button>
+                            <div class="modal-dialog" role="document">
+                                <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
+                                    class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Estado de Conservação</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span class="ui-float-label">
+                                                
+                                            <p:messages for="validacao" id="validacao" var="validacao" showDetail="true" closable="true" />                                   
+                                            <h:inputHidden  id="id" value="#{estadoConservacaoBean.estadoConservacao.id}" />
+                                            <h:outputText value="Descrição: " />
+                                            <p:inputText style="width: 540px;" id="descricao" value="#{estadoConservacaoBean.estadoConservacao.descricao}" />                                                                                                   
+
+                                        </span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
+                                            action="#{estadoConservacaoBean.Salvar()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <i class="far fa-save crud-btn"></i>
+                                        </h:commandLink>
+                                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <p:growl id="messages" showDetail="true" closable="true" />
+                    <p:messages for="validacao2" id="validacao2" var="validacao2" showDetail="true" closable="true" />
                     
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />

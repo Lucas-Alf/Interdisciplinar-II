@@ -47,9 +47,17 @@ public class CidadeBean implements Serializable {
 
     public void Salvar() {
         if (this.cidade.getDescricao().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCidade').modal('show');");
+        } else if (this.cidade.getEstadoid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Estado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCidade').modal('show');");
         } else {
             cidadeRepository.save(this.cidade);
             this.AtualizarTabela();
@@ -57,7 +65,7 @@ public class CidadeBean implements Serializable {
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -66,20 +74,20 @@ public class CidadeBean implements Serializable {
             if (id == 0) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             } else {
                 cidadeRepository.deleteById(id);
                 this.AtualizarTabela();
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             }
         } catch (Exception e) {
             if (e.getMessage().contains("could not extract ResultSet")) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!","Não é possível excluir este registro, pois está relacionado!");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             }
         }
     }
@@ -88,21 +96,11 @@ public class CidadeBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             cidade = cidadeRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarCidade').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        cidadeRepository.save(cidade);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public Cidade getCidade() {

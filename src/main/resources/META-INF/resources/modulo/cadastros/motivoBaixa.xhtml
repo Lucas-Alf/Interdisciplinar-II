@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="modal-body" >
                                     <span class="ui-float-label">
-                                        <p:messages id="validacao" showDetail="true" closable="true" />
+                                        <p:messages for="validacao" id="validacao" var="validacao" showDetail="true" closable="true" />
                                         <h:inputHidden id="id" value="#{motivoBaixaBean.motivoBaixa.id}" />
                                         <h:outputText value="Descrição: " />
                                         <p:inputText style="width: 540px;" id="descricao" value="#{motivoBaixaBean.motivoBaixa.descricao}" />
@@ -55,6 +55,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <p:messages for="validacao2" id="validacao2" var="validacao2" showDetail="true" closable="true" />
 
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
@@ -74,8 +76,7 @@
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
-
-                    <p:growl id="messages" showDetail="true" closable="true" />
+                    
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#{motivoBaixaBean.Deletar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>

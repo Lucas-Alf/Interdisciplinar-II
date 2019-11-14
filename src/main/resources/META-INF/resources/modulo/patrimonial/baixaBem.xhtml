@@ -54,13 +54,14 @@
                                         <p:selectOneMenu id="motivoBaixa" filter="true" filterMatchMode="contains" value="#{baixaBemBean.baixaBem.motivobaixaid}" style="width: 515px;" converter="MotivoBaixaConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione Motivo de Baixa" />
                                             <f:selectItems value="#{motivoBaixaBean.motivoBaixas}" var="motivoBaixa" itemValue="#{motivoBaixa}" itemLabel="#{motivoBaixa.descricao}" />
+                                            <f:ajax event="change" render="valor"/> 
                                         </p:selectOneMenu><br /><br />
 
                                         <h:outputText value="Valor: " style="margin-left: 10px; margin-right: 48px;" />
-                                        <p:inputNumber id="valor" style="width: 200px;" minValue="0" value="#{baixaBemBean.baixaBem.valor}"></p:inputNumber><br/><br/>  
+                                        <p:inputNumber var="valor" id="valor" style="width: 200px;" minValue="0" disabled="#{baixaBemBean.baixaBem.motivobaixaid.descricao != 'Venda'}" value="#{baixaBemBean.baixaBem.valor}"></p:inputNumber><br/><br/>
 
                                         <h:outputText value="Observação: " style="margin-right: 12px;" />
-                                        <p:inputText style="width: 515px;" id="observacao" value="#{baixaBemBean.baixaBem.observacao}" />                               
+                                        <p:inputText style="width: 515px;" id="observacao" value="#{baixaBemBean.baixaBem.observacao}" />
                                     </span>
                                 </div>
                                 <div class="modal-footer">
