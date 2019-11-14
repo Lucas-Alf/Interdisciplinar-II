@@ -49,6 +49,8 @@ public class EstadoConservacaoBean implements Serializable {
         if (this.estadoConservacao.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarEstadoConservacao').modal('show');");
             context.addMessage(null, fm);
         } else {
             estadoConservacaoRepository.save(this.estadoConservacao);

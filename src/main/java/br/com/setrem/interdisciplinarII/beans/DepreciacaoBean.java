@@ -1,7 +1,9 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -49,27 +51,45 @@ public class DepreciacaoBean implements Serializable {
 
     public void Depreciar() {
         Date dataInical = getDataInicial();
-        String anoI = new SimpleDateFormat("yyyy").format(dataInical);
-        String mesI = new SimpleDateFormat("MM").format(dataInical);
-
         Date dataFinal = getDataFinal();
-        String anoF = new SimpleDateFormat("yyyy").format(dataFinal);
-        String mesF = new SimpleDateFormat("MM").format(dataFinal);
-
-        //int id = getPatId();
-
-        int id = depreciacao.getPatrimonioid().getId();
-        this.depreciacoes = depreciacaoRepository.ListarFaltaDepreciar(id, Integer.parseInt(mesI), Integer.parseInt(mesF), Integer.parseInt(anoI), Integer.parseInt(anoF));
-
-
-
-        //depreciacaoRepository.save(this.depreciacao);
-        //this.AtualizarTabela();
-        //PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Depreciado com Sucesso!");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
+        if (dataInical == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Período Inicial!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarDepreciacao').modal('show');");
+        } else if (dataFinal == null) {
+            FacesMessage fm2 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Período Final!");
+            FacesContext context2 = FacesContext.getCurrentInstance();
+            context2.addMessage(null, fm2);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarDepreciacao').modal('show');");
+        } else {
+            String anoI = new SimpleDateFormat("yyyy").format(dataInical);
+            String mesI = new SimpleDateFormat("MM").format(dataInical);
+            
+            String anoF = new SimpleDateFormat("yyyy").format(dataFinal);
+            String mesF = new SimpleDateFormat("MM").format(dataFinal);
+    
+            this.depreciacoes = depreciacaoRepository.ListarFaltaDepreciar(Integer.parseInt(mesI), Integer.parseInt(mesF), Integer.parseInt(anoI), Integer.parseInt(anoF));
+    
+            for (int i = 0; i < this.depreciacoes.size(); i++) {
+                this.depreciacao = depreciacoes.get(i);
+                this.depreciacao.setDepreciacao(1);
+                this.depreciacao.setDatadepreciacao(new Date());
+                depreciacaoRepository.save(this.depreciacao);
+            }
+    
+            this.depreciacao = new Depreciacao();
+            this.AtualizarTabela();
+            setDataInicial(null);
+            setDataFinal(null);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+    
+            FacesMessage fm3 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Depreciado com Sucesso!");
+            FacesContext context3 = FacesContext.getCurrentInstance();
+            context3.addMessage(null, fm3);
+        }
     }
 
     public List<Depreciacao> getDepreciacoes() {

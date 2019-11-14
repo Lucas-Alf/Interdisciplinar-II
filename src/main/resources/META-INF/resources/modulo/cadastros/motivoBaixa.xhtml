@@ -29,7 +29,7 @@
 
                     <div class="modal fade" id="CadastrarMotivoBaixa" widgetVar="CadastrarMotivoBaixa" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Motivo da Baixa</h4>
@@ -39,6 +39,7 @@
                                 </div>
                                 <div class="modal-body" >
                                     <span class="ui-float-label">
+                                        <p:messages id="validacao" showDetail="true" closable="true" />
                                         <h:inputHidden id="id" value="#{motivoBaixaBean.motivoBaixa.id}" />
                                         <h:outputText value="Descrição: " />
                                         <p:inputText style="width: 540px;" id="descricao" value="#{motivoBaixaBean.motivoBaixa.descricao}" />
@@ -98,4 +99,8 @@
     </ui:composition>
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
+<f:metadata>
+    <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+</f:metadata>
+
 </html>

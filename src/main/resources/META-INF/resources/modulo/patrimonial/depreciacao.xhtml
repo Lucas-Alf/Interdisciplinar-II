@@ -30,7 +30,7 @@
 
                     <div class="modal fade" id="CadastrarDepreciacao" widgetVar="CadastrarDepreciacao" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 60%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 330px;"
+                            <div style="margin-top: 60%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; "
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Lançamento de Depreciação</h4>
@@ -39,20 +39,16 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <h:messages></h:messages>
                                     <span class="ui-float-label">
+                                        <p:messages id="validacao" showDetail="true" closable="true" />
 
-                                        <p:outputLabel for="Periodo" value="Período: " style="margin-right: 30px;" />
-                                        <p:datePicker id="Periodo" value="#{depreciacaoBean.dataInicial}" showIcon="true" pattern="MM/yyyy" style="text-align: center;" /><br /><br />
-                                        
-                                        <p:outputLabel for="Ate" value="Até: " style="margin-right: 65px;" />
-                                        <p:datePicker id="Ate" value="#{depreciacaoBean.dataFinal}" showIcon="true" pattern="MM/yyyy" style="width: 50px; text-align: center;" /><br /><br />                       
-                                        
-                                        <h:outputText value="Patrimônio: " style="width: 300px; margin-right: 12px;" />
-                                        <p:selectOneMenu id="patrimonio" value="#{depreciacaoBean.depreciacao.patrimonioid}" filter="true" filterMatchMode="contains" style="width: 515px;" converter="PatrimonioConverter" appendTo="@this">
-                                            <f:selectItem itemValue="null" itemLabel="Selecione um Patrimônio" />
-                                            <f:selectItems value="#{patrimonioBean.patrimonios}" var="patrimonio" itemValue="#{patrimonio}" itemLabel="#{patrimonio.id} - #{patrimonio.produtoid.nome}" />
-                                        </p:selectOneMenu><br />
+                                        <p:outputLabel value="Selecione Abaixo o Período para Depreciar os Patrimônios" style="font-weight: bold;" /><br /><br />
+
+                                        <p:outputLabel for="month" value="Período: " style="margin-right: 20px;" />
+                                        <p:datePicker id="month" view="month" value="#{depreciacaoBean.dataInicial}" showIcon="true" pattern="MM/yyyy" yearNavigator="true" yearRange="2000:2030" /><br /><br />
+
+                                        <p:outputLabel for="month" value="Até: " style="margin-right: 55px;" />
+                                        <p:datePicker id="month2" view="month" value="#{depreciacaoBean.dataFinal}" showIcon="true" pattern="MM/yyyy" yearNavigator="true" yearRange="2000:2030" />
 
                                     </span>
                                 </div>
@@ -89,7 +85,7 @@
 
                     <p:dataTable scrollable="true" scrollHeight="70%" id="tabela1" var="item"
                         value="#{depreciacaoBean.depreciacoes}" style="margin-top: 10px; height: 550px;" rowKey="#{item.id}"
-                        selection="#{item}" selectionMode="single" emptyMessage="Não há registros na tabela.">
+                        selection="#{item}" selectionMode="single" emptyMessage="Não há registros na tabela." rowStyleClass="#{item.depreciacao eq '0' ? 'aberto' : 'fechado'}">
                         <p:column headerText="Código" style="text-align: center; width: 5%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>
@@ -102,7 +98,7 @@
                         <p:column headerText="Ano" style="width: 5%; text-align: center">
                             <h:outputText value="#{item.ano}" />
                         </p:column>
-                        <p:column headerText="Valor Atualizado" style="width: 10%; text-align: right">
+                        <p:column headerText="Valor Atualizado" style="width: 15%; text-align: right">
                             <h:outputText value="#{item.valoratualizado}" />
                         </p:column>
                         <p:column headerText="Depreciado?" style="width: 10%; text-align: left">
@@ -117,7 +113,7 @@
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
 <f:metadata>
-        <f:viewAction action="#{depreciacaoBean.AtualizarTabela()}" />
+    <f:viewAction action="#{depreciacaoBean.AtualizarTabela()}" />
     <f:viewAction action="#{patrimonioBean.AtualizarTabela()}" />
 </f:metadata>
 

@@ -85,3 +85,11 @@
 .menu-link {
   cursor: pointer;
 }
+
+.aberto{
+  color: green;
+} 
+
+.fechado{
+  color: red;
+} 

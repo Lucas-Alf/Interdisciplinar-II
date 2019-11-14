@@ -48,6 +48,8 @@ public class MotivoBaixaBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarMotivoBaixa').modal('show');");
         } else {
             motivoBaixaRepository.save(this.motivoBaixa);
             this.AtualizarTabela();

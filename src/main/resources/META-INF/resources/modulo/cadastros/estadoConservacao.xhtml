@@ -31,21 +31,20 @@
 
                     <div class="modal fade" id="CadastrarEstadoConservacao" widgetVar="CadastrarEstadoConservacao" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
                                 class="modal-content">
                                 <div class="modal-header">
-                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Estado
-                                        de Conservação</h4>
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Estado de Conservação</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                     <span class="ui-float-label">
+                                        <p:messages id="validacao" showDetail="true" closable="true" />                                   
                                         <h:inputHidden  id="id" value="#{estadoConservacaoBean.estadoConservacao.id}" />
                                         <h:outputText value="Descrição: " />
-                                        <p:inputText style="width: 540px;" id="descricao"
-                                            value="#{estadoConservacaoBean.estadoConservacao.descricao}" />
+                                        <p:inputText style="width: 540px;" id="descricao" value="#{estadoConservacaoBean.estadoConservacao.descricao}" />
                                     </span>
                                 </div>
                                 <div class="modal-footer">
@@ -61,6 +60,8 @@
                         </div>
                     </div>
 
+                    <p:growl id="messages" showDetail="true" closable="true" />
+                    
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
@@ -81,7 +82,6 @@
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
-                    <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
                         action="#{estadoConservacaoBean.Deletar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
@@ -106,5 +106,8 @@
     </ui:composition>
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
+<f:metadata>
+    <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+</f:metadata>
 
 </html>
