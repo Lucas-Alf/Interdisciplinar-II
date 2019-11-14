@@ -32,7 +32,7 @@
                     <div class="modal fade" id="CadastrarCompra" widgetVar="CadastrarCompra" tabindex="-1" role="dialog"
                         aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 550px;"
+                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 600px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Compra
@@ -64,11 +64,6 @@
                                                         itemValue="#{clifor}" itemLabel="#{clifor.nome}" />
                                                 </p:selectOneMenu>
                                                 
-                                                <h:commandLink class="btn btn-info btn-sm" value="Salvar" action="#{compraBean.SalvarEstoque()}">
-                                                <f:ajax execute="@form" render="@form" />
-                                                <i class="far fa-edit crud-btn"></i>
-                                                </h:commandLink><br /><br />
-
                                          </f:facet>
                                          
                                       </h:panelGrid><br />
@@ -87,8 +82,7 @@
                                                 itemValue="#{produto}" itemLabel="#{produto.nome}" />
                                         </p:selectOneMenu>
 
-                                        <h:outputText value="Local: "
-                                            style="width: 300px; margin-left: 30px; margin-right: 30px; " />
+                                        <h:outputText value="Local: " style="width: 300px; margin-left: 30px; margin-right: 30px; " />
                                         <p:selectOneMenu id="local" filter="true" filterMatchMode="contains"
                                             value="#{compraBean.movItens.localId}" style="width: 300px;"
                                             converter="LocalConverter" appendTo="@this">
@@ -101,18 +95,18 @@
                                         <p:inputNumber id="quantidade" value="#{compraBean.movItens.qtde}">
                                         </p:inputNumber>
 
-                                        <h:outputText value="Valor: "
-                                            style="width: 20px; margin-left: 60px; margin-right: 55px;" />
+                                        <h:outputText value="valor: " style="width: 20px; margin-right: 55px;" />
                                         <p:inputNumber id="valor" value="#{compraBean.movItens.valor}">
-                                        </p:inputNumber><br /><br />
+                                        </p:inputNumber>
+
+
                                     </f:facet>
                                          
                                 </h:panelGrid>
                                         
-                                        <h:commandLink class="btn btn-success btn-sm" value="Incluir"
-                                            action="#{compraBean.SalvarEstoque()}">
-                                            <f:ajax execute="@form" render="@form" />
-                                            <i class="far fa-edit crud-btn"></i>
+                                        <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{compraBean.SalvarEstoque()}">
+                                            <f:ajax execute="@form" render="@form" /> 
+                                             <i class="far fa-edit crud-btn"></i>
                                         </h:commandLink>
 
                                         <p:growl id="messages2" showDetail="true" closable="true" />
@@ -121,9 +115,9 @@
                                             <f:ajax execute="@form" render="@form" />
                                             <i class="far fa-trash-alt crud-btn"></i>
                                         </h:commandLink>
-
+<!-- value="#{compraBean.produtos}" style="margin-top: 10px; height: 100px;" -->
                                         <p:dataTable scrollable="true" scrollHeight="60%" id="tabela2" var="item"
-                                            value="#{compraBean.movItenss}" style="margin-top: 10px; height: 550px;"
+                                            value="#{compraBean.movItenss}" style="margin-top: 10px; height: 100px;"
                                             rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                                             emptyMessage="Não há registros na tabela.">
                                             <p:column headerText="Produto" style="width: 30%; text-align: left">
@@ -135,7 +129,7 @@
                                             <p:column headerText="valor" style="width: 10%; text-align: left">
                                                 <h:outputText value="#{item.valor}" />
                                             </p:column>
-                                        </p:dataTable>
+                                        </p:dataTable><br /><br />
 
                                     </span>
                                 </div>
@@ -164,7 +158,8 @@
                         </h:commandLink><br />
                     </div>
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{compraBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir"
+                        action="#{compraBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
@@ -201,12 +196,15 @@
                             <h:outputText value="#{item.valor}" />
                         </p:column>
                     </p:dataTable>
-
+                        
                 </h:form>
             </div>
         </ui:define>
     </ui:composition>
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
+<f:metadata>
 
+    <f:viewAction action="#{localBean.AtualizarTabela()}" />
+</f:metadata>
 </html>

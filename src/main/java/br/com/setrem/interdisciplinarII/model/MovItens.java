@@ -44,21 +44,21 @@ public class MovItens implements Serializable {
 
     @JoinColumn(name = "ProdutoId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Movimentacao ProdutoId;
+    private Produto ProdutoId;
 
     @JoinColumn(name = "LocalId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Movimentacao LocalId;
+    private Local LocalId;
 
     @Basic(optional = false)
     //@NotNull
     @Column(name = "quantidade")
-    private int qtde;
+    private double qtde;
 
     @Basic(optional = false)
     //@NotNull
     @Column(name = "valor")
-    private BigDecimal valor;
+    private double valor;
 
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -71,7 +71,7 @@ public class MovItens implements Serializable {
         this.id = id;
     }
 
-    public MovItens(Integer id, int qtde, BigDecimal valor) {
+    public MovItens(Integer id, Double qtde, double valor) {
         this.id = id;
         this.qtde = qtde;
         this.valor = valor;
@@ -118,37 +118,10 @@ public class MovItens implements Serializable {
         MovimentacaoId = movimentacaoId;
     }
 
-    public Movimentacao getProdutoId() {
-        return ProdutoId;
-    }
+  
 
-    public void setProdutoId(Movimentacao produtoId) {
-        ProdutoId = produtoId;
-    }
+    
 
-    public Movimentacao getLocalId() {
-        return LocalId;
-    }
-
-    public void setLocalId(Movimentacao localId) {
-        LocalId = localId;
-    }
-
-    public int getQtde() {
-        return qtde;
-    }
-
-    public void setQtde(int qtde) {
-        this.qtde = qtde;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
 
     public Movimentacao getCliForId() {
         return CliForId;
@@ -158,5 +131,49 @@ public class MovItens implements Serializable {
         CliForId = cliForId;
     }
 
-    
+    public double getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(double qtde) {
+        this.qtde = qtde;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    /**
+     * @return Produto return the ProdutoId
+     */
+    public Produto getProdutoId() {
+        return ProdutoId;
+    }
+
+    /**
+     * @param ProdutoId the ProdutoId to set
+     */
+    public void setProdutoId(Produto ProdutoId) {
+        this.ProdutoId = ProdutoId;
+    }
+
+    /**
+     * @return Local return the LocalId
+     */
+    public Local getLocalId() {
+        return LocalId;
+    }
+
+    /**
+     * @param LocalId the LocalId to set
+     */
+    public void setLocalId(Local LocalId) {
+        this.LocalId = LocalId;
+    }
+
 }
+
