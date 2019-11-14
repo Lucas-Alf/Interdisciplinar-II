@@ -17,7 +17,6 @@
             <div class="container">
                 <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro Avulso de Lançamento Contábil</h3>
                 <h:form>
-
                     <div class="modal fade" id="CadastrarLancamento" widgetVar="CadastrarLancamento"
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
@@ -40,11 +39,11 @@
                                         <p:inputText style="width: 300px;" id="histotico" value="#{lancamentoContabilBean.lancamentoContabil.historico}" />
 
                                         <h:outputText value="Valor: " />
-                                        <p:inputText style="width: 300px;" id="valor" value="#{lancamentoContabilBean.lancamentoContabil.valor}" />
+                                        <p:inputText style="width: 300px;" id="valor" value="#{lancamentoContabilBean.valor}" />
 
-                                        <p:outputLabel for="button" value="Data: " style="margin-right: 50px;" />
-                                        <p:datePicker id="button" value="#{lancamentoContabilBean.lancamentoContabil.datahora}" showIcon="true" style="width: 100px;" />
-
+                                        <h:outputText for="pt" value="Data: "/>
+                                        <p:datePicker id="pt" value="#{lancamentoContabilBean.lancamentoContabil.datahora}" showIcon="false" style="width: 300px;" pattern="dd/MM/yyyy" locale="pt_BR"/>
+                                        
                                         <h:outputText value="Tipo: " />
                                         <p:selectOneMenu id="tipo" value="#{lancamentoContabilBean.lancamentoContabil.tipo}"
                                         style="width: 85%;" appendTo="@this">
@@ -119,10 +118,14 @@
                             <h:outputText value="#{item.historico}" />
                         </p:column>
                         <p:column headerText="Valor" style="text-align: center; width: 10%;">
-                            <h:outputText value="#{item.valor}" />
+                            <h:outputText value="#{item.valor}">
+                                <f:convertNumber currencySymbol = "R$ " type = "currency" locale="pt_BR"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Data/Hora" style="text-align: center; width: 10%;">
-                            <h:outputText value="#{item.datahora}" />
+                            <h:outputText value="#{item.datahora}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Tipo" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.tipo}" />

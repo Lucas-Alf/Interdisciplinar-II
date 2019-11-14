@@ -25,6 +25,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  *
  * 
@@ -41,7 +43,7 @@ public class LancamentoContabil implements Serializable {
     private Integer id;
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
-    @Basic(optional = false)
+    //@Basic(optional = false)
     //@NotNull
     @Column(name = "valor")
     private double valor;
@@ -50,6 +52,7 @@ public class LancamentoContabil implements Serializable {
     //@NotNull
     @Column(name = "datahora")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat (pattern="dd/MM/yyyy")
     private Date datahora;
 
     @Basic(optional = false)
