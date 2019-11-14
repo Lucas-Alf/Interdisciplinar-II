@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -50,6 +51,8 @@ public class Depreciacao implements Serializable {
     private double valoratualizado;
     @Column(name = "depreciacao")
     private Integer depreciacao;
+    @Transient
+    private String descDepreciacao;
     @Column(name = "datadepreciacao")
     @Temporal(TemporalType.DATE)
     private Date datadepreciacao;
@@ -221,6 +224,18 @@ public class Depreciacao implements Serializable {
 
     public void setTaxadepreciacaomensal(double taxadepreciacaomensal) {
         this.taxadepreciacaomensal = taxadepreciacaomensal;
+    }
+
+    public String getDescDepreciacao() {
+        if (this.depreciacao == 0) {
+            return "Aberto";
+        } else {
+            return "Fechado";
+        }
+    }
+
+    public void setDescDepreciacao(String descDepreciacao) {
+        this.descDepreciacao = descDepreciacao;
     }
     
 }

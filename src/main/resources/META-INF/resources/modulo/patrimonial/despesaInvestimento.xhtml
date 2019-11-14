@@ -42,13 +42,13 @@
                                 <div class="modal-body">
                                     <span class="ui-float-label">
                                         <h:inputHidden id="id" value="#{despesaInvestimentoBean.despesaInvestimento.id}" />
-                                        
+                                                                       
                                         <p:selectOneRadio id="console" value="#{despesaInvestimentoBean.despesaInvestimento.tipo}" unselectable="true">
                                             <f:selectItem itemLabel="Despesa" itemValue="D" />
                                             <f:selectItem itemLabel="Investimento" itemValue="I" />
                                         </p:selectOneRadio>
 
-                                        <p:outputLabel for="button" value="Data: " style="margin-right: 50px;" />
+                                        <p:outputLabel for="button" value="Data: " style="margin-right: 60px;" />
                                         <p:datePicker id="button" value="#{despesaInvestimentoBean.despesaInvestimento.data}" showIcon="true" style="width: 50px; text-align: center;" /><br /><br />
 
                                         <h:outputText value="Patrimônio: " style="width: 300px; margin-right: 17px;" />
@@ -57,11 +57,11 @@
                                             <f:selectItems value="#{patrimonioBean.patrimonios}" var="patrimonio" itemValue="#{patrimonio}" itemLabel="#{patrimonio.id} - #{patrimonio.produtoid.nome}" />
                                         </p:selectOneMenu><br /><br />
 
-                                        <h:outputText value="Valor: " style="width: 20px; margin-right: 55px;" />
+                                        <h:outputText value="Valor: " style="width: 20px; margin-right: 58px;" />
                                         <p:inputNumber widgetVar="valor" id="valor" value="#{despesaInvestimentoBean.despesaInvestimento.valor}">
                                         </p:inputNumber><br /><br />
 
-                                        <h:outputText value="Observação: " style="margin-right: 14px;" />
+                                        <h:outputText value="Observação: " style="margin-right: 12px;" />
                                         <p:inputText style="width: 512px;" id="observacao"
                                             value="#{despesaInvestimentoBean.despesaInvestimento.observacao}" />
                                     </span>

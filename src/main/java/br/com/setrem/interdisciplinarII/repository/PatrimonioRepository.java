@@ -29,5 +29,5 @@ public interface PatrimonioRepository extends JpaRepository<Patrimonio, Integer>
 
     @Query(value = "select b.vidautil from patrimonio a inner join grupobem b on (a.grupobemid = b.id) where a.id = ?1", nativeQuery = true)
     public double BuscarVidaUtil(int patrimonio);
-
+    
 }
