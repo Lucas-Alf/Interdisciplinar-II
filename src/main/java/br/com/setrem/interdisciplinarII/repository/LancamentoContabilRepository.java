@@ -16,7 +16,7 @@ public interface LancamentoContabilRepository extends JpaRepository<LancamentoCo
     @Query(value="SELECT * FROM lancamentocontabil c WHERE c.historico LIKE %?1% AND c.cliforid = ?2", nativeQuery = true)
     public List<LancamentoContabil> pesquisar(String historico,String id);
 
-    @Query(value="SELECT * FROM conta c WHERE c.sintetica = false AND c.cliforid = ?1", nativeQuery = true)
+    @Query(value="SELECT * FROM conta WHERE sintetica = false AND cliforid = ?1", nativeQuery = true)
     public List<Conta> pesquisarAnalit(String id);
 
     @Query(value="SELECT * FROM lancamentocontabil c WHERE c.cliforid = ?1", nativeQuery = true)

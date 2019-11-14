@@ -180,6 +180,10 @@ public class LancamentoContabilBean implements Serializable {
     }
 
     public List<Conta> getContasAnalit() {
+        if (this.contasAnalit == null) {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            this.contasAnalit = lancamentoContabilRepository.pesquisarAnalit(empresa.getId());
+        }
         return contasAnalit;
     }
 

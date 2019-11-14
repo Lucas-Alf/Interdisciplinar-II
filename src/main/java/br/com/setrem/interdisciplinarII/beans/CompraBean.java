@@ -1,6 +1,7 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -31,7 +32,7 @@ public class CompraBean implements Serializable {
 
     private List<MovItens> movItenss;
     private List<MovItens> produtos;
-
+ 
     public CompraBean() {
 
     }
@@ -63,8 +64,14 @@ public class CompraBean implements Serializable {
     }*/
 
     public void SalvarEstoque() {
-
-        this.produtos = this.movItenss;
+        if( this.produtos == null){
+            this.produtos = new ArrayList<MovItens>(); 
+        } else {
+            this.produtos.add(movItens);
+        }
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        movItens = new MovItens();
     }
 
     public void SalvarMovimentacao() {
