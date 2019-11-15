@@ -26,10 +26,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "patrimonio")
 
 public class Patrimonio implements Serializable {
@@ -37,23 +33,13 @@ public class Patrimonio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    //@NotNull
     @Column(name = "dataaquisicao")
     @Temporal(TemporalType.DATE)
     private Date dataaquisicao;
-    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
-    // consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    //@NotNull
-    //@Column(name = "valor")
+    @Column(name = "valor")
     private double valor;
-    @Basic(optional = false)
-    //@NotNull
-    //@Size(min = 1, max = 500)
     @Column(name = "observacao")
     private String observacao;
     @Column(name = "baixado")
