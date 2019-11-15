@@ -163,7 +163,9 @@
                             <h:outputText value="#{item.produtoid.nome}" />
                         </p:column>
                         <p:column headerText="Valor" style="width: 10%; text-align: right">
-                            <h:outputText value="#{item.valor}" />
+                            <h:outputText value="#{item.valor}">
+                                <f:convertNumber currencySymbol = "R$ " type = "currency" locale="pt_BR"/>
+                            </h:outputText>
                         </p:column>
                     </p:dataTable>
 

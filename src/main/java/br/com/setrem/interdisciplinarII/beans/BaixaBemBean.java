@@ -38,8 +38,7 @@ public class BaixaBemBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        //this.baixaBens = baixaBemRepository.findAll();
-        this.baixaBens = baixaBemRepository.AtualizarTabela();
+        this.baixaBens = baixaBemRepository.findAll();
     }
 
     /*public void Pesquisar(String descricao) {
@@ -52,20 +51,38 @@ public class BaixaBemBean implements Serializable {
     }
 
     public void Salvar() {
-        //patrimonio.setBaixado(1);
-        //patrimonioRepository.save(this.patrimonio);
-        //patrimonioRepository.BaixarBem(baixaBem.getPatrimonioid());
-        //patrimonioRepository.BaixarBem(id);
-
-        //patrimonioRepository.BaixarBem(this.baixaBem.getPatrimonioid().getId());
-        //patrimonioBean.BaixarBem(this.baixaBem.getPatrimonioid().getId());
-
-        this.patrimonio = patrimonioRepository.getOne(this.baixaBem.getPatrimonioid().getId());
-        this.patrimonio.setBaixado(1);
-        patrimonioRepository.save(patrimonio);
-        baixaBemRepository.save(this.baixaBem);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        if (this.baixaBem.getData() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
+        } else if (this.baixaBem.getPatrimonioid() == null) {    
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Patrimônio.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
+        } else if (this.baixaBem.getMotivobaixaid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Motivo de Baixa.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
+        } else if ((int)(this.baixaBem.getValor()) == 0 && this.baixaBem.getMotivobaixaid().getId() == 1) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor da Venda.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
+        } else {
+            this.patrimonio = patrimonioRepository.getOne(this.baixaBem.getPatrimonioid().getId());
+            this.patrimonio.setBaixado(1);
+            patrimonioRepository.save(patrimonio);
+            baixaBemRepository.save(this.baixaBem);
+            this.AtualizarTabela();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        }
     }
 
     public void Deletar(int id) {

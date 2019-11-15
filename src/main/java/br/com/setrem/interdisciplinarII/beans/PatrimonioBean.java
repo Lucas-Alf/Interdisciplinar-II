@@ -48,7 +48,6 @@ public class PatrimonioBean implements Serializable {
 
     public void AtualizarTabela() {
         this.patrimonios = patrimonioRepository.listaPatrimonio();
-        this.patrimonios = patrimonioRepository.listaPatrimonio();
     }
 
     public void BaixarBem(int id) {

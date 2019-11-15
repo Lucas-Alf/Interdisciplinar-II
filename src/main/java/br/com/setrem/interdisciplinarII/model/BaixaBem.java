@@ -35,23 +35,13 @@ public class BaixaBem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    //@NotNull
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
-    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
-    // consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    //@NotNull
     @Column(name = "valor")
     private double valor;
-    @Basic(optional = false)
-    //@NotNull
-    //@Size(min = 1, max = 300)
     @Column(name = "observacao")
     private String observacao;
     @JoinColumn(name = "motivobaixaid", referencedColumnName = "id")
@@ -122,7 +112,7 @@ public class BaixaBem implements Serializable {
     public void setPatrimonioid(Patrimonio patrimonioid) {
         this.patrimonioid = patrimonioid;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
