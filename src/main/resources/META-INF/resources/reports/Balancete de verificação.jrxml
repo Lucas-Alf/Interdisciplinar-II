@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Patrimônios da empresa" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Balancete de verificação" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
 	<parameter name="REPORTS_DIR" class="java.lang.String"/>
 	<parameter name="EMPRESA_NOME" class="java.lang.String"/>
 	<parameter name="RELATORIO_NOME" class="java.lang.String"/>
@@ -11,18 +11,20 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="codigo" class="java.lang.String"/>
-	<field name="dataAquisicao" class="java.lang.String"/>
-	<field name="valor" class="java.lang.Double"/>
 	<field name="descricao" class="java.lang.String"/>
-	<field name="produto" class="java.lang.String"/>
-	<field name="centroCusto" class="java.lang.String"/>
-	<field name="observacao" class="java.lang.String"/>
+	<field name="valortotal" class="java.lang.Double"/>
+	<field name="tipo" class="java.lang.String"/>
+	<variable name="totalcredor" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{tipo}.contains("C")) ? $F{valortotal} : 0]]></variableExpression>
+	</variable>
+	<variable name="totaldevedor" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{tipo}.contains("D")) ? $F{valortotal} : 0]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="93" splitType="Stretch">
+		<band height="81" splitType="Stretch">
 			<staticText>
 				<reportElement x="184" y="21" width="47" height="13" uuid="db21b1b6-c56e-4114-8371-c6b6ba52c300"/>
 				<textElement>
@@ -52,11 +54,6 @@
 				<reportElement x="254" y="57" width="100" height="14" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="5" y="83" width="544" height="1" uuid="ae5aafeb-e112-4fc3-8c99-fd585f334f8a">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-			</line>
 			<textField>
 				<reportElement x="230" y="39" width="317" height="15" uuid="d64cb109-a15e-484f-9f23-1778d39cea9f"/>
 				<textFieldExpression><![CDATA[$P{EMPRESA_NOME}]]></textFieldExpression>
@@ -73,98 +70,127 @@
 		</band>
 	</title>
 	<columnHeader>
-		<band height="14" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement x="5" y="0" width="36" height="14" uuid="221ec989-63c6-471f-90a9-faa1e9e8ddb4"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Código]]></text>
+				<reportElement x="5" y="0" width="305" height="28" uuid="19e931f3-57a6-4a15-85c8-502c5c72c08e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e9b8b68-27a9-406e-af07-23cb4a4cee7a"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None"/>
+				<text><![CDATA[CONTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="0" width="74" height="14" uuid="71f21de1-4795-4626-94d5-1fff353683cb"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Data Aquisição]]></text>
+				<reportElement x="310" y="0" width="238" height="14" uuid="519bb670-a2a5-40d0-b1c1-ebb019dcaf1c"/>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SALDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="115" y="0" width="116" height="14" uuid="f44a6874-17c2-4299-ab63-22589faa0c61"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Produto]]></text>
+				<reportElement x="310" y="14" width="120" height="14" uuid="fff39113-03cf-4d82-9956-be161b869340"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DEVEDOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="231" y="0" width="184" height="14" uuid="04e5ca9c-d585-42b7-85bb-900cfc34c649"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Descrição]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="417" y="0" width="54" height="14" uuid="9af984dd-b41a-492f-8765-44c0087291e0"/>
-				<textElement textAlignment="Left">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Valor]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="471" y="0" width="78" height="14" uuid="20b0d063-497c-463b-8504-1d416633dc5f"/>
-				<textElement textAlignment="Right">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Centro de Custo]]></text>
+				<reportElement x="430" y="14" width="118" height="14" uuid="5f1e4fb8-8d91-4c91-8af3-80b393611d61"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CREDOR]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="15" splitType="Stretch">
+		<band height="16" splitType="Stretch">
 			<textField>
-				<reportElement x="5" y="0" width="36" height="14" uuid="7c7126e0-8471-4cb8-91d0-21d85618548c">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="df675b52-9258-4fa8-a52b-1254546bb2b1"/>
+				<reportElement x="5" y="0" width="305" height="16" uuid="a88e78f0-93fa-48df-bc3a-6f5f3af969bf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e9b8b68-27a9-406e-af07-23cb4a4cee7a"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="41" y="0" width="74" height="14" uuid="efc4a117-0529-41ef-a0aa-e11e95fd89fd">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="87c3c80e-fbcd-4620-9b53-4a6fd3232d4d"/>
-				</reportElement>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{dataAquisicao}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="115" y="0" width="116" height="14" uuid="084b2fe8-1393-4fc2-b900-75d6ba8dd252">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0fe70404-60fc-472f-a6dc-514241053fcf"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{produto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="231" y="0" width="184" height="14" uuid="5aa1f800-dc62-4f1c-a7f7-6a1a86f872ce">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c7d928be-4d95-4ce3-a9d2-cec81e028689"/>
-				</reportElement>
+				<box padding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="417" y="0" width="54" height="14" uuid="00c4372a-502c-4f19-a48e-7759d920b83f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="127e72f2-acec-4da0-8971-9d272fcdc3ee"/>
-				</reportElement>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="310" y="0" width="120" height="16" uuid="b8723c76-b771-4ac3-bccf-de648f807be9"/>
+				<box padding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[($F{tipo}.contains("D")) ? $F{valortotal} : ""]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="471" y="0" width="78" height="14" uuid="10d85c82-3ff5-4feb-aecc-e30928c6f4a2">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="41991a43-cc36-43d4-b677-894b1ab64c7e"/>
-				</reportElement>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{centroCusto}]]></textFieldExpression>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="430" y="0" width="118" height="16" uuid="63ccc5b4-c86b-4ab5-bf29-e39bd8de508d"/>
+				<box padding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[($F{tipo}.contains("C")) ? $F{valortotal} : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="50">
+			<staticText>
+				<reportElement x="5" y="0" width="305" height="16" uuid="f5d49c9b-d372-46bd-a2da-6ce475d46826"/>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="430" y="0" width="118" height="16" uuid="787a685b-d9d8-4d11-bf82-deb18b256806"/>
+				<box padding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$V{totalcredor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="310" y="0" width="120" height="16" uuid="d7f2a1c8-a507-4a17-9430-9a39602089b0"/>
+				<box padding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$V{totaldevedor}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="64" splitType="Stretch"/>
+		<band height="17"/>
 	</pageFooter>
 </jasperReport>
