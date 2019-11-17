@@ -37,15 +37,11 @@ public class Auditoria implements Serializable {
     @Column(name = "tabela")
     private String tabela;
     @Basic(optional = false)
-    @NotNull
-    @Lob
     @Column(name = "valorantigo")
-    private Object valorantigo;
+    private String valorantigo;
     @Basic(optional = false)
-    @NotNull
-    @Lob
     @Column(name = "valornovo")
-    private Object valornovo;
+    private String valornovo;
 
     public Auditoria() {
     }
@@ -54,7 +50,7 @@ public class Auditoria implements Serializable {
         this.id = id;
     }
 
-    public Auditoria(Integer id, String tabela, Object valorantigo, Object valornovo) {
+    public Auditoria(Integer id, String tabela, String valorantigo, String valornovo) {
         this.id = id;
         this.tabela = tabela;
         this.valorantigo = valorantigo;
@@ -77,19 +73,19 @@ public class Auditoria implements Serializable {
         this.tabela = tabela;
     }
 
-    public Object getValorantigo() {
+    public String getValorantigo() {
         return valorantigo;
     }
 
-    public void setValorantigo(Object valorantigo) {
+    public void setValorantigo(String valorantigo) {
         this.valorantigo = valorantigo;
     }
 
-    public Object getValornovo() {
+    public String getValornovo() {
         return valornovo;
     }
 
-    public void setValornovo(Object valornovo) {
+    public void setValornovo(String valornovo) {
         this.valornovo = valornovo;
     }
 

@@ -13,12 +13,16 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import com.google.gson.Gson;
+
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.Auditoria;
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Relatorio;
 import br.com.setrem.interdisciplinarII.model.SolicitacaoRelatorio;
+import br.com.setrem.interdisciplinarII.repository.AuditoriaRepository;
 import br.com.setrem.interdisciplinarII.repository.SolicitacaoRelatorioRepository;
 
 /**
@@ -31,6 +35,8 @@ public class SolicitacaoRelatorioBean implements Serializable {
 
     @Autowired
     private SolicitacaoRelatorioRepository solicitacaoRelatorioRepository;
+    @Autowired
+    private AuditoriaRepository auditoriaRepository;
 
     private String nome;
     private Relatorio relatorio = new Relatorio();
@@ -69,11 +75,18 @@ public class SolicitacaoRelatorioBean implements Serializable {
             solicitacao.setRelatorioid(relatorio.getId());
             solicitacao.setTipo(Integer.parseInt(tipo));
             solicitacaoRelatorioRepository.save(solicitacao);
+            Gson gson = new Gson();
+            Auditoria audit = new Auditoria();
+            audit.setTabela("solicitacaorelatorio");
+            audit.setValorantigo(null);
+            audit.setValornovo(gson.toJson(solicitacao));
+            auditoriaRepository.save(audit);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
             new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso."));
             return "";
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
             new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possível salvar a solicitação. "));
