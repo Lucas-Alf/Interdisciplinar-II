@@ -130,7 +130,7 @@
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
-
+<!--
                     <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
                         action="#{cliforBean.AbreAlterar(item.id)}">
                         <f:ajax execute="@form" render="@form" />
@@ -143,7 +143,7 @@
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
-
+-->
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
                         value="#{cliforBean.clifors}" style="margin-top: 10px; height: 550px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"

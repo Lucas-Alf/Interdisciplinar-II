@@ -21,7 +21,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 480px;"
+                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 575px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Avulso de Lançamento Contábil</h4>
@@ -29,14 +29,17 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">                                   
-                                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
-
+                                <div class="modal-body">                                 
                                         <h:inputHidden  id="id" value="#{lancamentoContabilBean.lancamentoContabil.id}" />
-                                        <h:inputHidden  id="CliForid" value="#{lancamentoContabilBean.lancamentoContabil.cliforid}" converter = "CliForConverter"/>
+                                        <h:inputHidden  id="CliForid" value="#{lancamentoContabilBean.lancamentoContabil.cliforid}" converter = "CliForConverter"/>  
+
+                                        <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
 
                                         <h:outputText value="Histórico: " />
-                                        <p:inputText style="width: 300px;" id="histotico" value="#{lancamentoContabilBean.lancamentoContabil.historico}" />
+                                        <h:panelGroup>
+                                        <p:inputTextarea style="width: 95%;" id="historico"  value="#{lancamentoContabilBean.lancamentoContabil.historico}" rows="4" cols="30" counter="display" maxlength="350" counterTemplate="{0} caracteres faltantes." autoResize="false" /> 
+                                        <h:outputText id="display" />
+                                        </h:panelGroup>
 
                                         <h:outputText value="Valor: " />
                                         <p:inputText style="width: 300px;" id="valor" value="#{lancamentoContabilBean.valor}" />
@@ -52,7 +55,7 @@
                                             <f:selectItem itemValue="D" itemLabel="Débito" />
                                         </p:selectOneMenu>
 
-                                        <h:outputText value="Centro de Custo: "  />
+                                        <h:outputText value="Centro de Custo:"  />
                                         <p:selectOneMenu filter="true" filterMatchMode="contains" id="centrocusto" binding="#{centrocusto}" style="width: 85%; margin-top: 10px;"
                                                 converter="CentroCustoConverter" appendTo="@this" value="#{lancamentoContabilBean.lancamentoContabil.centrocustoid}">    
                                             <f:selectItem itemValue="" itemLabel="Selecione um Centro de Custo"/>
@@ -65,7 +68,6 @@
                                             <f:selectItem itemValue="" itemLabel="Selecione uma Conta"/>
                                             <f:selectItems value="#{lancamentoContabilBean.contasAnalit}" var="conta" itemValue="#{conta}" itemLabel="#{conta.descricao}"/>
                                         </p:selectOneMenu>
-
 
                                     </h:panelGrid>  
                                 </div>
