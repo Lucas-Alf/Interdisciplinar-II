@@ -179,6 +179,16 @@ public class RelatorioBean implements Serializable {
         }
     }
 
+    // private JRResultSetDataSource gerarDataSource(String consulta) {
+    // try {
+    // ResultSet result = relatorioRepository.RealizaConsulta(consulta);
+    // return new JRResultSetDataSource(result);
+    // } catch (Exception e) {
+    // System.err.println(e.getMessage());
+    // return null;
+    // }
+    // }
+
     private JasperPrint exportPdfFile(Relatorio relatorio) {
         try {
             Resource resource = resourceLoader

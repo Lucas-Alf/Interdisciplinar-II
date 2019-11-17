@@ -1,5 +1,6 @@
 package br.com.setrem.interdisciplinarII.repository;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,7 @@ import br.com.setrem.interdisciplinarII.model.Relatorio;
 public interface RelatorioRepository extends JpaRepository<Relatorio, Integer> {
     @Query(value = "SELECT * FROM relatorio WHERE excluido = false and nome like %?1% and cliforid = ?2", nativeQuery = true)
     List<Relatorio> Lista(String descricao, String cliforid);
+
+    @Query(value = "$1", nativeQuery = true)
+    ResultSet RealizaConsulta(String consulta);
 }
