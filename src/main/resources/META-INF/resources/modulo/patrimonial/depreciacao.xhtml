@@ -99,7 +99,9 @@
                             <h:outputText value="#{item.ano}" />
                         </p:column>
                         <p:column headerText="Valor Atualizado" style="width: 15%; text-align: right">
-                            <h:outputText value="#{item.valoratualizado}" />
+                            <h:outputText value="#{item.valoratualizado}">
+                                <f:convertNumber currencySymbol = "R$ " type = "currency" locale="pt_BR"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Depreciado?" style="width: 10%; text-align: left">
                             <h:outputText value="#{item.descDepreciacao}" />
@@ -113,6 +115,7 @@
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
 <f:metadata>
+    <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
     <f:viewAction action="#{depreciacaoBean.AtualizarTabela()}" />
     <f:viewAction action="#{patrimonioBean.AtualizarTabela()}" />
 </f:metadata>

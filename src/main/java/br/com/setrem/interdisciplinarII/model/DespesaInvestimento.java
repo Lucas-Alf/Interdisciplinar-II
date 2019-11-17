@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,22 +31,19 @@ public class DespesaInvestimento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    // @NotNull
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
     @Column(name = "observacao")
     private String observacao;
-    @Basic(optional = false)
-    // @NotNull
     @Column(name = "valor")
     private double valor;
     @Column(name = "tipo")
     private String tipo;
+    @Transient
+    private String descTipo;
     @JoinColumn(name = "patrimonioid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Patrimonio patrimonioid;
@@ -136,5 +134,19 @@ public class DespesaInvestimento implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
+    public String getDescTipo() {
+        if (this.tipo.equals("I")) {
+            return "Investimento";
+        } else if (this.tipo.equals("D")) {
+            return "Despesa";
+        } else {
+            return "";
+        }
+    }
+
+    public void setDescTipo(String descTipo) {
+        this.descTipo = descTipo;
+    }
+
 }

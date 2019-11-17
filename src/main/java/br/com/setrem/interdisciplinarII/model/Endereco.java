@@ -22,10 +22,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "endereco")
 
 public class Endereco implements Serializable {
@@ -33,40 +29,22 @@ public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    //@NotNull
-    //@Size(min = 1, max = 8)
     @Column(name = "cep")
     private String cep;
-    @Basic(optional = false)
-    //@NotNull
-    //@Size(min = 1, max = 200)
     @Column(name = "rua")
     private String rua;
-    @Basic(optional = false)
-    //@NotNull
-    //@Size(min = 1, max = 200)
     @Column(name = "bairro")
     private String bairro;
-    @Basic(optional = false)
-    //@NotNull
     @Column(name = "numero")
     private int numero;
-    @Basic(optional = false)
-    //@NotNull
-    //@Size(min = 1, max = 300)
     @Column(name = "complemento")
     private String complemento;
     @JoinColumn(name = "cidadeid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cidade cidadeid;
-    /*
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "enderecoid")
-    private Collection<CliFor> CliForCollection;
-*/
+
     public Endereco() {
     }
 
@@ -138,16 +116,7 @@ public class Endereco implements Serializable {
     public void setCidadeid(Cidade cidadeid) {
         this.cidadeid = cidadeid;
     }
-/*
-    @XmlTransient
-    public Collection<CliFor> getCliForCollection() {
-        return CliForCollection;
-    }
 
-    public void setCliForCollection(Collection<CliFor> CliForCollection) {
-        this.CliForCollection = CliForCollection;
-    }
-*/
     @Override
     public int hashCode() {
         int hash = 0;

@@ -48,7 +48,6 @@ public class PatrimonioBean implements Serializable {
 
     public void AtualizarTabela() {
         this.patrimonios = patrimonioRepository.listaPatrimonio();
-        this.patrimonios = patrimonioRepository.listaPatrimonio();
     }
 
     public void BaixarBem(int id) {
@@ -125,50 +124,82 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void Salvar() {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        patrimonio.setCliForid(empresa);
-        patrimonioRepository.save(this.patrimonio);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        this.LancarDepreciacao();
+        if (this.patrimonio.getDataaquisicao() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data de Aquisição.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
+        } else if (this.patrimonio.getProdutoid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Patrimônio.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
+        } else if ((int)(this.patrimonio.getValor()) == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
+        } else if (this.patrimonio.getFornecedorid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Fornecedor.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
+        } else if (this.patrimonio.getGrupoBemid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Grupo do Bem.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
+        } else if (this.patrimonio.getEstadoConservacaoid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Estado de Conservação.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
+        } else if (this.patrimonio.getCentroCustoid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Centro de Custo.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
+        } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            patrimonio.setCliForid(empresa);
+            patrimonioRepository.save(this.patrimonio);
+            this.AtualizarTabela();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            this.LancarDepreciacao();
+        }
     }
 
     public void Deletar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
-                    "Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             patrimonioRepository.deleteById(id);
             this.AtualizarTabela();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
     public void AbreAlterar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
-                    "Selecione um registro para Alterar.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             this.patrimonio = patrimonioRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        patrimonioRepository.save(patrimonio);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public Patrimonio getPatrimonio() {
@@ -186,12 +217,6 @@ public class PatrimonioBean implements Serializable {
     public void setPatrimonios(List<Patrimonio> patrimonios) {
         this.patrimonios = patrimonios;
     }
-
-    /*
-     * public List<Produto> getProdutos() { return produtos; }
-     * 
-     * public void setProdutos(List<Produto> produtos) { this.produtos = produtos; }
-     */
 
     public Produto getProduto() {
         return produto;
@@ -218,20 +243,9 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void SalvarBaixa(int id) {
-        //patrimonio.setBaixado(1);
-        //patrimonioRepository.save(this.patrimonio);
-        //patrimonioRepository.BaixarBem(baixaBem.getPatrimonioid());
-        //patrimonioRepository.BaixarBem(id);
-
-        //patrimonioRepository.BaixarBem(this.baixaBem.getPatrimonioid().getId());
-
-        //patrimonioBean.BaixarBem(this.baixaBem.getPatrimonioid().getId());
-
-
         this.patrimonio = patrimonioRepository.getOne(id);
         this.patrimonio.setBaixado(1);
         patrimonioRepository.save(patrimonio);
-        //baixaBemRepository.save(this.baixaBem);
         this.AtualizarTabela();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
     }
@@ -243,5 +257,5 @@ public class PatrimonioBean implements Serializable {
     public void setDepreciacao(Depreciacao depreciacao) {
         this.depreciacao = depreciacao;
     }
-    
+
 }
