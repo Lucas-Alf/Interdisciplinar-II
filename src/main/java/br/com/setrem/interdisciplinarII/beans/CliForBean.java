@@ -101,6 +101,17 @@ public class CliForBean implements Serializable {
         this.clifors = cliforRepository.findAll();
     }
 /*
+    public void AbreAlterar(String id) {
+        if (id.equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        } else {
+            cliFor = cliforRepository.getOne(id);
+            PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('show');");
+        }
+    }
+
     public void Remove(String id) {
         if (id.equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
@@ -115,17 +126,6 @@ public class CliForBean implements Serializable {
         context.addMessage(null, fm);
         }
 
-    }
-
-    public void AbreAlterar(String id) {
-        if (id.equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-        } else {
-            cliFor = cliforRepository.getOne(id);
-            PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('show');");
-        }
     }
 
     public void Alterar() {

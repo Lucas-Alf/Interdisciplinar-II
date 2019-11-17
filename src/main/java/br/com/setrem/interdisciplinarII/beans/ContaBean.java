@@ -76,12 +76,18 @@ public class ContaBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            contaRepository.deleteById(id);
-            this.AtualizarTable();
+            try {
+                contaRepository.deleteById(id);
+                this.AtualizarTable();
 
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, fm);
+            } catch (Exception e) {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção", "Registro é utilizado por Lançamento(s) Contábil(eis).");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, fm);
+            }
         }
 
     }

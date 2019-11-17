@@ -73,12 +73,18 @@ public class CentroCustoBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            centroCustoRepository.deleteById(id);
-            this.AtualizarTable();
+            try{
+                centroCustoRepository.deleteById(id);
+                this.AtualizarTable();
 
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, fm);
+            } catch(Exception ex){
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção", "Registro é utilizado por Lançamento(s) Contábil(eis) ou Patrimônio(s).");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, fm);
+            }
         }
     }
 
