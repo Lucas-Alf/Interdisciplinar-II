@@ -47,7 +47,8 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.patrimonios = patrimonioRepository.listaPatrimonio();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.patrimonios = patrimonioRepository.listaPatrimonio(empresa.getId());
     }
 
     public void BaixarBem(int id) {
@@ -55,11 +56,13 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void Pesquisar(String descricao) {
-        this.patrimonios = patrimonioRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.patrimonios = patrimonioRepository.pesquisar(descricao, empresa.getId());
     }
 
     public void ListaPatrimonio() {
-        this.patrimonios = patrimonioRepository.listaPatrimonio();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.patrimonios = patrimonioRepository.listaPatrimonio(empresa.getId());
     }
 
     public void AbrirModal() {

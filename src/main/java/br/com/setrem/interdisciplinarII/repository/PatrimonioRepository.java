@@ -12,14 +12,11 @@ import br.com.setrem.interdisciplinarII.model.Patrimonio;
 @Repository
 public interface PatrimonioRepository extends JpaRepository<Patrimonio, Integer> {
 
-    @Query("SELECT e FROM patrimonio e INNER JOIN e.produtoid t where e.baixado = 0 and t.nome LIKE %?1%")
-    public List<Patrimonio> pesquisar(String descricao);
+    @Query(value = "select * from patrimonio a inner join produto b on (a.produtoid = b.id) where a.baixado = 0 and b.nome like %?1% and a.cliforid = ?2", nativeQuery = true)
+    public List<Patrimonio> pesquisar(String descricao, String empresa);
 
-    @Query("SELECT e FROM patrimonio e INNER JOIN e.produtoid where e.baixado = 0")
-    public List<Patrimonio> listaPatrimonio();
-
-    //@Query(value = "select b.vidautil from patrimonio a inner join grupobem b on (a.grupobemid = b.id) where a.id = ?1", nativeQuery = true)
-    //public List<Patrimonio> listaPatrimonio();
+    @Query(value = "select * from patrimonio a inner join produto b on (a.produtoid = b.id) where a.baixado = 0 and a.cliforid = ?1", nativeQuery = true)
+    public List<Patrimonio> listaPatrimonio(String empresa);
     
     @Query("update patrimonio e set e.baixado = 1 where e.id = ?1")
     public void BaixarBem(int id);
