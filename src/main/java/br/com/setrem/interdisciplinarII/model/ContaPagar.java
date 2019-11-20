@@ -12,12 +12,22 @@ public class ContaPagar implements Serializable{
     private Integer id;
     @Basic(optional = false)
     @NotNull
-   //@Size(min = 1, max = 50)
-    @Column(name = "nome")
-    private String nome;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaid")
-    //private Collection<Produto> produtoCollection;
-
+    @Column(name = "Descrição")
+    private String descricao;
+    @Column(name = "Número do documento")
+    private Number numdocumento;
+    @Column(name = "Série do Documento")
+    private Number seriedocumento;
+    @Column(name = "Data do Documento")
+    private Date datadocumento;
+    @Column(name = "Data de Vencimento")
+    private Date datavencimento;
+    @Column(name = "Data de Pagamento")
+    private Date datapagamento;
+    @Column(name = "Valor")
+    private Double valor;
+    @Column(name = "Saldo")
+    private Double saldo;
 public ContaPagar {
 }
 public ContaPagar (Integer id){
