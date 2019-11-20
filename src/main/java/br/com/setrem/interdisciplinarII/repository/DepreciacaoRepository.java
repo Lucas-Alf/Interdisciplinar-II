@@ -21,20 +21,11 @@ public interface DepreciacaoRepository extends JpaRepository<Depreciacao, Intege
     @Query(value = "select count(*) from depreciacao where patrimonioid = ?1", nativeQuery = true)
     public int VerificaDepreciacao(int id);
 
-    //@Query(value = "select * from depreciacao where depreciacao = 0 and mes between ?1 and ?2 and ano between ?3 and ?4", nativeQuery = true)
-    //public List<Depreciacao> ListarFaltaDepreciar(int mesI, int mesF, int anoI, int anoF);
-
     @Query(value = "select * from depreciacao where depreciacao = 0 and cast((ano ||''|| (case when CHARACTER_LENGTH(cast(mes as varchar)) = 1 then cast(0 as varchar) || cast(mes as varchar) else cast(mes as varchar) end) ||'01') as date) between ?1 and ?2", nativeQuery = true)
     public List<Depreciacao> ListarFaltaDepreciar(Date dataI, Date dataF);
 
     @Query(value = "update depreciacao set depreciacao = 1, datadepreciacao = current_date where id = ?1", nativeQuery = true)
     public int AlterarDepreciar(int idDepreciacao);
-
-    //@Query(value = "delete from depreciacao where patrimonioid = ?1 and depreciacao = 0", nativeQuery = true)
-    //public Void ExcluirDepreciacao(int patrimonioId);
-
-    //@Query(value = "select * from depreciacao where patrimonioid = ?1 and depreciacao = 1", nativeQuery = true)
-    //public int CountDepreciados(int patrimonioId);
 
     @Query(value = "select * from depreciacao where patrimonioid = ?1 and depreciacao = 0 order by id asc", nativeQuery = true)
     public List<Depreciacao> ListaDepreciacao(int patrimonioId);

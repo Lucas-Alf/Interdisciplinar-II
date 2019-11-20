@@ -18,13 +18,6 @@ public interface PatrimonioRepository extends JpaRepository<Patrimonio, Integer>
     @Query(value = "select * from patrimonio a inner join produto b on (a.produtoid = b.id) where a.baixado = 0 and a.cliforid = ?1", nativeQuery = true)
     public List<Patrimonio> listaPatrimonio(String empresa);
     
-    @Query("update patrimonio e set e.baixado = 1 where e.id = ?1")
-    public void BaixarBem(int id);
-
-    @Query(value = "select b.taxadepreciacao, b.vidautil from patrimonio a inner join grupobem b on (a.grupobemid = b.id) where a.id = ?1", nativeQuery = true)
-    public double BuscarDepreciacao(int patrimonio);
-
-    @Query(value = "select b.vidautil from patrimonio a inner join grupobem b on (a.grupobemid = b.id) where a.id = ?1", nativeQuery = true)
-    public double BuscarVidaUtil(int patrimonio);
-    
+    @Query("update patrimonio e set e.baixado = 1 where e.id = ?1 and cliforid = ?2")
+    public void BaixarBem(int id, String empresa);
 }

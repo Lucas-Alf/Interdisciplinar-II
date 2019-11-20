@@ -52,7 +52,8 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void BaixarBem(int id) {
-        patrimonioRepository.BaixarBem(id);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        patrimonioRepository.BaixarBem(id, empresa.getId());
     }
 
     public void Pesquisar(String descricao) {

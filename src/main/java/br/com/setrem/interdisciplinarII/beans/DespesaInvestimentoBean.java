@@ -108,12 +108,6 @@ public class DespesaInvestimentoBean implements Serializable {
                             depreciacaoRepository.save(depreciacao);
                         }
                     }
-
-                    //depreciacaoRepository.ExcluirDepreciacao(patrimonioId);
-                    //int countDepreciados = depreciacaoRepository.CountDepreciados(patrimonioId);
-                    //Depreciacao dep = new Depreciacao();
-                    //depreciacoes = depreciacaoRepository.ListaUltimoDepreciado(patrimonioId);
-                    //double valorAtualizado = dep.getValoratualizado();
                 }
             }
     
