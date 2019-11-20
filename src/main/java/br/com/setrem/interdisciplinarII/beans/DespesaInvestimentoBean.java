@@ -29,6 +29,7 @@ public class DespesaInvestimentoBean implements Serializable {
 
     @Autowired
     private DepreciacaoRepository depreciacaoRepository;
+    private Depreciacao depreciacao = new Depreciacao();
 
     private List<DespesaInvestimento> despesaInvestimentos;
     private List<Depreciacao> depreciacoes;
@@ -80,18 +81,39 @@ public class DespesaInvestimentoBean implements Serializable {
                 if (despesaInvestimento.getPatrimonioid().isDepreciavel() == true) {
                     int patrimonioId = despesaInvestimento.getPatrimonioid().getId();                  
                     
-                    depreciacaoRepository.ExcluirDepreciacao(patrimonioId);
-        
-                    int countDepreciados = depreciacaoRepository.CountDepreciados(patrimonioId);
+                    this.depreciacoes = depreciacaoRepository.ListaDepreciacao(patrimonioId);
 
-                    Depreciacao dep = new Depreciacao();
-                    depreciacoes = depreciacaoRepository.ListaUltimoDepreciado(patrimonioId);
+                    this.depreciacao = depreciacoes.get(0);
+                    double valorAtualizado = depreciacao.getValoratualizado();
+                    double valorReavaliado = valorAtualizado + despesaInvestimento.getValor();
 
-                    double valorAtualizado = dep.getValoratualizado();
+                    double valorMensal = valorReavaliado * (depreciacao.getTaxadepreciacaomensal() / 100);
+                    double valorAnual = valorMensal * 12;
+                    double valorAtualizadoCerto;
                     
+                    for (int i = 0; i < this.depreciacoes.size(); i++) {
+                        this.depreciacao = depreciacoes.get(i);
+                        
+                        valorAtualizadoCerto = valorReavaliado - (valorMensal * (i + 1));
 
-                    //int mes =  dep.get
-                    //int ano =
+                        if (valorAtualizadoCerto < 0) {
+                            break;
+                        } else {
+                            depreciacao.setValordepreciado(valorReavaliado - valorAtualizadoCerto);
+                            depreciacao.setValorreavaliado(valorReavaliado);
+                            depreciacao.setValoratualizado(valorAtualizadoCerto);
+                            depreciacao.setDepreciacao(0);
+                            depreciacao.setValoranual(valorAnual);
+                            depreciacao.setValormes(valorMensal);
+                            depreciacaoRepository.save(depreciacao);
+                        }
+                    }
+
+                    //depreciacaoRepository.ExcluirDepreciacao(patrimonioId);
+                    //int countDepreciados = depreciacaoRepository.CountDepreciados(patrimonioId);
+                    //Depreciacao dep = new Depreciacao();
+                    //depreciacoes = depreciacaoRepository.ListaUltimoDepreciado(patrimonioId);
+                    //double valorAtualizado = dep.getValoratualizado();
                 }
             }
     
@@ -165,6 +187,14 @@ public class DespesaInvestimentoBean implements Serializable {
 
     public void setDepreciacoes(List<Depreciacao> depreciacoes) {
         this.depreciacoes = depreciacoes;
+    }
+
+    public Depreciacao getDepreciacao() {
+        return depreciacao;
+    }
+
+    public void setDepreciacao(Depreciacao depreciacao) {
+        this.depreciacao = depreciacao;
     }
 
 }

@@ -65,13 +65,10 @@ public class DepreciacaoBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarDepreciacao').modal('show');");
         } else {
-            String anoI = new SimpleDateFormat("yyyy").format(dataInical);
-            String mesI = new SimpleDateFormat("MM").format(dataInical);
-            
-            String anoF = new SimpleDateFormat("yyyy").format(dataFinal);
-            String mesF = new SimpleDateFormat("MM").format(dataFinal);
-    
-            this.depreciacoes = depreciacaoRepository.ListarFaltaDepreciar(Integer.parseInt(mesI), Integer.parseInt(mesF), Integer.parseInt(anoI), Integer.parseInt(anoF));
+            //String anoI = new SimpleDateFormat("yyyy").format(dataInical);
+            //String mesI = new SimpleDateFormat("MM").format(dataInical);
+
+            this.depreciacoes = depreciacaoRepository.ListarFaltaDepreciar(dataInical, dataFinal);
     
             for (int i = 0; i < this.depreciacoes.size(); i++) {
                 this.depreciacao = depreciacoes.get(i);

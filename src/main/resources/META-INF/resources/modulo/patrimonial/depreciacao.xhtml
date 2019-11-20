@@ -89,7 +89,7 @@
                         <p:column headerText="Código" style="text-align: center; width: 5%;">
                             <h:outputText value="#{item.id}" />
                         </p:column>
-                        <p:column headerText="Patrimônio" style="width: 30%; text-align: left">
+                        <p:column headerText="Patrimônio" style="width: 20%; text-align: left">
                             <h:outputText value="#{item.patrimonioid.produtoid.nome}" />
                         </p:column>
                         <p:column headerText="Mês" style="width: 5%; text-align: center">
@@ -98,7 +98,12 @@
                         <p:column headerText="Ano" style="width: 5%; text-align: center">
                             <h:outputText value="#{item.ano}" />
                         </p:column>
-                        <p:column headerText="Valor Atualizado" style="width: 15%; text-align: right">
+                        <p:column headerText="Valor Reavaliado" style="width: 10%; text-align: right">
+                            <h:outputText value="#{item.valorreavaliado}">
+                                <f:convertNumber currencySymbol = "R$ " type = "currency" locale="pt_BR"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Atualizado" style="width: 10%; text-align: right">
                             <h:outputText value="#{item.valoratualizado}">
                                 <f:convertNumber currencySymbol = "R$ " type = "currency" locale="pt_BR"/>
                             </h:outputText>
