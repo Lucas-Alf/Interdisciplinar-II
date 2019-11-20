@@ -26,4 +26,13 @@ public interface DepreciacaoRepository extends JpaRepository<Depreciacao, Intege
     @Query(value = "update depreciacao set depreciacao = 1, datadepreciacao = current_date where id = ?1", nativeQuery = true)
     public int AlterarDepreciar(int idDepreciacao);
 
+    @Query(value = "delete from depreciacao where patrimonioid = ?1 and depreciacao = 0", nativeQuery = true)
+    public Void ExcluirDepreciacao(int patrimonioId);
+
+    @Query(value = "select * from depreciacao where patrimonioid = ?1 and depreciacao = 1", nativeQuery = true)
+    public int CountDepreciados(int patrimonioId);
+
+    @Query(value = "select * from depreciacao where patrimonioid = ?1 order by mes desc, ano desc limit 1", nativeQuery = true)
+    public List<Depreciacao> ListaUltimoDepreciado(int patrimonioId);
+
 }

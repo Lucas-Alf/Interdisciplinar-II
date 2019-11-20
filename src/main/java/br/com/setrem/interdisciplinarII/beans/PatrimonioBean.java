@@ -75,7 +75,7 @@ public class PatrimonioBean implements Serializable {
                 cal.setTime(data);
                 int mes = cal.get(Calendar.MONTH);
                 int ano = cal.get(Calendar.YEAR);
-    
+
                 double valor = patrimonio.getValor();
                 double depreciacaoTaxa = patrimonio.getGrupoBemid().getTaxadepreciacao();
                 double vidaUtil = patrimonio.getGrupoBemid().getVidautil();

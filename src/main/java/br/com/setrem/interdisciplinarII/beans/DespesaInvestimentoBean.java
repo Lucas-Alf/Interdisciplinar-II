@@ -14,7 +14,9 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.Depreciacao;
 import br.com.setrem.interdisciplinarII.model.DespesaInvestimento;
+import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
 import br.com.setrem.interdisciplinarII.repository.DespesaInvestimentoRepository;
 
 @Named(value = "despesaInvestimentoBean")
@@ -25,7 +27,11 @@ public class DespesaInvestimentoBean implements Serializable {
     private DespesaInvestimentoRepository despesaInvestimentoRepository;
     private DespesaInvestimento despesaInvestimento = new DespesaInvestimento();
 
+    @Autowired
+    private DepreciacaoRepository depreciacaoRepository;
+
     private List<DespesaInvestimento> despesaInvestimentos;
+    private List<Depreciacao> depreciacoes;
 
     public DespesaInvestimentoBean() {
 
@@ -69,6 +75,25 @@ public class DespesaInvestimentoBean implements Serializable {
             despesaInvestimentoRepository.save(this.despesaInvestimento);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            if (despesaInvestimento.getTipo().equals("I")) {
+                if (despesaInvestimento.getPatrimonioid().isDepreciavel() == true) {
+                    int patrimonioId = despesaInvestimento.getPatrimonioid().getId();                  
+                    
+                    depreciacaoRepository.ExcluirDepreciacao(patrimonioId);
+        
+                    int countDepreciados = depreciacaoRepository.CountDepreciados(patrimonioId);
+
+                    Depreciacao dep = new Depreciacao();
+                    depreciacoes = depreciacaoRepository.ListaUltimoDepreciado(patrimonioId);
+
+                    double valorAtualizado = dep.getValoratualizado();
+                    
+
+                    //int mes =  dep.get
+                    //int ano =
+                }
+            }
     
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -124,6 +149,22 @@ public class DespesaInvestimentoBean implements Serializable {
 
     public void setDespesaInvestimentos(List<DespesaInvestimento> despesaInvestimentos) {
         this.despesaInvestimentos = despesaInvestimentos;
+    }
+
+    public DepreciacaoRepository getDepreciacaoRepository() {
+        return depreciacaoRepository;
+    }
+
+    public void setDepreciacaoRepository(DepreciacaoRepository depreciacaoRepository) {
+        this.depreciacaoRepository = depreciacaoRepository;
+    }
+
+    public List<Depreciacao> getDepreciacoes() {
+        return depreciacoes;
+    }
+
+    public void setDepreciacoes(List<Depreciacao> depreciacoes) {
+        this.depreciacoes = depreciacoes;
     }
 
 }
