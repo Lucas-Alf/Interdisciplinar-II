@@ -63,6 +63,8 @@ public class Depreciacao implements Serializable {
     @JoinColumn(name = "patrimonioid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Patrimonio patrimonioid;
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    private CliFor CliForid;
 
     public Depreciacao() {
     }
@@ -236,6 +238,14 @@ public class Depreciacao implements Serializable {
 
     public void setDescDepreciacao(String descDepreciacao) {
         this.descDepreciacao = descDepreciacao;
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
     
 }
