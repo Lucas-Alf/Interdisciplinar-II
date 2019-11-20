@@ -15,6 +15,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Depreciacao;
 import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
 
@@ -36,12 +37,14 @@ public class DepreciacaoBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.depreciacoes = depreciacaoRepository.AtualizarTabela();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.depreciacoes = depreciacaoRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar() {
         int id = depreciacao.getPatrimonioid().getId();
-        this.depreciacoes = depreciacaoRepository.Pesquisar(id);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.depreciacoes = depreciacaoRepository.Pesquisar(id, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -68,7 +71,8 @@ public class DepreciacaoBean implements Serializable {
             //String anoI = new SimpleDateFormat("yyyy").format(dataInical);
             //String mesI = new SimpleDateFormat("MM").format(dataInical);
 
-            this.depreciacoes = depreciacaoRepository.ListarFaltaDepreciar(dataInical, dataFinal);
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            this.depreciacoes = depreciacaoRepository.ListarFaltaDepreciar(dataInical, dataFinal, empresa.getId());
     
             for (int i = 0; i < this.depreciacoes.size(); i++) {
                 this.depreciacao = depreciacoes.get(i);

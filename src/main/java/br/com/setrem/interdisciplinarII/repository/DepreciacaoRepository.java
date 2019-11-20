@@ -12,17 +12,17 @@ import br.com.setrem.interdisciplinarII.model.Depreciacao;
 @Repository
 public interface DepreciacaoRepository extends JpaRepository<Depreciacao, Integer> {
 
-    @Query(value = "select * from depreciacao order by id asc", nativeQuery = true)
-    public List<Depreciacao> AtualizarTabela();
+    @Query(value = "select * from depreciacao where cliforid = ?1 order by id asc", nativeQuery = true)
+    public List<Depreciacao> AtualizarTabela(String empresa);
 
-    @Query(value = "select * from depreciacao where patrimonioid = ?1 order by id asc", nativeQuery = true)
-    public List<Depreciacao> Pesquisar(int id);
+    @Query(value = "select * from depreciacao where patrimonioid = ?1 and cliforid = ?2 order by id asc", nativeQuery = true)
+    public List<Depreciacao> Pesquisar(int id, String empresa);
 
     @Query(value = "select count(*) from depreciacao where patrimonioid = ?1", nativeQuery = true)
     public int VerificaDepreciacao(int id);
 
     @Query(value = "select * from depreciacao where depreciacao = 0 and cast((ano ||''|| (case when CHARACTER_LENGTH(cast(mes as varchar)) = 1 then cast(0 as varchar) || cast(mes as varchar) else cast(mes as varchar) end) ||'01') as date) between ?1 and ?2", nativeQuery = true)
-    public List<Depreciacao> ListarFaltaDepreciar(Date dataI, Date dataF);
+    public List<Depreciacao> ListarFaltaDepreciar(Date dataI, Date dataF, String empresa);
 
     @Query(value = "update depreciacao set depreciacao = 1, datadepreciacao = current_date where id = ?1", nativeQuery = true)
     public int AlterarDepreciar(int idDepreciacao);
