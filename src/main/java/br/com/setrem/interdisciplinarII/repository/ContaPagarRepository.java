@@ -1,5 +1,7 @@
 
 package br.com.setrem.interdisciplinarII.repository;
+
+import br.com.setrem.interdisciplinarII.model.ContaPagar;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.model.Produto;
 

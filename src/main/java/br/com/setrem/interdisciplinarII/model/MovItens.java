@@ -19,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import javax.sound.midi.Sequence;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,6 +39,9 @@ public class MovItens implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Transient
+    private int sequencia;
 
     @JoinColumn(name = "MovimentacaoId", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -173,6 +178,21 @@ public class MovItens implements Serializable {
      */
     public void setLocalId(Local LocalId) {
         this.LocalId = LocalId;
+    }
+
+
+    /**
+     * @return int return the sequencia
+     */
+    public int getSequencia() {
+        return sequencia;
+    }
+
+    /**
+     * @param sequencia the sequencia to set
+     */
+    public void setSequencia(int sequencia) {
+        this.sequencia = sequencia;
     }
 
 }
