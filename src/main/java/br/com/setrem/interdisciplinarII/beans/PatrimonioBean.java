@@ -107,6 +107,7 @@ public class PatrimonioBean implements Serializable {
                         break;
                     } else {
                         Depreciacao dep = new Depreciacao();
+                        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
                         dep.setMes(mes);
                         dep.setAno(ano);
                         dep.setValordepreciado(valor - valorAtualizado);
@@ -119,6 +120,7 @@ public class PatrimonioBean implements Serializable {
                         dep.setValoranual(valorAnual);
                         dep.setValormes(valorMensal);
                         dep.setPatrimonioid(patrimonio);
+                        dep.setCliForid(empresa);
                         depreciacaoRepository.save(dep);
                         mes++;
                     }

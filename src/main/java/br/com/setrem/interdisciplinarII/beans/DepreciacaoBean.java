@@ -78,6 +78,7 @@ public class DepreciacaoBean implements Serializable {
                 this.depreciacao = depreciacoes.get(i);
                 this.depreciacao.setDepreciacao(1);
                 this.depreciacao.setDatadepreciacao(new Date());
+                this.depreciacao.setCliForid(empresa);
                 depreciacaoRepository.save(this.depreciacao);
             }
     

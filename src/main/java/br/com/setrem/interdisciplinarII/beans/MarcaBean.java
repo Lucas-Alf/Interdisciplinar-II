@@ -8,6 +8,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Marca;
 import br.com.setrem.interdisciplinarII.repository.MarcaRepository;
 
@@ -28,11 +30,13 @@ public class MarcaBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.marcas = marcaRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.marcas = marcaRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String nome) {
-        this.marcas = marcaRepository.pesquisar(nome);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.marcas = marcaRepository.Pesquisar(nome, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -47,7 +51,9 @@ public class MarcaBean implements Serializable {
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
-           marcaRepository.save(this.marca);
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            marca.setCliForid(empresa);
+            marcaRepository.save(this.marca);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
 

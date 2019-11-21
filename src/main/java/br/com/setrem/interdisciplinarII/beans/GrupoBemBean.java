@@ -30,11 +30,13 @@ public class GrupoBemBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.grupoBens = grupoBemRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.grupoBens = grupoBemRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.grupoBens = grupoBemRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.grupoBens = grupoBemRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -62,6 +64,8 @@ public class GrupoBemBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarGrupoBem').modal('show');");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            grupoBem.setCliForid(empresa);
             grupoBemRepository.save(this.grupoBem);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

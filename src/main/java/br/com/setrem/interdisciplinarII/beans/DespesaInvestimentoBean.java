@@ -75,6 +75,8 @@ public class DespesaInvestimentoBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarDespesaInvestimento').modal('show');");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            despesaInvestimento.setCliForid(empresa);
             despesaInvestimentoRepository.save(this.despesaInvestimento);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

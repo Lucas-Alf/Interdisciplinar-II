@@ -15,15 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "marca")
 
 public class Marca implements Serializable {
@@ -35,12 +33,11 @@ public class Marca implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-   //@Size(min = 1, max = 50)
     @Column(name = "nome")
     private String nome;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaid")
-    //private Collection<Produto> produtoCollection;
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
 
     public Marca() {
     }
@@ -69,15 +66,6 @@ public class Marca implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    /*@XmlTransient
-    public Collection<Produto> getProdutoCollection() {
-        return produtoCollection;
-    }
-
-    public void setProdutoCollection(Collection<Produto> produtoCollection) {
-        this.produtoCollection = produtoCollection;
-    }*/
 
     @Override
     public int hashCode() {
@@ -110,6 +98,14 @@ public class Marca implements Serializable {
 
     public void setMarca(String marca) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
 
 }

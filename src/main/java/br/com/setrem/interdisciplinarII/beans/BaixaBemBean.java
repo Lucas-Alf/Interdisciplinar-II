@@ -72,7 +72,7 @@ public class BaixaBemBean implements Serializable {
             context.addMessage("validacao", fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
-        } else if ((int)(this.baixaBem.getValor()) == 0 && this.baixaBem.getMotivobaixaid().getId() == 1) {
+        } else if ((int)(this.baixaBem.getValor()) == 0 && this.baixaBem.getMotivobaixaid().getDescricao().equals("Venda")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor da Venda.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);

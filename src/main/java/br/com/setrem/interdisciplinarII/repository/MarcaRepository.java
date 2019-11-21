@@ -14,7 +14,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MarcaRepository extends JpaRepository<Marca, Integer> {
 
-    @Query("SELECT e FROM marca e WHERE e.nome LIKE %?1%")
-    public List<Marca> pesquisar(String nome);
+    @Query(value = "select * from marca where nome like %?1% and cliforid = ?2", nativeQuery = true)
+    public List<Marca> Pesquisar(String nome, String empresa);
 
+    @Query(value = "select * from marca where cliforid = ?1", nativeQuery = true)
+    public List<Marca> AtualizarTabela(String empresa);
+    
 }

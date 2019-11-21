@@ -16,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,6 +38,9 @@ public class GrupoBem implements Serializable {
     private double taxadepreciacao;
     @Column(name = "vidautil")
     private double vidautil;
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
     
     public GrupoBem() {
     }
@@ -66,17 +71,7 @@ public class GrupoBem implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-
-    /*@XmlTransient
-    public Collection<Patrimonio> getPatrimonioCollection() {
-        return patrimonioCollection;
-    }
-
-    public void setPatrimonioCollection(Collection<Patrimonio> patrimonioCollection) {
-        this.patrimonioCollection = patrimonioCollection;
-    }*/
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -117,6 +112,14 @@ public class GrupoBem implements Serializable {
     
     public void setVidautil(double vidautil) {
         this.vidautil = vidautil;
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
 
 }

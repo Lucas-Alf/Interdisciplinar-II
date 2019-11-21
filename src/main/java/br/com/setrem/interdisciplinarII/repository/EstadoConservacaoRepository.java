@@ -11,7 +11,10 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface EstadoConservacaoRepository extends JpaRepository<EstadoConservacao, Integer> {
 
-    @Query("SELECT e FROM estadoconservacao e WHERE e.descricao LIKE %?1%")
-    public List<EstadoConservacao> pesquisar(String descricao);
+    @Query(value = "select * from estadoconservacao where descricao like %?1% and cliforid = ?2", nativeQuery = true)
+    public List<EstadoConservacao> Pesquisar(String descricao, String empresa);
+
+    @Query(value = "select * from estadoconservacao where cliforid = ?1", nativeQuery = true)
+    public List<EstadoConservacao> AtualizarTabela(String empresa);
 
 }

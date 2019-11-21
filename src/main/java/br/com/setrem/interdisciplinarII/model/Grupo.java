@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +27,10 @@ public class Grupo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descricao;
-
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
+    
     public Grupo() {
     }
 
@@ -87,6 +92,14 @@ public class Grupo implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
     
 }

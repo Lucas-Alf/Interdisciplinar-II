@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.MotivoBaixa;
 import br.com.setrem.interdisciplinarII.repository.MotivoBaixaRepository;
 
@@ -31,11 +32,13 @@ public class MotivoBaixaBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.motivoBaixas = motivoBaixaRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.motivoBaixas = motivoBaixaRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.motivoBaixas = motivoBaixaRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.motivoBaixas = motivoBaixaRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -51,6 +54,8 @@ public class MotivoBaixaBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarMotivoBaixa').modal('show');");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            motivoBaixa.setCliForid(empresa);
             motivoBaixaRepository.save(this.motivoBaixa);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

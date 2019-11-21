@@ -11,7 +11,10 @@ import br.com.setrem.interdisciplinarII.model.MotivoBaixa;
 @Repository
 public interface MotivoBaixaRepository extends JpaRepository<MotivoBaixa, Integer> {
 
-    @Query("SELECT e FROM motivobaixa e WHERE e.descricao LIKE %?1%")
-    public List<MotivoBaixa> pesquisar(String descricao);
+    @Query(value = "select * from motivobaixa where descricao like %?1% and cliforid = ?2", nativeQuery = true)
+    public List<MotivoBaixa> Pesquisar(String descricao, String empresa);
+
+    @Query(value = "select * from motivobaixa where cliforid = ?1", nativeQuery = true)
+    public List<MotivoBaixa> AtualizarTabela(String empresa);
 
 }
