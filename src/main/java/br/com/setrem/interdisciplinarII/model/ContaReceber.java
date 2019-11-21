@@ -1,11 +1,11 @@
 
-
 package br.com.setrem.interdisciplinarII.model;
 
+import java.io.Serializable;
 
 public class ContaReceber implements Serializable{
     private static final long serialVersionUID = 1L;
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
@@ -34,5 +34,5 @@ date DataVencimento, date DataPagamento, double Valor, double Saldo) {
         this.valor = valor;
         this.saldo = saldo;
     }
-
+*/
 }

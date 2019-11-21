@@ -1,10 +1,13 @@
 
-
 package br.com.setrem.interdisciplinarII.model;
 
-@Entity(name = contapagar)
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+
+@Entity(name = "contaPagar")
 public class ContaPagar implements Serializable{
-    private static final long serialVersionUID = 1L;
+    /*private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -44,6 +47,6 @@ date DataVencimento, date DataPagamento, double Valor, double Saldo) {
         this.datapagamento = datapagamento;
         this.valor = valor;
         this.saldo = saldo;
-    }
+    }*/
 
 }
