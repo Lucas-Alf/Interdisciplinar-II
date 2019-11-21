@@ -11,10 +11,10 @@ import br.com.setrem.interdisciplinarII.model.BaixaBem;
 @Repository
 public interface BaixaBemRepository extends JpaRepository<BaixaBem, Integer> {
 
-    @Query("SELECT e FROM baixabem e INNER JOIN e.patrimonioid t inner join t.produtoid i")
-    public List<BaixaBem> AtualizarTabela();
-    
-    // @Query("SELECT e FROM baixabem e INNER JOIN e.patrimonioid t t.produtoid i where i.nome LIKE %?1%")
-    // public List<BaixaBem> pesquisar(String descricao);
+    @Query(value = "select * from baixabem a inner join patrimonio b on (a.patrimonioid = b.id) inner join produto c on (b.produtoid = c.id) where a.cliforid = ?1", nativeQuery = true)
+    public List<BaixaBem> AtualizarTabela(String empresa);
+
+    @Query(value = "select * from baixabem a inner join patrimonio b on (a.patrimonioid = b.id) inner join produto c on (b.produtoid = c.id) where c.nome like %?1% and a.cliforid = ?2", nativeQuery = true)
+    public List<BaixaBem> Pesquisar(String descricao, String empresa);
 
 }

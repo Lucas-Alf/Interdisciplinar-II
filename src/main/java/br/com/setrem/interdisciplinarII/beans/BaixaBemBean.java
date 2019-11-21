@@ -15,6 +15,7 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.BaixaBem;
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
@@ -38,12 +39,14 @@ public class BaixaBemBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.baixaBens = baixaBemRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.baixaBens = baixaBemRepository.AtualizarTabela(empresa.getId());
     }
 
-    /*public void Pesquisar(String descricao) {
-        this.baixaBens = baixaBemRepository.pesquisar(descricao);
-    }*/
+    public void Pesquisar(String descricao) {
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.baixaBens = baixaBemRepository.Pesquisar(descricao, empresa.getId());
+    }
 
     public void AbrirModal() {
         this.baixaBem = new BaixaBem();
@@ -76,9 +79,11 @@ public class BaixaBemBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.patrimonio = patrimonioRepository.getOne(this.baixaBem.getPatrimonioid().getId());
             this.patrimonio.setBaixado(1);
             patrimonioRepository.save(patrimonio);
+            this.baixaBem.setCliForid(empresa);
             baixaBemRepository.save(this.baixaBem);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

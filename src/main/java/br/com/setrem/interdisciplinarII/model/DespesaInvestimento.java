@@ -47,6 +47,9 @@ public class DespesaInvestimento implements Serializable {
     @JoinColumn(name = "patrimonioid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Patrimonio patrimonioid;
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
 
     public DespesaInvestimento() {
     }
@@ -149,4 +152,12 @@ public class DespesaInvestimento implements Serializable {
         this.descTipo = descTipo;
     }
 
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
+    }
+    
 }
