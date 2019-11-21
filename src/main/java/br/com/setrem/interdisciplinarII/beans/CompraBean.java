@@ -72,8 +72,6 @@ public class CompraBean implements Serializable {
     }*/
 
     public void SalvarEstoque() {
-        //int  prod = movItens.getProdutoId().getId();
-
         if( this.produtos == null){
             this.produtos = new ArrayList<MovItens>();
         }
@@ -85,18 +83,22 @@ public class CompraBean implements Serializable {
         }
 
         movItens.setSequencia(getSeq());
-
         this.produtos.add(movItens);
-        MovItens movItens = new MovItens();
+        movItens = new MovItens();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
-    
-        //movItens = new MovItens();
-        //this.AtualizarTabelaEstoque();
     }
     
-    public void DeletarEstoque(int id){
-        System.out.print("");
+    public void DeletarEstoque(int sequencia){
+        for (int i = 0; i < this.produtos.size(); i++) {
+            if (produtos.get(i).getSequencia() == sequencia) {
+                this.movItens = produtos.get(i);
+            }
+        }
+        this.produtos.remove(movItens);
+        movItens = new MovItens();
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
     }
 
     public void SalvarMovimentacao() {

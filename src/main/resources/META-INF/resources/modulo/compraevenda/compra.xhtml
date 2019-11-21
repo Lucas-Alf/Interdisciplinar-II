@@ -120,26 +120,25 @@
 
                                         <p:growl id="messages2" showDetail="true" closable="true" />
                                         <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                                            action="#{compraBean.DeletarEstoque(item)}">
-                                            <f:ajax execute="@form" render="tabela2" />
+                                            action="#{compraBean.DeletarEstoque(item2.sequencia)}">
+                                            <f:ajax execute="@form" render="@form" />
                                             <i class="far fa-trash-alt crud-btn"></i>
                                         </h:commandLink>
-                                        <!-- value="#{compraBean.produtos}" style="margin-top: 10px; height: 100px;" -->
-                                        <p:dataTable scrollable="true" scrollHeight="60%" id="tabela2" var="item"
+                                        <p:dataTable scrollable="true" scrollHeight="60%" id="tabela2" var="item2"
                                             value="#{compraBean.produtos}" style="margin-top: 10px; height: 100px;"
-                                            rowKey="#{item.sequencia}" selection="#{item}" selectionMode="single"
+                                            rowKey="#{item2.sequencia}" selection="#{item2}" selectionMode="single"
                                             emptyMessage="Não há registros na tabela.">
                                             <p:column headerText="Sequência" style="width: 10%; text-align: center">
-                                                <h:outputText value="#{item.sequencia}" />
+                                                <h:outputText value="#{item2.sequencia}" />
                                             </p:column>
                                             <p:column headerText="Produto" style="width: 30%; text-align: left">
-                                                <h:outputText value="#{item.produtoId.nome}" />
+                                                <h:outputText value="#{item2.produtoId.nome}" />
                                             </p:column>
                                             <p:column headerText="Quantidade" style="width: 10%; text-align: left">
-                                                <h:outputText value="#{item.qtde}" />
+                                                <h:outputText value="#{item2.qtde}" />
                                             </p:column>
                                             <p:column headerText="valor" style="width: 10%; text-align: left">
-                                                <h:outputText value="#{item.valor}" />
+                                                <h:outputText value="#{item2.valor}" />
                                             </p:column>
                                         </p:dataTable><br /><br />
 
@@ -215,7 +214,7 @@
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
 <f:metadata>
-
+    <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
     <f:viewAction action="#{localBean.AtualizarTabela()}" />
 </f:metadata>
 
