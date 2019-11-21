@@ -64,6 +64,7 @@ public class Depreciacao implements Serializable {
     @ManyToOne(optional = false)
     private Patrimonio patrimonioid;
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
     private CliFor CliForid;
 
     public Depreciacao() {
