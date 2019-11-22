@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.print.DocFlavor.STRING;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.CliFor;
@@ -55,6 +56,15 @@ public class CompraBean implements Serializable {
         this.movItenss = movItensRepository.AtualizarTabela(empresa.getId());
     }
 
+    public void ListarProdutos(int id) {
+        this.movItenss = movItensRepository.ListarProdutos(id);
+    }
+
+    public void rowSelected(SelectEvent event) {
+        Movimentacao mov = (Movimentacao) event.getObject();
+        this.movItenss = movItensRepository.ListarProdutos(mov.getId());
+   }
+
     public void AbrirModal() {
         this.movItens = new MovItens();
         this.movimentacao = new Movimentacao();
@@ -62,21 +72,47 @@ public class CompraBean implements Serializable {
     }
 
     public void SalvarEstoque() {
-        if( this.produtos == null){
-            this.produtos = new ArrayList<MovItens>();
-        }
-
-        if (getSeq() == 0) {
-            setSeq(1);
+        if (movItens.getProdutoId() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Produto.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        } else if (movItens.getLocalId() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Local.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        } else if (movItens.getQtde() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Quantidade.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        } else if (movItens.getValor() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
         } else {
-            setSeq(getSeq() + 1);
+            if( this.produtos == null){
+                this.produtos = new ArrayList<MovItens>();
+            }
+    
+            if (getSeq() == 0) {
+                setSeq(1);
+            } else {
+                setSeq(getSeq() + 1);
+            }
+    
+            movItens.setSequencia(getSeq());
+            this.produtos.add(movItens);
+            movItens = new MovItens();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
         }
-
-        movItens.setSequencia(getSeq());
-        this.produtos.add(movItens);
-        movItens = new MovItens();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
     }
     
     public void DeletarEstoque(int sequencia){
@@ -92,36 +128,62 @@ public class CompraBean implements Serializable {
     }
 
     public void SalvarMovimentacao() {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        movimentacao.setTipo('C');
-        movimentacao.setValortotal(0);
-        movimentacao.setEmpresaId(empresa);
-        movimentacaoRepository.save(movimentacao);
+        if (movimentacao.getData() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        } else if (movimentacao.getNotafiscal() == "") {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Nota Fiscal.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        } else if (movimentacao.getCliForid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Fornecedor.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        } else if (produtos == null || produtos.size() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Inclua ao menos 1 produto.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao3", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            movimentacao.setTipo('C');
+            movimentacao.setValortotal(0);
+            movimentacao.setEmpresaId(empresa);
+            movimentacaoRepository.save(movimentacao);
 
-        double valorTotal = 0;
-        for (int i = 0; i < produtos.size(); i++) {
-            movItens = produtos.get(i);
-            movItens.setCliForId(empresa);
-            movItens.setMovimentacaoId(movimentacao);
-            movItensRepository.save(movItens);
-            valorTotal += movItens.getValor();
+            double valorTotal = 0;
+            for (int i = 0; i < produtos.size(); i++) {
+                movItens = produtos.get(i);
+                movItens.setCliForId(empresa);
+                movItens.setMovimentacaoId(movimentacao);
+                movItensRepository.save(movItens);
+                valorTotal += movItens.getValor();
+            }
+
+            movimentacao.setValortotal(valorTotal);
+            movimentacaoRepository.save(movimentacao);
+            movimentacao = new Movimentacao();
+            movItens = new MovItens();
+            produtos.removeAll(produtos);
+            this.AtualizarTabelaMovimentacao();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }
-
-        movimentacao.setValortotal(valorTotal);
-        movimentacaoRepository.save(movimentacao);
-
-        this.AtualizarTabelaMovimentacao();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
     }
 
     public void Deletar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
-                    "Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            // grupoBemRepository.deleteById(id);
             this.AtualizarTabelaMovimentacao();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
