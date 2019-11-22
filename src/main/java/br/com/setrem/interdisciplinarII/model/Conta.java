@@ -57,7 +57,7 @@ public class Conta implements Serializable {
     @Basic(optional = false)
     private int ordem;
 
-    @Transient // TABELA NA GRID SUCESSO
+    //@Transient // TABELA NA GRID SUCESSO
     private String hierarquia;
 
     // CAMPO NIVEL SINTETICO
@@ -148,6 +148,14 @@ public class Conta implements Serializable {
 
     public void setOrdem(int ordem) {
         this.ordem = ordem;
+    }
+
+    public String getHierarquia() {
+        return hierarquia;
+    }
+
+    public void setHierarquia(String hierarquia) {
+        this.hierarquia = hierarquia;
     }
 
 }
