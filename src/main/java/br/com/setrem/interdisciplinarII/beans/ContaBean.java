@@ -125,7 +125,6 @@ public class ContaBean implements Serializable {
     }
 
     public void AbrirModal() {
-        PesquisarSintetica();
         this.conta = new Conta();
         PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
     }

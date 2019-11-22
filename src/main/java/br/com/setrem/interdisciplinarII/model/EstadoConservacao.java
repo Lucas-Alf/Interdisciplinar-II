@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "estadoconservacao")
 public class EstadoConservacao implements Serializable {
@@ -15,6 +17,9 @@ public class EstadoConservacao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descricao;
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
 
     public EstadoConservacao() {
     }
@@ -67,6 +72,14 @@ public class EstadoConservacao implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
 
 }

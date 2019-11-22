@@ -72,7 +72,7 @@
                                         </p:selectOneMenu><br/><br/>
 
                                         <h:outputText value="Fornecedor: " style="width: 450px; margin-right: 12px;" />                                   
-                                        <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.cliforid}" style="width: 517px;" converter="CliForConverter" appendTo="@this">
+                                        <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.fornecedorid}" style="width: 517px;" converter="CliForConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um Fornecedor"/>
                                             <f:selectItems value="#{cliforBean.listaFornecedores()}" var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}"/>
                                         </p:selectOneMenu>
@@ -142,5 +142,9 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{produtoBean.AtualizarTabela()}" />
+    <f:viewAction action="#{marcaBean.AtualizarTabela()}" />
+    <f:viewAction action="#{grupoBean.AtualizarTabela()}" />
+    <f:viewAction action="#{unidadeMedidaBean.AtualizarTabela()}" />
 </f:metadata>
+
 </html>

@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.UnidadeMedida;
 import br.com.setrem.interdisciplinarII.repository.UnidadeMedidaRepository;
 
@@ -31,11 +32,13 @@ public class UnidadeMedidaBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.unidadeMedidas = unidadeMedidaRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.unidadeMedidas = unidadeMedidaRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.unidadeMedidas = unidadeMedidaRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.unidadeMedidas = unidadeMedidaRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -50,6 +53,8 @@ public class UnidadeMedidaBean implements Serializable {
             context.addMessage(null, fm); 
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            unidadeMedida.setCliForid(empresa);
             unidadeMedidaRepository.save(this.unidadeMedida);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

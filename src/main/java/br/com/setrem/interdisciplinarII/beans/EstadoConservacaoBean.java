@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.EstadoConservacao;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.repository.EstadoConservacaoRepository;
@@ -33,11 +34,13 @@ public class EstadoConservacaoBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.estadoConservacoes = estadoConservacaoRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.estadoConservacoes = estadoConservacaoRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.estadoConservacoes = estadoConservacaoRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.estadoConservacoes = estadoConservacaoRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -53,6 +56,8 @@ public class EstadoConservacaoBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarEstadoConservacao').modal('show');");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            estadoConservacao.setCliForid(empresa);
             estadoConservacaoRepository.save(this.estadoConservacao);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

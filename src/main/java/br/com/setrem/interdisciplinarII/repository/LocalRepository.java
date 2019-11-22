@@ -12,7 +12,10 @@ import br.com.setrem.interdisciplinarII.model.Local;
 @Repository
 public interface LocalRepository extends JpaRepository<Local, Integer> {
 
-    @Query("SELECT e FROM marca e WHERE e.nome LIKE %?1%")
-    public List<Local> pesquisar(String descricao);
+    @Query(value = "select * from local where descricao like %?1% and cliforid = ?2", nativeQuery = true)
+    public List<Local> Pesquisar(String nome, String empresa);
 
+    @Query(value = "select * from local where cliforid = ?1", nativeQuery = true)
+    public List<Local> AtualizarTabela(String empresa);
+    
 }

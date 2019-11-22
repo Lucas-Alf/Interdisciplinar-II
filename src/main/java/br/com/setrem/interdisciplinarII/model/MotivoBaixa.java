@@ -15,15 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "motivobaixa")
 
 public class MotivoBaixa implements Serializable {
@@ -35,10 +33,11 @@ public class MotivoBaixa implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    //@Size(min = 1, max = 100)
     @Column(name = "descricao")
     private String descricao;
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
 
     public MotivoBaixa() {
     }
@@ -91,6 +90,14 @@ public class MotivoBaixa implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.Motivobaixa[ id=" + id + " ]";
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
 
 }

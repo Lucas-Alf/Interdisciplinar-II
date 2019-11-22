@@ -44,90 +44,101 @@
                                 <div class="modal-body">
                                     <span class="ui-float-label">
 
-                                            <h:panelGrid id = "panel" columns = "1" border = "1"
-                                            cellpadding = "1" cellspacing = "1">
-                                         
-                                         <f:facet name = "header">
+                                        <h:panelGrid id="panel" columns="1" border="1" cellpadding="1" cellspacing="1">
+
+                                            <f:facet name="header">
                                                 <h:inputHidden id="id" value="#{compraBean.movimentacao.id}" />
-                                                <p:outputLabel for="button" value="Data: " style="margin-right: 50px; " />
+                                                <p:outputLabel for="button" value="Data: "
+                                                    style="margin-right: 50px; " />
                                                 <p:datePicker id="button" value="#{compraBean.movimentacao.data}"
-                                                    showIcon="true" style="width: 50px; text-align: center; font-size: 13px;" />
+                                                    showIcon="true"
+                                                    style="width: 50px; text-align: center; font-size: 13px;" />
                                                 <h:outputText style="margin-left: 80px;" value="Nota Fiscal: " />
-                                                <p:inputText style="width: 300px; margin-bottom: 5px; margin-left: 30px;"
-                                                    id="notafiscal" value="#{compraBean.movimentacao.notafiscal}" /><br />
-                                                <h:outputText value="Fornecedor: " style="width: 150px; margin-right: 6px;" />
+                                                <p:inputText
+                                                    style="width: 300px; margin-bottom: 5px; margin-left: 30px;"
+                                                    id="notafiscal" value="#{compraBean.movimentacao.notafiscal}" />
+                                                <br />
+                                                <h:outputText value="Fornecedor: "
+                                                    style="width: 150px; margin-right: 6px;" />
                                                 <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains"
                                                     value="#{compraBean.movimentacao.cliForid}" style="width: 300px;"
                                                     converter="CliForConverter" appendTo="@this">
-                                                    <f:selectItem itemValue="null" itemLabel="Selecione um Fornecedor" />
-                                                    <f:selectItems value="#{cliforBean.listaFornecedores()}" var="clifor"
-                                                        itemValue="#{clifor}" itemLabel="#{clifor.nome}" />
+                                                    <f:selectItem itemValue="null"
+                                                        itemLabel="Selecione um Fornecedor" />
+                                                    <f:selectItems value="#{cliforBean.listaFornecedores()}"
+                                                        var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}" />
                                                 </p:selectOneMenu>
-                                                
-                                         </f:facet>
-                                         
-                                      </h:panelGrid><br />
 
-                                    
-                                      <h:panelGrid id = "panel2" columns = "1" border = "1"
-                                      cellpadding = "1" cellspacing = "1">
-                                   
-                                   <f:facet name = "header">
-                                        <h:outputText value="Produto: " style="width: 300px; margin-right: 30px;" />
-                                        <p:selectOneMenu id="produto" filter="true" filterMatchMode="contains"
-                                            value="#{compraBean.movItens.produtoId}" style="width: 300px;"
-                                            converter="ProdutoConverter" appendTo="@this">
-                                            <f:selectItem itemValue="null" itemLabel="Selecione um Produto" />
-                                            <f:selectItems value="#{produtoBean.produtos}" var="produto"
-                                                itemValue="#{produto}" itemLabel="#{produto.nome}" />
-                                        </p:selectOneMenu>
+                                            </f:facet>
 
-                                        <h:outputText value="Local: " style="width: 300px; margin-left: 30px; margin-right: 30px; " />
-                                        <p:selectOneMenu id="local" filter="true" filterMatchMode="contains"
-                                            value="#{compraBean.movItens.localId}" style="width: 300px;"
-                                            converter="LocalConverter" appendTo="@this">
-                                            <f:selectItem itemValue="null" itemLabel="Selecione um local" />
-                                            <f:selectItems value="#{localBean.locais}" var="local" itemValue="#{local}"
-                                                itemLabel="#{local.descricao}" />
-                                        </p:selectOneMenu><br /><br />
-
-                                        <h:outputText value="Quantidade: " style="width: 20px; margin-right: 55px;" />
-                                        <p:inputNumber id="quantidade" value="#{compraBean.movItens.qtde}">
-                                        </p:inputNumber>
-
-                                        <h:outputText value="valor: " style="width: 20px; margin-right: 55px;" />
-                                        <p:inputNumber id="valor" value="#{compraBean.movItens.valor}">
-                                        </p:inputNumber>
+                                        </h:panelGrid><br />
 
 
-                                    </f:facet>
-                                         
-                                </h:panelGrid>
-                                        
-                                        <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{compraBean.SalvarEstoque()}">
-                                            <f:ajax execute="@form" render="@form" /> 
-                                             <i class="far fa-edit crud-btn"></i>
+                                        <h:panelGrid id="panel2" columns="1" border="1" cellpadding="1" cellspacing="1">
+
+                                            <f:facet name="header">
+                                                <h:outputText value="Produto: "
+                                                    style="width: 300px; margin-right: 30px;" />
+                                                <p:selectOneMenu id="produto" filter="true" filterMatchMode="contains"
+                                                    value="#{compraBean.movItens.produtoId}" style="width: 300px;"
+                                                    converter="ProdutoConverter" appendTo="@this">
+                                                    <f:selectItem itemValue="null" itemLabel="Selecione um Produto" />
+                                                    <f:selectItems value="#{produtoBean.produtos}" var="produto"
+                                                        itemValue="#{produto}" itemLabel="#{produto.nome}" />
+                                                </p:selectOneMenu>
+
+                                                <h:outputText value="Local: "
+                                                    style="width: 300px; margin-left: 30px; margin-right: 30px; " />
+                                                <p:selectOneMenu id="local" filter="true" filterMatchMode="contains"
+                                                    value="#{compraBean.movItens.localId}" style="width: 300px;"
+                                                    converter="LocalConverter" appendTo="@this">
+                                                    <f:selectItem itemValue="null" itemLabel="Selecione um local" />
+                                                    <f:selectItems value="#{localBean.locais}" var="local"
+                                                        itemValue="#{local}" itemLabel="#{local.descricao}" />
+                                                </p:selectOneMenu><br /><br />
+
+                                                <h:outputText value="Quantidade: "
+                                                    style="width: 20px; margin-right: 55px;" />
+                                                <p:inputNumber id="quantidade" value="#{compraBean.movItens.qtde}">
+                                                </p:inputNumber>
+
+                                                <h:outputText value="valor: "
+                                                    style="width: 20px; margin-right: 55px;" />
+                                                <p:inputNumber id="valor" value="#{compraBean.movItens.valor}">
+                                                </p:inputNumber>
+
+
+                                            </f:facet>
+
+                                        </h:panelGrid>
+
+                                        <h:commandLink class="btn btn-success btn-sm" value="Incluir"
+                                            action="#{compraBean.SalvarEstoque()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <i class="far fa-edit crud-btn"></i>
                                         </h:commandLink>
 
                                         <p:growl id="messages2" showDetail="true" closable="true" />
                                         <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                                            action="#{compraBean.DeletarEstoque(item.id)}">
+                                            action="#{compraBean.DeletarEstoque(item2.sequencia)}">
                                             <f:ajax execute="@form" render="@form" />
                                             <i class="far fa-trash-alt crud-btn"></i>
                                         </h:commandLink>
-<!-- value="#{compraBean.produtos}" style="margin-top: 10px; height: 100px;" -->
-                                        <p:dataTable scrollable="true" scrollHeight="60%" id="tabela2" var="item"
-                                            value="#{compraBean.movItenss}" style="margin-top: 10px; height: 100px;"
-                                            rowKey="#{item.id}" selection="#{item}" selectionMode="single"
+                                        <p:dataTable scrollable="true" scrollHeight="60%" id="tabela2" var="item2"
+                                            value="#{compraBean.produtos}" style="margin-top: 10px; height: 100px;"
+                                            rowKey="#{item2.sequencia}" selection="#{item2}" selectionMode="single"
                                             emptyMessage="Não há registros na tabela.">
+                                            <p:column headerText="Sequência" style="width: 10%; text-align: center">
+                                                <h:outputText value="#{item2.sequencia}" />
+                                            </p:column>
                                             <p:column headerText="Produto" style="width: 30%; text-align: left">
-                                                <h:outputText value="#{item.produtoid.nome}" />
+                                                <h:outputText value="#{item2.produtoId.nome}" />
                                             </p:column>
                                             <p:column headerText="Quantidade" style="width: 10%; text-align: left">
-                                                <h:outputText value="#{item.quantidade}" />
+                                                <h:outputText value="#{item2.qtde}" />
                                             </p:column>
                                             <p:column headerText="valor" style="width: 10%; text-align: left">
-                                                <h:outputText value="#{item.valor}" />
+                                                <h:outputText value="#{item2.valor}" />
                                             </p:column>
                                         </p:dataTable><br /><br />
 
@@ -158,8 +169,7 @@
                         </h:commandLink><br />
                     </div>
 
-                    <h:commandLink class="btn btn-success btn-sm" value="Incluir"
-                        action="#{compraBean.AbrirModal()}">
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{compraBean.AbrirModal()}">
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
@@ -196,7 +206,7 @@
                             <h:outputText value="#{item.valor}" />
                         </p:column>
                     </p:dataTable>
-                        
+
                 </h:form>
             </div>
         </ui:define>
@@ -204,7 +214,8 @@
     <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
 </h:body>
 <f:metadata>
-
+    <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
     <f:viewAction action="#{localBean.AtualizarTabela()}" />
 </f:metadata>
+
 </html>

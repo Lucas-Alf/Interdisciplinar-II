@@ -109,6 +109,9 @@
                         <p:column headerText="Hierarquia" style="width: 10%; text-align: left">
                             <h:outputText value="#{item.hierarquia}" />
                         </p:column>
+                        <p:column headerText="Conta Pai" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item.contapai}" />
+                        </p:column>
                         <p:column headerText="Descrição" style="width: 65%; text-align: left">
                             <h:outputText value="#{item.descricao}" />
                         </p:column>
@@ -122,6 +125,7 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+    <f:viewAction action="#{contaBean.PesquisarSintetica()}" />
     <f:viewAction action="#{contaBean.AtualizarTable()}" />
 </f:metadata>
 </html>

@@ -50,6 +50,9 @@ public class BaixaBem implements Serializable {
     @JoinColumn(name = "patrimonioid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Patrimonio patrimonioid;
+    @JoinColumn(name = "cliforid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor CliForid;
 
     public BaixaBem() {
     }
@@ -136,6 +139,14 @@ public class BaixaBem implements Serializable {
     @Override
     public String toString() {
         return "br.com.setrem.interdisciplinarII.model.Baixabem[ id=" + id + " ]";
+    }
+
+    public CliFor getCliForid() {
+        return CliForid;
+    }
+
+    public void setCliForid(CliFor cliForid) {
+        CliForid = cliForid;
     }
 
 }

@@ -8,6 +8,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.print.DocFlavor.STRING;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,12 @@ public class CompraBean implements Serializable {
 
     private List<MovItens> movItenss;
     private List<MovItens> produtos;
+
+    String produtoid;
+    String localid;
+    double valor;
+    double qtde;
+    int seq = 0;
  
     public CompraBean() {
 
@@ -40,6 +47,7 @@ public class CompraBean implements Serializable {
     public void AtualizarTabela() {
         this.movItenss = movItensRepository.findAll();
     }
+    
 
     /*
      * public void Pesquisar(String descricao) { this.grupoBens =
@@ -65,13 +73,32 @@ public class CompraBean implements Serializable {
 
     public void SalvarEstoque() {
         if( this.produtos == null){
-            this.produtos = new ArrayList<MovItens>(); 
-        } else {
-            this.produtos.add(movItens);
+            this.produtos = new ArrayList<MovItens>();
         }
+
+        if (getSeq() == 0) {
+            setSeq(1);
+        } else {
+            setSeq(getSeq() + 1);
+        }
+
+        movItens.setSequencia(getSeq());
+        this.produtos.add(movItens);
+        movItens = new MovItens();
         PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+    }
+    
+    public void DeletarEstoque(int sequencia){
+        for (int i = 0; i < this.produtos.size(); i++) {
+            if (produtos.get(i).getSequencia() == sequencia) {
+                this.movItens = produtos.get(i);
+            }
+        }
+        this.produtos.remove(movItens);
         movItens = new MovItens();
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+        PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
     }
 
     public void SalvarMovimentacao() {
@@ -200,6 +227,48 @@ public class CompraBean implements Serializable {
 
     public void setProdutos(List<MovItens> produtos) {
         this.produtos = produtos;
+    }
+
+
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public double getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(double qtde) {
+        this.qtde = qtde;
+    }
+
+    public String getProdutoid() {
+        return produtoid;
+    }
+
+    public void setProdutoid(String produtoid) {
+        this.produtoid = produtoid;
+    }
+
+	public String getLocalid() {
+		return localid;
+	}
+
+	public void setLocalid(String localid) {
+		this.localid = localid;
+	}
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 
 }

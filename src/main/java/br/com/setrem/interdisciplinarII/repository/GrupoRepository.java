@@ -11,7 +11,10 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
 
-    @Query("SELECT e FROM grupo e WHERE e.descricao LIKE %?1%")
-    public List<Grupo> pesquisar(String descricao);
+    @Query(value = "select * from grupo where descricao like %?1% and cliforid = ?2", nativeQuery = true)
+    public List<Grupo> Pesquisar(String descricao, String empresa);
+
+    @Query(value = "select * from grupo where cliforid = ?1", nativeQuery = true)
+    public List<Grupo> AtualizarTabela(String empresa);
 
 }

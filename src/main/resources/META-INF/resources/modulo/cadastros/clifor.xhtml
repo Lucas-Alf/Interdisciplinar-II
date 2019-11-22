@@ -99,7 +99,7 @@
                                         style="width: 450px;" converter="EnderecoConverter" appendTo="@this">
                                         <f:selectItem itemValue="null" itemLabel="Selecione um Endereço" />
                                         <f:selectItems value="#{enderecoBean.enderecos}" var="endereco"
-                                            itemValue="#{endereco}" itemLabel="#{endereco.rua}" />
+                                            itemValue="#{endereco}" itemLabel="#{endereco.cep} - #{endereco.rua}, Nº: #{endereco.numero}" />
                                     </p:selectOneMenu>
                                     </h:panelGrid>
                                 </div>

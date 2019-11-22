@@ -34,19 +34,12 @@ public class Produto implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-   // @NotNull
-   //@Size(min = 1, max = 100)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-   // @NotNull
-    //@Size(min = 1, max = 200)
     @Column(name = "descricao")
     private String descricao;
-    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
-    // consider using these annotations to enforce field validation
     @Basic(optional = false)
-    //@NotNull
     @Column(name = "quantidademinima")
     private BigDecimal quantidademinima;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produtoid")
@@ -63,9 +56,9 @@ public class Produto implements Serializable {
     @JoinColumn(name = "unidademedidaid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private UnidadeMedida unidademedidaid;
-    //@JoinColumn(name = "precoid", referencedColumnName = "id")
-    //@ManyToOne(optional = false)
-    //private Preco precoid;
+    @JoinColumn(name = "fornecedorid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor fornecedorid;
 
     public Produto() {
     }
@@ -180,4 +173,12 @@ public class Produto implements Serializable {
         this.cliforid = cliforid;
     }
 
+    public CliFor getFornecedorid() {
+        return fornecedorid;
+    }
+
+    public void setFornecedorid(CliFor fornecedorid) {
+        this.fornecedorid = fornecedorid;
+    }
+    
 }

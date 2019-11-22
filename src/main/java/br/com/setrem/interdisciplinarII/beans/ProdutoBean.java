@@ -37,11 +37,13 @@ public class ProdutoBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.produtos = produtoRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.produtos = produtoRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.produtos = produtoRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.produtos = produtoRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -61,6 +63,8 @@ public class ProdutoBean implements Serializable {
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            produto.setCliforid(empresa);
             produtoRepository.save(this.produto);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

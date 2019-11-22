@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Local;
 import br.com.setrem.interdisciplinarII.repository.LocalRepository;
 
@@ -31,11 +32,13 @@ public class LocalBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.locais = localRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.locais = localRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.locais = localRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.locais = localRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -50,6 +53,8 @@ public class LocalBean implements Serializable {
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            local.setCliForid(empresa);
             localRepository.save(this.local);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

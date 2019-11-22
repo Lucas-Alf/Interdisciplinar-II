@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Grupo;
 import br.com.setrem.interdisciplinarII.repository.GrupoRepository;
 
@@ -31,11 +32,13 @@ public class GrupoBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.grupos = grupoRepository.findAll();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.grupos = grupoRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.grupos = grupoRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.grupos = grupoRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -50,6 +53,8 @@ public class GrupoBean implements Serializable {
             context.addMessage(null, fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            grupo.setCliForid(empresa);
             grupoRepository.save(this.grupo);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

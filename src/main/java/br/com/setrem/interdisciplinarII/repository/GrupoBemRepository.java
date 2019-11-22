@@ -11,7 +11,10 @@ import br.com.setrem.interdisciplinarII.model.GrupoBem;
 @Repository
 public interface GrupoBemRepository extends JpaRepository<GrupoBem, Integer> {
 
-    @Query("SELECT e FROM grupobem e WHERE e.descricao LIKE %?1%")
-    public List<GrupoBem> pesquisar(String descricao);
+    @Query(value = "select * from grupobem where descricao like %?1% and cliforid = ?2", nativeQuery = true)
+    public List<GrupoBem> Pesquisar(String descricao, String empresa);
 
+    @Query(value = "select * from grupobem where cliforid = ?1", nativeQuery = true)
+    public List<GrupoBem> AtualizarTabela(String empresa);
+    
 }

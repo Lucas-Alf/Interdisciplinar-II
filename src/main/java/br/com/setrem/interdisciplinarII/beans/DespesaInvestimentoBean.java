@@ -14,6 +14,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Depreciacao;
 import br.com.setrem.interdisciplinarII.model.DespesaInvestimento;
 import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
@@ -39,7 +40,8 @@ public class DespesaInvestimentoBean implements Serializable {
     }
 
     public void AtualizarTabela() {
-        this.despesaInvestimentos = despesaInvestimentoRepository.AtualizarTabela();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.despesaInvestimentos = despesaInvestimentoRepository.AtualizarTabela(empresa.getId());
     }
 
     public void AbrirModal() {
@@ -73,6 +75,8 @@ public class DespesaInvestimentoBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarDespesaInvestimento').modal('show');");
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            despesaInvestimento.setCliForid(empresa);
             despesaInvestimentoRepository.save(this.despesaInvestimento);
             this.AtualizarTabela();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");

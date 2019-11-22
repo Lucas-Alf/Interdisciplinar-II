@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/simple-sidebar.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/webjars/font-awesome/5.11.2/css/all.min.css" />
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css" />
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js"></script>
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/modules/treeview.js"></script>
+    <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
+    <title>Ábaco</title>
+    </h:head>
+<h:body style="overflow: hidden; background-color:white; margin: 0px">
+
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <div class="container">
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Conta a Receber</h3>
+                <h:form>
+
+                    <div class="modal fade" id="ContaReceber" widgetVar="ContaReceber"
+                        tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
+                        data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div style="margin-top: 65%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 580px;"
+                                class="modal-content">
+                                <div class="modal-header">
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Contas a Receber</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="ui-float-label">
+                                        <h:inputHidden id="id" value="#{contapagarBean.contapagar.id}" />
+                                        <h:outputText value="Descrição: " style="margin-right: 50px;" />
+                                        <p:inputText style="width: 495px; margin-right: 20px;" id="nome" value="#{contareceberBean.contareceber.descricao}" /><br/><br/>
+                                        <h:outputText value="Número do Documneto " style="margin-right: 23px;" />
+                                        <p:inputNumber style="width: 495px;" id="descricao" value="#{contapagarBean.contapagar.numdocumento}" /><br/><br/>
+                                        <h:outputText value="Série do Documento: " style="margin-right: 5px;" />
+                                        <p:inputNumber id="quantidademinima" style="width: 100px;" minValue="0" value="#{contareceberBean.contareceber.seriedocumento}"></p:inputNumber><br/><br/>
+
+                                        <h:outputText value="Marca: " style="width: 450px; margin-right: 50px;" />
+                                        <p:selectOneMenu id="marca" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.marcaid}" style="width: 514px;" converter="MarcaConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione uma Marca" />
+                                        <f:selectItems value="#{marcaBean.marcas}" var="marca" 
+                                            itemValue="#{marca}" itemLabel="#{marca.nome}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Categoria: " style="width: 460px; margin-right: 25px;" />
+                                        <p:selectOneMenu id="grupo" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.grupoid}" style="width: 515px;" converter="GrupoConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione uma Categoria" />
+                                        <f:selectItems value="#{grupoBean.grupos}" var="grupo" 
+                                            itemValue="#{grupo}" itemLabel="#{grupo.descricao}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Und. Medida: " style="width: 450px; margin-right: 5px;" />
+                                        <p:selectOneMenu id="unidadeMedida" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.unidademedidaid}" style="width: 515px;" converter="UnidadeMedidaConverter" appendTo="@this">
+                                        <f:selectItem itemValue="null" itemLabel="Selecione uma Unidade Medida" />
+                                        <f:selectItems value="#{unidadeMedidaBean.unidadeMedidas}" var="unidadeMedida" itemValue="#{unidadeMedida}" itemLabel="#{unidadeMedida.descricao}" />
+                                        </p:selectOneMenu><br/><br/>
+
+                                        <h:outputText value="Fornecedor: " style="width: 450px; margin-right: 12px;" />                                   
+                                        <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains" value="#{produtoBean.produto.cliforid}" style="width: 517px;" converter="CliForConverter" appendTo="@this">
+                                            <f:selectItem itemValue="null" itemLabel="Selecione um Fornecedor"/>
+                                            <f:selectItems value="#{cliforBean.listaFornecedores()}" var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}"/>
+                                        </p:selectOneMenu>
+                                    </span>
+                                </div>
