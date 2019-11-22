@@ -103,11 +103,11 @@
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{contaBean.contas}" style="margin-top: 10px; height: 550px;"
+                        value="#{contaBean.contas}" style="margin-top: 10px; height: 850px;"
                         rowKey="#{item.id}" selection="#{item}" selectionMode="single"
                         emptyMessage="Não há registros na tabela.">
-                        <p:column headerText="Ordem" style="text-align: center; width: 10%;">
-                            <h:outputText value="#{item.ordem}" />
+                        <p:column headerText="Hierarquia" style="width: 10%; text-align: left">
+                            <h:outputText value="#{item.hierarquia}" />
                         </p:column>
                         <p:column headerText="Conta Pai" style="text-align: center; width: 10%;">
                             <h:outputText value="#{item.contapai}" />
@@ -128,5 +128,4 @@
     <f:viewAction action="#{contaBean.PesquisarSintetica()}" />
     <f:viewAction action="#{contaBean.AtualizarTable()}" />
 </f:metadata>
-
 </html>

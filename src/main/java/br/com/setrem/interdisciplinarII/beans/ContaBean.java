@@ -62,12 +62,12 @@ public class ContaBean implements Serializable {
 
     public List<Conta> ListarTable() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        return contaRepository.findByCliForid(empresa.getId());
+        return contaRepository.pessquisarGrid(empresa.getId());
     }
 
     public void AtualizarTable() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        this.contas = contaRepository.findByCliForid(empresa.getId());
+        this.contas = contaRepository.pessquisarGrid(empresa.getId());
     }
 
     public void Remove(int id) {
@@ -93,6 +93,7 @@ public class ContaBean implements Serializable {
     }
 
     public void AbreAlterar(int id) {
+        PesquisarSintetica();
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
