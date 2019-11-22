@@ -25,10 +25,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
 @Entity(name = "saldo")
 
 public class Saldo implements Serializable {
@@ -39,19 +35,12 @@ public class Saldo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
-    // consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
     @Column(name = "qtde")
-    private int qtde;
+    private double qtde;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "valor")
-    private BigDecimal valor;
-    @JoinColumn(name = "idlocal", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Local idlocal;
+    private double valor;
     @JoinColumn(name = "produtoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Produto produtoid;
@@ -63,7 +52,7 @@ public class Saldo implements Serializable {
         this.id = id;
     }
 
-    public Saldo(Integer id, int qtde, BigDecimal valor) {
+    public Saldo(Integer id, double qtde, double valor) {
         this.id = id;
         this.valor = valor;
         this.qtde = qtde;
@@ -102,36 +91,28 @@ public class Saldo implements Serializable {
         this.id = id;
     }
 
-    public int getQtde() {
-        return qtde;
-    }
-
-    public void setQtde(int qtde) {
-        this.qtde = qtde;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public Local getIdlocal() {
-        return idlocal;
-    }
-
-    public void setIdlocal(Local idlocal) {
-        this.idlocal = idlocal;
-    }
-
     public Produto getProdutoid() {
         return produtoid;
     }
 
     public void setProdutoid(Produto produtoid) {
         this.produtoid = produtoid;
+    }
+
+    public double getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(double qtde) {
+        this.qtde = qtde;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
 }

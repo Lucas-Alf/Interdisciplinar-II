@@ -17,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.MovItens;
 import br.com.setrem.interdisciplinarII.model.Movimentacao;
+import br.com.setrem.interdisciplinarII.model.Saldo;
 import br.com.setrem.interdisciplinarII.repository.MovItensRepository;
 import br.com.setrem.interdisciplinarII.repository.MovimentacaoRepository;
+import br.com.setrem.interdisciplinarII.repository.SaldoRepository;
 
 @Named(value = "compraBean")
 @SessionScoped
@@ -32,9 +34,14 @@ public class CompraBean implements Serializable {
     private MovimentacaoRepository movimentacaoRepository;
     private Movimentacao movimentacao = new Movimentacao();
 
+    @Autowired
+    private SaldoRepository saldoRepository;
+    private Saldo saldo = new Saldo();
+
     private List<Movimentacao> movimentacoes;
     private List<MovItens> movItenss;
     private List<MovItens> produtos;
+    private List<Saldo> saldos;
 
     String produtoid;
     String localid;
@@ -166,6 +173,24 @@ public class CompraBean implements Serializable {
                 movItens.setMovimentacaoId(movimentacao);
                 movItensRepository.save(movItens);
                 valorTotal += movItens.getValor();
+
+                saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId());
+                if (saldos.size() > 0) {
+                    saldo.setId(saldos.get(0).getId());
+                    saldo.setProdutoid(saldos.get(0).getProdutoid());
+                    saldo.setQtde(saldos.get(0).getQtde() + movItens.getQtde());
+                    saldo.setValor(saldos.get(0).getValor() + movItens.getValor());
+                    saldoRepository.save(saldo);
+                    saldo = new Saldo();
+                    saldos.removeAll(saldos);
+                } else {
+                    saldo.setProdutoid(movItens.getProdutoId());
+                    saldo.setQtde(movItens.getQtde());
+                    saldo.setValor(movItens.getValor());
+                    saldoRepository.save(saldo);
+                    saldo = new Saldo();
+                    saldos.removeAll(saldos);
+                }
             }
 
             movimentacao.setValortotal(valorTotal);
@@ -329,6 +354,30 @@ public class CompraBean implements Serializable {
 
     public void setMovimentacoes(List<Movimentacao> movimentacoes) {
         this.movimentacoes = movimentacoes;
+    }
+
+    public SaldoRepository getSaldoRepository() {
+        return saldoRepository;
+    }
+
+    public void setSaldoRepository(SaldoRepository saldoRepository) {
+        this.saldoRepository = saldoRepository;
+    }
+
+    public Saldo getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Saldo saldo) {
+        this.saldo = saldo;
+    }
+
+    public List<Saldo> getSaldos() {
+        return saldos;
+    }
+
+    public void setSaldos(List<Saldo> saldos) {
+        this.saldos = saldos;
     }
 
 }
