@@ -25,11 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * 
- */
-@Entity(name = "movitem")
+@Entity(name = "movitens")
 
 public class MovItens implements Serializable {
 
@@ -43,15 +39,15 @@ public class MovItens implements Serializable {
     @Transient
     private int sequencia;
 
-    @JoinColumn(name = "MovimentacaoId", referencedColumnName = "id")
+    @JoinColumn(name = "movimentacaoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Movimentacao MovimentacaoId;
 
-    @JoinColumn(name = "ProdutoId", referencedColumnName = "id")
+    @JoinColumn(name = "produtoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Produto ProdutoId;
 
-    @JoinColumn(name = "LocalId", referencedColumnName = "id")
+    @JoinColumn(name = "localid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Local LocalId;
 
@@ -67,7 +63,7 @@ public class MovItens implements Serializable {
 
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Movimentacao CliForId;
+    private CliFor CliForId;
 
     public MovItens() {
     }
@@ -122,20 +118,7 @@ public class MovItens implements Serializable {
     public void setMovimentacaoId(Movimentacao movimentacaoId) {
         MovimentacaoId = movimentacaoId;
     }
-
-  
-
     
-
-
-    public Movimentacao getCliForId() {
-        return CliForId;
-    }
-
-    public void setCliForId(Movimentacao cliForId) {
-        CliForId = cliForId;
-    }
-
     public double getQtde() {
         return qtde;
     }
@@ -195,5 +178,12 @@ public class MovItens implements Serializable {
         this.sequencia = sequencia;
     }
 
-}
+    public CliFor getCliForId() {
+        return CliForId;
+    }
 
+    public void setCliForId(CliFor cliForId) {
+        CliForId = cliForId;
+    }
+
+}

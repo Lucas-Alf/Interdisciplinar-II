@@ -13,5 +13,8 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Inte
 
    @Query("SELECT coalesce(max(id), 0)+1 FROM movimentacao")
    public int maxId();
+
+   @Query(value = "select * from movimentacao where empresaid = ?1", nativeQuery = true)
+   public List<Movimentacao> AtualizarTabela(String empresa);
    
 }

@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface MovItensRepository extends JpaRepository<MovItens, Integer> {
 
-    //@Query("SELECT c FROM movItens c WHERE c.nome LIKE %?1%")
-   // public List<MovItens> pesquisar(String nome);
+    @Query(value = "select * from movitens a inner join movimentacao b on (a.movimentacaoid = b.id) where a.cliforid = ?1", nativeQuery = true)
+    public List<MovItens> AtualizarTabela(String empresa);
    
 }

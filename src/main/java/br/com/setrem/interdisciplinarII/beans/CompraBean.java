@@ -31,6 +31,7 @@ public class CompraBean implements Serializable {
     private MovimentacaoRepository movimentacaoRepository;
     private Movimentacao movimentacao = new Movimentacao();
 
+    private List<Movimentacao> movimentacoes;
     private List<MovItens> movItenss;
     private List<MovItens> produtos;
 
@@ -44,32 +45,21 @@ public class CompraBean implements Serializable {
 
     }
 
-    public void AtualizarTabela() {
-        this.movItenss = movItensRepository.findAll();
+    public void AtualizarTabelaMovimentacao() {
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.movimentacoes = movimentacaoRepository.AtualizarTabela(empresa.getId());
     }
     
-
-    /*
-     * public void Pesquisar(String descricao) { this.grupoBens =
-     * grupoBemRepository.pesquisar(descricao); }
-     */
+    public void AtualizarTabelaMovItens() {
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.movItenss = movItensRepository.AtualizarTabela(empresa.getId());
+    }
 
     public void AbrirModal() {
         this.movItens = new MovItens();
         this.movimentacao = new Movimentacao();
         PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
     }
-
-    /*public void SalvarMovimentacao() {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        movimentacao.setEmpresaId(empresa);
-        movimentacao.setTipo('C');
-        movimentacao.setValortotal(0.0);
-        movimentacao.setId(movimentacaoRepository.maxId());
-        movimentacaoRepository.save(this.movimentacao);
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
-    }*/
 
     public void SalvarEstoque() {
         if( this.produtos == null){
@@ -103,14 +93,25 @@ public class CompraBean implements Serializable {
 
     public void SalvarMovimentacao() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        movimentacao.setEmpresaId(empresa);
         movimentacao.setTipo('C');
-        movimentacao.setValortotal(0.0);
-        movimentacao.setId(movimentacaoRepository.maxId());
-        movimentacaoRepository.save(this.movimentacao);
+        movimentacao.setValortotal(0);
+        movimentacao.setEmpresaId(empresa);
+        movimentacaoRepository.save(movimentacao);
 
-        //PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        //PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
+        double valorTotal = 0;
+        for (int i = 0; i < produtos.size(); i++) {
+            movItens = produtos.get(i);
+            movItens.setCliForId(empresa);
+            movItens.setMovimentacaoId(movimentacao);
+            movItensRepository.save(movItens);
+            valorTotal += movItens.getValor();
+        }
+
+        movimentacao.setValortotal(valorTotal);
+        movimentacaoRepository.save(movimentacao);
+
+        this.AtualizarTabelaMovimentacao();
+        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
     }
 
     public void Deletar(int id) {
@@ -121,7 +122,7 @@ public class CompraBean implements Serializable {
             context.addMessage(null, fm);
         } else {
             // grupoBemRepository.deleteById(id);
-            this.AtualizarTabela();
+            this.AtualizarTabelaMovimentacao();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -136,19 +137,8 @@ public class CompraBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
-            // grupoBem = grupoBemRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        // grupoBemRepository.save(grupoBem);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     /**
@@ -269,6 +259,14 @@ public class CompraBean implements Serializable {
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public List<Movimentacao> getMovimentacoes() {
+        return movimentacoes;
+    }
+
+    public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+        this.movimentacoes = movimentacoes;
     }
 
 }

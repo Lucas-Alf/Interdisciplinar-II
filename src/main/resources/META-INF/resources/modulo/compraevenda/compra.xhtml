@@ -32,7 +32,7 @@
                     <div class="modal fade" id="CadastrarCompra" widgetVar="CadastrarCompra" tabindex="-1" role="dialog"
                         aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 75%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 600px;"
+                            <div style="margin-top: 65%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 600px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Compra
@@ -120,25 +120,25 @@
 
                                         <p:growl id="messages2" showDetail="true" closable="true" />
                                         <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
-                                            action="#{compraBean.DeletarEstoque(item2.sequencia)}">
+                                            action="#{compraBean.DeletarEstoque(item.sequencia)}">
                                             <f:ajax execute="@form" render="@form" />
                                             <i class="far fa-trash-alt crud-btn"></i>
                                         </h:commandLink>
-                                        <p:dataTable scrollable="true" scrollHeight="60%" id="tabela2" var="item2"
+                                        <p:dataTable scrollable="true" scrollHeight="60%" id="tabela" var="item"
                                             value="#{compraBean.produtos}" style="margin-top: 10px; height: 100px;"
-                                            rowKey="#{item2.sequencia}" selection="#{item2}" selectionMode="single"
+                                            rowKey="#{item.sequencia}" selection="#{item}" selectionMode="single"
                                             emptyMessage="Não há registros na tabela.">
                                             <p:column headerText="Sequência" style="width: 10%; text-align: center">
-                                                <h:outputText value="#{item2.sequencia}" />
+                                                <h:outputText value="#{item.sequencia}" />
                                             </p:column>
                                             <p:column headerText="Produto" style="width: 30%; text-align: left">
-                                                <h:outputText value="#{item2.produtoId.nome}" />
+                                                <h:outputText value="#{item.produtoId.nome}" />
                                             </p:column>
                                             <p:column headerText="Quantidade" style="width: 10%; text-align: left">
-                                                <h:outputText value="#{item2.qtde}" />
+                                                <h:outputText value="#{item.qtde}" />
                                             </p:column>
                                             <p:column headerText="valor" style="width: 10%; text-align: left">
-                                                <h:outputText value="#{item2.valor}" />
+                                                <h:outputText value="#{item.valor}" />
                                             </p:column>
                                         </p:dataTable><br /><br />
 
@@ -187,23 +187,37 @@
                         <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
-                    <p:dataTable scrollable="true" scrollHeight="60%" id="tabela1" var="item"
-                        value="#{compraBean.movItenss}" style="margin-top: 10px; height: 550px;" rowKey="#{item.id}"
-                        selection="#{item}" selectionMode="single" emptyMessage="Não há registros na tabela.">
+                    <p:dataTable scrollable="true" scrollHeight="60%" id="tabela2" var="item2"
+                    value="#{compraBean.movimentacoes}" style="margin-top: 10px; height: 200px;" rowKey="#{item2.id}"
+                    selection="#{item2}" selectionMode="single" emptyMessage="Não há registros na tabela.">
+                    <p:column headerText="Nota Fiscal" style="text-align: center; width: 10%;">
+                        <h:outputText value="#{item2.notafiscal}" />
+                    </p:column>
+                    <p:column headerText="Data" style="width: 40%; text-align: center">
+                        <h:outputText value="#{item2.data}" />
+                    </p:column>
+                    <p:column headerText="Fornecedor" style="width: 10%; text-align: left">
+                        <h:outputText value="#{item2.cliforid.nome}" />
+                    </p:column>
+                    <p:column headerText="Valor Total" style="width: 10%; text-align: right">
+                        <h:outputText value="#{item2.valortotal}" />
+                    </p:column>
+                    </p:dataTable>
+
+                    <p:dataTable scrollable="true" scrollHeight="60%" id="tabela3" var="item3"
+                        value="#{compraBean.movItenss}" style="margin-top: 10px; height: 200px;" rowKey="#{item3.id}"
+                        selection="#{item3}" selectionMode="single" emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Nota Fiscal" style="text-align: center; width: 10%;">
-                            <h:outputText value="#{item.movimentacaoid.notafiscal}" />
+                            <h:outputText value="#{item3.movimentacaoId.notafiscal}" />
                         </p:column>
-                        <p:column headerText="Produto" style="width: 30%; text-align: left">
-                            <h:outputText value="#{item.produtoid.nome}" />
+                        <p:column headerText="Produto" style="width: 40%; text-align: left">
+                            <h:outputText value="#{item3.produtoId.nome}" />
                         </p:column>
-                        <p:column headerText="Local estocado" style="width: 15%; text-align: left">
-                            <h:outputText value="#{item.local}" />
+                        <p:column headerText="Quantidade" style="width: 10%; text-align: center">
+                            <h:outputText value="#{item3.qtde}" />
                         </p:column>
-                        <p:column headerText="Quantidade" style="width: 10%; text-align: left">
-                            <h:outputText value="#{item.quantidade}" />
-                        </p:column>
-                        <p:column headerText="valor" style="width: 10%; text-align: left">
-                            <h:outputText value="#{item.valor}" />
+                        <p:column headerText="valor" style="width: 10%; text-align: right">
+                            <h:outputText value="#{item3.valor}" />
                         </p:column>
                     </p:dataTable>
 
@@ -215,6 +229,8 @@
 </h:body>
 <f:metadata>
     <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+    <f:viewAction action="#{compraBean.AtualizarTabelaMovimentacao()}" />
+    <f:viewAction action="#{compraBean.AtualizarTabelaMovItens()}" />
     <f:viewAction action="#{localBean.AtualizarTabela()}" />
 </f:metadata>
 
