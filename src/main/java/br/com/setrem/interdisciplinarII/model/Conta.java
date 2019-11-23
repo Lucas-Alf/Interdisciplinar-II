@@ -57,7 +57,7 @@ public class Conta implements Serializable {
     @Basic(optional = false)
     private int ordem;
 
-    //@Transient // TABELA NA GRID SUCESSO
+ // TABELA NA GRID SUCESSO
     private String hierarquia;
 
     // CAMPO NIVEL SINTETICO
