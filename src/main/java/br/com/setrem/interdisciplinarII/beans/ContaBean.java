@@ -62,12 +62,12 @@ public class ContaBean implements Serializable {
 
     public List<Conta> ListarTable() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        return contaRepository.pessquisarGrid(empresa.getId());
+        return contaRepository.pessquisarGrid(empresa.getId(),"");
     }
 
     public void AtualizarTable() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        this.contas = contaRepository.pessquisarGrid(empresa.getId());
+        this.contas = contaRepository.pessquisarGrid(empresa.getId(),"");
     }
 
     public void Remove(int id) {
@@ -79,7 +79,6 @@ public class ContaBean implements Serializable {
             try {
                 contaRepository.deleteById(id);
                 this.AtualizarTable();
-
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
                 FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null, fm);
@@ -93,12 +92,12 @@ public class ContaBean implements Serializable {
     }
 
     public void AbreAlterar(int id) {
-        PesquisarSintetica();
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
+            this.PesquisarSintetica();
             conta = contaRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
         }
@@ -116,15 +115,16 @@ public class ContaBean implements Serializable {
 
     public void Pesquisar(String nome) {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        this.contas = contaRepository.pesquisar(nome, empresa.getId());
+        this.contas = contaRepository.pessquisarGrid(empresa.getId(),nome);
     }
 
-    public void PesquisarSintetica() {
+    public void PesquisarSintetica() { //ORGANIZAR A LISTA POR HIERARQUIA, FICA CANSATIVO TERQUE ACHAR A CONTA PAI
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.contasSint = contaRepository.pesquisarSint(empresa.getId());
     }
 
     public void AbrirModal() {
+        this.PesquisarSintetica();
         this.conta = new Conta();
         PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
     }

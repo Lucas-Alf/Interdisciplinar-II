@@ -42,6 +42,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 
 @Named(value = "relatorioBean")
 @SessionScoped
@@ -179,15 +180,15 @@ public class RelatorioBean implements Serializable {
         }
     }
 
-    // private JRResultSetDataSource gerarDataSource(String consulta) {
-    // try {
-    // ResultSet result = relatorioRepository.RealizaConsulta(consulta);
-    // return new JRResultSetDataSource(result);
-    // } catch (Exception e) {
-    // System.err.println(e.getMessage());
-    // return null;
-    // }
-    // }
+    private JRBeanArrayDataSource gerarDataSourceHibernate(String consulta) {
+        try {
+            List<?> result = relatorioRepository.RealizaConsulta();
+            return new JRBeanArrayDataSource(result.toArray());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
 
     private JasperPrint exportPdfFile(Relatorio relatorio) {
         try {
@@ -210,6 +211,8 @@ public class RelatorioBean implements Serializable {
             parameters.put("RELATORIO_NOME", relatorio.getNome());
             JRResultSetDataSource resultSet = gerarDataSource(
                     gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
+            // JRBeanArrayDataSource resultSet = gerarDataSourceHibernate(
+            //         gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
             JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, resultSet);
             return print;
         } catch (Exception e) {
