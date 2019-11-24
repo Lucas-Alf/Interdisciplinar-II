@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/simple-sidebar.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/webjars/font-awesome/5.11.2/css/all.min.css" />
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css" />
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js"></script>
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/modules/treeview.js"></script>
+    <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
+    <link rel="icon" href="images/favicon.ico" />
+    <title>Ábaco</title>
+</h:head>
+<h:body style="overflow: hidden; background-color:white; margin: 0px">
+
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <div class="container">
+                <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Cadastro
+                    Venda</h3>
+                <h:form>
+
+                    <div class="modal fade" id="CadastrarVenda" widgetVar="CadastrarVenda" tabindex="-1" role="dialog"
+                        aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div style="margin-top: 65%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px;"
+                                class="modal-content">
+                                <div class="modal-header">
+                                    <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Venda
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="ui-float-label">
+                                        <p:messages for="validacao3" id="validacao3" var="validacao3" showDetail="true" closable="true" />
+                                        <h:panelGrid id="panel" columns="1" border="1" cellpadding="1" cellspacing="1" style="width: 868px;" >                         
+                                            <f:facet name="header">
+                                                <p:messages for="validacao" id="validacao" var="validacao" showDetail="true" closable="true" />
+                                                <h:inputHidden id="id" value="#{vendaBean.movimentacao.id}" />
+                                                <p:outputLabel for="button" value="Data: "
+                                                    style="margin-right: 50px; margin: 10px;" />
+                                                <p:datePicker id="button" value="#{vendaBean.movimentacao.data}"
+                                                    showIcon="true"
+                                                    style="width: 50px; text-align: center; font-size: 13px;" />
+                                                <h:outputText style="margin-left: 80px; margin: 10px;" value="Nota Fiscal: " />
+                                                <p:inputText
+                                                    style="width: 300px; margin-bottom: 5px; margin-left: 30px;"
+                                                    id="notafiscal" value="#{vendaBean.movimentacao.notafiscal}" />
+                                                <br />
+                                                <h:outputText value="Fornecedor: "
+                                                    style="width: 150px; margin-right: 6px; margin: 10px;" />
+                                                <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains"
+                                                    value="#{vendaBean.movimentacao.cliForid}" style="width: 300px;"
+                                                    converter="CliForConverter" appendTo="@this">
+                                                    <f:selectItem itemValue="null"
+                                                        itemLabel="Selecione um Fornecedor" />
+                                                    <f:selectItems value="#{cliforBean.listaFornecedores()}"
+                                                        var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}" />
+                                                </p:selectOneMenu>
+                                            </f:facet>
+                                        </h:panelGrid><br />
+
+                                        <h:panelGrid id="panel2" columns="1" border="1" cellpadding="1" cellspacing="1" style="width: 868px;" >
+                                            <f:facet name="header">
+                                                <p:messages for="validacao2" id="validacao2" var="validacao2" showDetail="true" closable="true" />
+                                                <h:outputText value="Produto: "
+                                                    style="width: 300px; margin-right: 40px; margin-top: 5px;" />
+                                                <p:selectOneMenu id="produto" filter="true" filterMatchMode="contains"
+                                                    value="#{vendaBean.movItens.produtoId}" style="width: 300px; margin-top: 5px;"
+                                                    converter="ProdutoConverter" appendTo="@this">
+                                                    <f:selectItem itemValue="null" itemLabel="Selecione um Produto" />
+                                                    <f:selectItems value="#{produtoBean.produtos}" var="produto"
+                                                        itemValue="#{produto}" itemLabel="#{produto.nome}" />
+                                                </p:selectOneMenu>
+
+                                                <h:outputText value="Local: "
+                                                    style="width: 300px; margin-left: 50px; margin-right: 30px; margin-top: 5px;" />
+                                                <p:selectOneMenu id="local" filter="true" filterMatchMode="contains"
+                                                    value="#{vendaBean.movItens.localId}" style="width: 300px; margin-top: 5px; margin-bottom: 5px;"
+                                                    converter="LocalConverter" appendTo="@this">
+                                                    <f:selectItem itemValue="null" itemLabel="Selecione um local" />
+                                                    <f:selectItems value="#{localBean.locais}" var="local"
+                                                        itemValue="#{local}" itemLabel="#{local.descricao}" />
+                                                </p:selectOneMenu><br />
+
+                                                <h:outputText value="Quantidade: "
+                                                    style="width: 20px; margin-right: 17px;" />
+                                                <p:inputNumber id="quantidade" value="#{vendaBean.movItens.qtde}">
+                                                </p:inputNumber>
+
+                                                <h:outputText value="Valor: "
+                                                    style="width: 20px; margin-left: 120px; margin-right: 55px;" />
+                                                <p:inputNumber id="valor" value="#{vendaBean.movItens.valor}">
+                                                </p:inputNumber>
+                                            </f:facet>
+                                        </h:panelGrid>
+
+                                        <h:commandLink class="btn btn-success btn-sm" value="Incluir"
+                                            action="#{vendaBean.SalvarEstoque()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <i class="far fa-edit crud-btn"></i>
+                                        </h:commandLink>
+
+                                        <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
+                                            action="#{vendaBean.DeletarEstoque(item.sequencia)}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <i class="far fa-trash-alt crud-btn"></i>
+                                        </h:commandLink>
+
+                                        <p:dataTable scrollable="true" scrollHeight="130" id="tabela" var="item"
+                                            value="#{vendaBean.produtos}" style="margin-top: 5px; height: 150px;"
+                                            rowKey="#{item.sequencia}" selection="#{item}" selectionMode="single"
+                                            emptyMessage="Não há registros na tabela.">
+                                            <p:column headerText="Sequência" style="width: 10%; text-align: center">
+                                                <h:outputText value="#{item.sequencia}" />
+                                            </p:column>
+                                            <p:column headerText="Produto" style="width: 30%; text-align: left">
+                                                <h:outputText value="#{item.produtoId.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Quantidade" style="width: 10%; text-align: left">
+                                                <h:outputText value="#{item.qtde}" />
+                                            </p:column>
+                                            <p:column headerText="valor" style="width: 10%; text-align: left">
+                                                <h:outputText value="#{item.valor}" />
+                                            </p:column>
+                                        </p:dataTable>
+
+                                    </span>
+                                </div>
+                                <div class="modal-footer">
+                                    <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
+                                        action="#{vendaBean.SalvarMovimentacao()}">
+                                        <f:ajax execute="@form" render="@form" />
+                                        <i class="far fa-save crud-btn"></i>
+                                    </h:commandLink>
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
+                                            class="fas fa-ban"></i> Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="float-right">
+                        <h:outputText style="font-weight:bold" value="Pesquisar: " />
+                        <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
+                        <h:commandLink id="botaoPesquisar"
+                            style="margin-left: 1px; margin-bottom: 10px; width: 50px; height: 35px;"
+                            class="btn btn-info btn-sm" value=""
+                            action="#{estadoConservacaoBean.Pesquisar(pesquisa.value)}">
+                            <f:ajax execute="@form" render="@form" />
+                            <i style="margin-left: -8px; margin-top: 3px; font-size: 16px;" class="fas fa-search"></i>
+                        </h:commandLink><br />
+                    </div>
+
+                    <h:commandLink class="btn btn-success btn-sm" value="Incluir" action="#{vendaBean.AbrirModal()}">
+                        <f:ajax execute="@form" render="@form" />
+                        <i class="far fa-edit crud-btn"></i>
+                    </h:commandLink>
+
+                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
+                        action="#{vendaBean.AbreAlterar(item.id)}">
+                        <f:ajax execute="@form" render="@form" />
+                        <i class="far fa-edit crud-btn"></i>
+                    </h:commandLink>
+
+                    <p:dataTable scrollable="true" scrollHeight="40%" id="tabela2" var="item2"
+                    value="#{vendaBean.movimentacoes}" style="margin-top: 10px; height: 250px;" rowKey="#{item2.id}"
+                    selection="#{item2}" selectionMode="single" emptyMessage="Não há registros na tabela.">
+                    <p:ajax event="rowSelect" listener="#{vendaBean.rowSelected}" update="@form" />
+                    <p:column headerText="Nota Fiscal" style="text-align: center; width: 10%;">
+                        <h:outputText value="#{item2.notafiscal}" />
+                    </p:column>
+                    <p:column headerText="Data" style="width: 10%; text-align: center">
+                        <h:outputText value="#{item2.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fornecedor" style="width: 40%; text-align: left">
+                        <h:outputText value="#{item2.cliForid.nome}" />
+                    </p:column>
+                    <p:column headerText="Valor Total" style="width: 10%; text-align: right">
+                        <h:outputText value="#{item2.valortotal}">
+                            <f:convertNumber currencySymbol = "R$ " type = "currency" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    </p:dataTable>
+
+                    <p:dataTable scrollable="true" scrollHeight="40%" id="tabela3" var="item3"
+                        value="#{vendaBean.movItenss}" style="margin-top: 10px; height: 250px;" rowKey="#{item3.id}"
+                        selection="#{item3}" selectionMode="single" emptyMessage="Não há registros na tabela.">
+                        <p:column headerText="Nota Fiscal" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{item3.movimentacaoId.notafiscal}" />
+                        </p:column>
+                        <p:column headerText="Produto" style="width: 40%; text-align: left">
+                            <h:outputText value="#{item3.produtoId.nome}" />
+                        </p:column>
+                        <p:column headerText="Quantidade" style="width: 10%; text-align: center">
+                            <h:outputText value="#{item3.qtde}" />
+                        </p:column>
+                        <p:column headerText="Valor" style="width: 10%; text-align: right">
+                            <h:outputText value="#{item3.valor}">
+                                <f:convertNumber currencySymbol = "R$ " type = "currency" locale="pt_BR"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+    <script src="/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js"></script>
+</h:body>
+<f:metadata>
+    <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+    <f:viewAction action="#{vendaBean.AtualizarTabelaSaida()}" />
+    <f:viewAction action="#{localBean.AtualizarTabela()}" />
+</f:metadata>
+
+</html>

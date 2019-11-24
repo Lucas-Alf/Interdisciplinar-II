@@ -16,5 +16,8 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Inte
 
    @Query(value = "select * from movimentacao where empresaid = ?1", nativeQuery = true)
    public List<Movimentacao> AtualizarTabela(String empresa);
+
+   @Query(value = "select * from movimentacao where empresaid = ?1 and tipo = 'V'", nativeQuery = true)
+   public List<Movimentacao> AtualizarTabelaSaida(String empresa);
    
 }
