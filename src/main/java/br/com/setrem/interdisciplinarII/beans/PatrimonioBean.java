@@ -134,50 +134,39 @@ public class PatrimonioBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data de Aquisição.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         } else if (this.patrimonio.getProdutoid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Patrimônio.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         } else if ((int)(this.patrimonio.getValor()) == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         } else if (this.patrimonio.getFornecedorid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Fornecedor.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         } else if (this.patrimonio.getGrupoBemid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Grupo do Bem.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         } else if (this.patrimonio.getEstadoConservacaoid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Estado de Conservação.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         } else if (this.patrimonio.getCentroCustoid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Centro de Custo.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('show');");
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             patrimonio.setCliForid(empresa);
             patrimonioRepository.save(this.patrimonio);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarPatrimonio').modal('hide');");
+
             this.LancarDepreciacao();
         }
     }
@@ -188,6 +177,7 @@ public class PatrimonioBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         } else {
+            depreciacaoRepository.DeletarDepreciacao(id);
             patrimonioRepository.deleteById(id);
             this.AtualizarTabela();
 

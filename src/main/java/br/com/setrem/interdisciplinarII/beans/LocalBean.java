@@ -50,18 +50,19 @@ public class LocalBean implements Serializable {
         if (this.local.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descricao!");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            context.addMessage("validacao", fm);
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             local.setCliForid(empresa);
             localRepository.save(this.local);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarLocal').modal('hide');");
             
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -69,14 +70,14 @@ public class LocalBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             localRepository.deleteById(id);
             this.AtualizarTabela();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -85,7 +86,7 @@ public class LocalBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
                     "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             local = localRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarLocal').modal('show');");
@@ -99,7 +100,7 @@ public class LocalBean implements Serializable {
 
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
+        context.addMessage("validacao2", fm);
     }
 
     public Local getLocal() {

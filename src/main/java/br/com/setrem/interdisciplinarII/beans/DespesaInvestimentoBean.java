@@ -54,32 +54,26 @@ public class DespesaInvestimentoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Tipo do Lançamento.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarDespesaInvestimento').modal('show');");
         } else if (this.despesaInvestimento.getData() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarDespesaInvestimento').modal('show');");
         } else if (this.despesaInvestimento.getPatrimonioid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Patrimônio.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarDespesaInvestimento').modal('show');");
         } else if ((int)(this.despesaInvestimento.getValor()) == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarDespesaInvestimento').modal('show');");
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             despesaInvestimento.setCliForid(empresa);
             despesaInvestimentoRepository.save(this.despesaInvestimento);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarDespesaInvestimento').modal('hide');");
 
             if (despesaInvestimento.getTipo().equals("I")) {
                 if (despesaInvestimento.getPatrimonioid().isDepreciavel() == true) {

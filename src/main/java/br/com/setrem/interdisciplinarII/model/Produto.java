@@ -41,7 +41,7 @@ public class Produto implements Serializable {
     private String descricao;
     @Basic(optional = false)
     @Column(name = "quantidademinima")
-    private BigDecimal quantidademinima;
+    private double quantidademinima;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produtoid")
     private Collection<Patrimonio> patrimonioCollection;
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
@@ -67,7 +67,7 @@ public class Produto implements Serializable {
         this.id = id;
     }
 
-    public Produto(Integer id, String nome, String descricao, BigDecimal quantidademinima) {
+    public Produto(Integer id, String nome, String descricao, double quantidademinima) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -96,14 +96,6 @@ public class Produto implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public BigDecimal getQuantidademinima() {
-        return quantidademinima;
-    }
-
-    public void setQuantidademinima(BigDecimal quantidademinima) {
-        this.quantidademinima = quantidademinima;
     }
 
     @XmlTransient
@@ -180,5 +172,13 @@ public class Produto implements Serializable {
     public void setFornecedorid(CliFor fornecedorid) {
         this.fornecedorid = fornecedorid;
     }
-    
+
+    public double getQuantidademinima() {
+        return quantidademinima;
+    }
+
+    public void setQuantidademinima(double quantidademinima) {
+        this.quantidademinima = quantidademinima;
+    }
+     
 }

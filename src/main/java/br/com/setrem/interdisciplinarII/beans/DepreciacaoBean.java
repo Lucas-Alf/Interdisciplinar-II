@@ -58,15 +58,11 @@ public class DepreciacaoBean implements Serializable {
         if (dataInical == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Período Inicial!");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarDepreciacao').modal('show');");
+            context.addMessage("validacao", fm);
         } else if (dataFinal == null) {
             FacesMessage fm2 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Período Final!");
             FacesContext context2 = FacesContext.getCurrentInstance();
-            context2.addMessage(null, fm2);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarDepreciacao').modal('show');");
+            context2.addMessage("validacao", fm2);
         } else {
             //String anoI = new SimpleDateFormat("yyyy").format(dataInical);
             //String mesI = new SimpleDateFormat("MM").format(dataInical);
@@ -86,11 +82,13 @@ public class DepreciacaoBean implements Serializable {
             this.AtualizarTabela();
             setDataInicial(null);
             setDataFinal(null);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarDepreciacao').modal('hide');");
     
             FacesMessage fm3 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Depreciado com Sucesso!");
             FacesContext context3 = FacesContext.getCurrentInstance();
-            context3.addMessage(null, fm3);
+            context3.addMessage("validacao2", fm3);
         }
     }
 

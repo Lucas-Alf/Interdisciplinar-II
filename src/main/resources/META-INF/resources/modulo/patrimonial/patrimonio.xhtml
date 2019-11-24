@@ -31,7 +31,7 @@
                     <div class="modal fade" id="CadastrarPatrimonio" widgetVar="CadastrarPatrimonio" tabindex="-1"
                         role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 65%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
+                            <div style="margin-top: 72%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Lançamento de Patrimônio</h4>
@@ -110,7 +110,7 @@
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
                                         action="#{patrimonioBean.Salvar()}">
-                                        <f:ajax execute="@form" render="@form" />
+                                        <f:ajax execute="@form" render="validacao" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
                                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i

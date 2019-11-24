@@ -38,25 +38,23 @@ public class ContaBean implements Serializable {
         if (this.conta.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descriçao!");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+            context.addMessage("validacao", fm);
         } if(!this.conta.isSintetica() && this.conta.getContapai() == null){
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Quando a conta for analítica, é obrigatório informar o Pai!");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+            context.addMessage("validacao", fm);
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.conta.setCliforid(empresa);
             contaRepository.save(this.conta);
             this.AtualizarTable();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('hide');");
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -74,18 +72,18 @@ public class ContaBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             try {
                 contaRepository.deleteById(id);
                 this.AtualizarTable();
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             } catch (Exception e) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção", "Registro é utilizado por Lançamento(s) Contábil(eis).");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             }
         }
 
@@ -95,22 +93,12 @@ public class ContaBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             this.PesquisarSintetica();
             conta = contaRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        contaRepository.save(conta);
-        this.AtualizarTable(); 
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public void Pesquisar(String nome) {

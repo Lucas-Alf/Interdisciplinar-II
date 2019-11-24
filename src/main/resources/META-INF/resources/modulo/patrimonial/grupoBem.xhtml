@@ -45,9 +45,11 @@
                                         <h:outputText value="Descrição: " style="margin-right: 20px;" />
                                         <p:inputText style="width: 520px;" id="descricao" value="#{grupoBemBean.grupoBem.descricao}" /><br/><br/>
                                         <h:outputText value="Depreciação: " />
-                                        <p:inputText style="width: 200px; text-align: right;" id="taxadepreciacao" value="#{grupoBemBean.grupoBem.taxadepreciacao}" /><br/><br/>                             
+                                        <p:inputNumber style="width: 200px; text-align: right;" widgetVar="taxadepreciacao" id="taxadepreciacao" value="#{grupoBemBean.grupoBem.taxadepreciacao}">
+                                        </p:inputNumber><br/><br/>                             
                                         <h:outputText value="Vida Útil: " style="margin-right: 30px;" />
-                                        <p:inputText style="width: 200px; text-align: right;" id="vidautil" value="#{grupoBemBean.grupoBem.vidautil}" />                                                  
+                                        <p:inputNumber style="width: 200px; text-align: right;" widgetVar="vidautil" id="vidautil" value="#{grupoBemBean.grupoBem.vidautil}">
+                                        </p:inputNumber>                                               
                                     </span>
                                 </div>
                                 <div class="modal-footer">

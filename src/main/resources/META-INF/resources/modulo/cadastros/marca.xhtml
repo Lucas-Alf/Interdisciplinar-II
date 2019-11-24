@@ -33,7 +33,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 200px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro de Marca</h4>
@@ -43,6 +43,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <span class="ui-float-label">
+                                        <p:messages for="validacao" id="validacao" var="validacao" showDetail="true" closable="true" />
                                         <h:inputHidden  id="id" value="#{marcaBean.marca.id}" />
                                         <h:outputText value="Nome: " />
                                         <p:inputText style="width: 540px;" id="nome"
@@ -52,7 +53,7 @@
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
                                         action="#{marcaBean.Salvar()}">
-                                        <f:ajax execute="@form" render="@form" />
+                                        <f:ajax execute="@form" render="validacao" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
                                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
@@ -61,6 +62,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <p:messages for="validacao2" id="validacao2" var="validacao2" showDetail="true" closable="true" />
 
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
@@ -82,7 +85,6 @@
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
-                    <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
                         action="#{marcaBean.Deletar(item.id)}">
                         <f:ajax execute="@form" render="@form" />

@@ -3,7 +3,10 @@ package br.com.setrem.interdisciplinarII.repository;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -29,5 +32,10 @@ public interface DepreciacaoRepository extends JpaRepository<Depreciacao, Intege
 
     @Query(value = "select * from depreciacao where patrimonioid = ?1 and depreciacao = 0 order by id asc", nativeQuery = true)
     public List<Depreciacao> ListaDepreciacao(int patrimonioId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from depreciacao where patrimonioid = ?1", nativeQuery = true)
+    public void DeletarDepreciacao(int patrimonioId);
 
 }

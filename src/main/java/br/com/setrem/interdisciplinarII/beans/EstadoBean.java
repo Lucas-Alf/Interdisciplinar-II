@@ -50,18 +50,16 @@ public class EstadoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Descrição.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
         } else if (this.estado.getSigla().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Sigla.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('show');");
         } else {
             estadoRepository.save(this.estado);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarEstado').modal('hide');");
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();

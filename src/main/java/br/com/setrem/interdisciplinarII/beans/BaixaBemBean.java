@@ -32,7 +32,6 @@ public class BaixaBemBean implements Serializable {
     private PatrimonioRepository patrimonioRepository;
 
     private List<BaixaBem> baixaBens;
-    //private List<Patrimonio> patrimonios;
 
     public BaixaBemBean() {
 
@@ -58,26 +57,18 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
         } else if (this.baixaBem.getPatrimonioid() == null) {    
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Patrimônio.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
         } else if (this.baixaBem.getMotivobaixaid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Motivo de Baixa.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
         } else if ((int)(this.baixaBem.getValor()) == 0 && this.baixaBem.getMotivobaixaid().getDescricao().equals("Venda")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor da Venda.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('show');");
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.patrimonio = patrimonioRepository.getOne(this.baixaBem.getPatrimonioid().getId());
@@ -86,7 +77,13 @@ public class BaixaBemBean implements Serializable {
             this.baixaBem.setCliForid(empresa);
             baixaBemRepository.save(this.baixaBem);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarBaixaBem').modal('hide');");
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Patrimônio Baixado.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
         }
     }
 

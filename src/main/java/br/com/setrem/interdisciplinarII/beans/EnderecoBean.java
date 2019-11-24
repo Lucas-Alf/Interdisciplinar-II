@@ -50,42 +50,32 @@ public class EnderecoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um CEP.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         } else if (this.endereco.getNumero() == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Número.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         } else if (this.endereco.getRua().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Rua.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         } else if (this.endereco.getBairro().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Bairro.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         } else if (this.endereco.getComplemento().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Complemento.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         } else if (this.endereco.getCidadeid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Cidade.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('show');");
         } else {
             enderecoRepository.save(this.endereco);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarEndereco').modal('hide');");
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();

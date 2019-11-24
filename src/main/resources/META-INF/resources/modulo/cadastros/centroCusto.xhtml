@@ -22,7 +22,7 @@
                         tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
                         data-backdrop="static">
                         <div class="modal-dialog" role="document">
-                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 250px;"
+                            <div style="margin-top: 50%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px;"
                                 class="modal-content">
                                 <div class="modal-header">
                                     <h4 style="font-weight: bold;" class="modal-title" id="modalLabel">Cadastro Centro de Custo</h4>
@@ -31,7 +31,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5">
+                                    <p:messages for="validacao" id="validacao" var="validacao" showDetail="true" closable="true" />
+                                    <h:panelGrid style="width: 99%" columns="2" cellpadding="5"> 
                                         <h:inputHidden  id="id" value="#{centroCustoBean.centroCusto.id}" />
                                         <h:inputHidden  id="CliForid" value="#{centroCustoBean.centroCusto.cliforid}" converter = "CliForConverter"/>
                                         <h:outputText value="Nome: " />
@@ -42,7 +43,7 @@
                                 <div class="modal-footer">
                                     <h:commandLink class="btn btn-primary btn-sm" value="Salvar"
                                         action="#{centroCustoBean.Insert()}">
-                                        <f:ajax execute="@form" render="@form" />
+                                        <f:ajax execute="@form" render="validacao" />
                                         <i class="far fa-save crud-btn"></i>
                                     </h:commandLink>
                                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i
@@ -51,6 +52,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <p:messages for="validacao2" id="validacao2" var="validacao2" showDetail="true" closable="true" />
 
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
@@ -73,7 +76,6 @@
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
-                    <p:growl id="messages" showDetail="true" closable="true" />
                     <h:commandLink class="btn btn-danger btn-sm" value="Excluir"
                         action="#{centroCustoBean.Remove(item.id)}">
                         <f:ajax execute="@form" render="@form" />

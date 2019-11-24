@@ -48,8 +48,7 @@ public class CliForBean implements Serializable {
             if(this.cliFor.getNome().equals("")){
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome!");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
-                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                context.addMessage("validacao", fm);
             } else{
                 if(tipo){
                     cliFor.setTipopessoa("F".charAt(0));
@@ -58,14 +57,12 @@ public class CliForBean implements Serializable {
                 }
                 cliforRepository.save(this.cliFor);
                 this.AtualizarTable();
-                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             }
         } else if (this.cliFor.getNomefantasia() != null) {
             if(this.cliFor.getNomefantasia().equals("")){
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome Fantasia!");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
-                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                context.addMessage("validacao", fm);
             } else{
                 if(tipo){
                     cliFor.setTipopessoa("F".charAt(0));
@@ -74,11 +71,13 @@ public class CliForBean implements Serializable {
                 }
                 cliforRepository.save(this.cliFor);
                 this.AtualizarTable();
-                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+                FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+                PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('hide');");
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             }
         } 
     }

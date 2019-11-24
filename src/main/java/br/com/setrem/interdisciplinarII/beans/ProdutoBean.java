@@ -53,25 +53,45 @@ public class ProdutoBean implements Serializable {
 
     public void Salvar() {
         if (this.produto.getNome().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome!");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-        } else if (this.produto.getNome().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Nome!");
+            context.addMessage("validacao", fm);
+        } else if (this.produto.getDescricao().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            context.addMessage("validacao", fm);
+        } else if (this.produto.getQuantidademinima() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Quantidade Mínica.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+        } else if (this.produto.getMarcaid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Marca.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+        } else if (this.produto.getGrupoid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Categoria.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+        } else if (this.produto.getUnidademedidaid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Unidade de Medida.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+        } else if (this.produto.getFornecedorid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Fornecedor.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             produto.setCliforid(empresa);
             produtoRepository.save(this.produto);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarProduto').modal('hide');");
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -80,14 +100,14 @@ public class ProdutoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
                     "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             produtoRepository.deleteById(id);
             this.AtualizarTabela();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -96,21 +116,11 @@ public class ProdutoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
                     "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             produto = produtoRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarProduto').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        produtoRepository.save(produto);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public Produto getProduto() {
@@ -177,13 +187,5 @@ public class ProdutoBean implements Serializable {
     public void setCliFor(CliFor cliFor) {
         this.cliFor = cliFor;
     }
-
-    /*public List<CliFor> getFornecedores() {
-        return fornecedores;
-    }
-
-    public void setFornecedores(List<CliFor> fornecedores) {
-        this.fornecedores = fornecedores;
-    }*/
 
 }

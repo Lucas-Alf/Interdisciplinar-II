@@ -33,10 +33,9 @@ public class CentroCustoBean implements Serializable {
 
     public void Insert() {
         if (this.centroCusto.getNome().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um nome!");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Nome.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            context.addMessage("validacao", fm);
         } /*else if (this.centroCusto.getNome().length() > 80) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
                     "Centro de custo nao pode conter mais que 80 caracteres.");
@@ -47,12 +46,14 @@ public class CentroCustoBean implements Serializable {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.centroCusto.setCliforid(empresa);
             centroCustoRepository.save(this.centroCusto);
-            this.AtualizarTable();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            this.AtualizarTable();   
+            
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarCentroCusto').modal('hide');");
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -71,7 +72,7 @@ public class CentroCustoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
                     "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             try{
                 centroCustoRepository.deleteById(id);
@@ -79,11 +80,11 @@ public class CentroCustoBean implements Serializable {
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             } catch(Exception ex){
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção", "Registro é utilizado por Lançamento(s) Contábil(eis) ou Patrimônio(s).");
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, fm);
+                context.addMessage("validacao2", fm);
             }
         }
     }
@@ -93,21 +94,11 @@ public class CentroCustoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
                     "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             centroCusto = centroCustoRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarCentroCusto').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        centroCustoRepository.save(centroCusto);
-        this.AtualizarTable();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public void Pesquisar(String nome) {

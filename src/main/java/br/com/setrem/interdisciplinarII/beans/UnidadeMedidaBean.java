@@ -48,20 +48,25 @@ public class UnidadeMedidaBean implements Serializable {
 
     public void Salvar() {
         if (this.unidadeMedida.getDescricao().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição!");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Descrição.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm); 
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            context.addMessage("validacao", fm); 
+        } else if (this.unidadeMedida.getSigla().equals("")) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Sigla.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             unidadeMedida.setCliForid(empresa);
             unidadeMedidaRepository.save(this.unidadeMedida);
             this.AtualizarTabela();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+
+            FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+            PrimeFaces.current().executeScript("$('#CadastrarUnidadeMedida').modal('hide');");
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -69,14 +74,14 @@ public class UnidadeMedidaBean implements Serializable {
         if (id == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             unidadeMedidaRepository.deleteById(id);
             this.AtualizarTabela();
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         }
     }
 
@@ -85,21 +90,11 @@ public class UnidadeMedidaBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
                     "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao2", fm);
         } else {
             unidadeMedida = unidadeMedidaRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarUnidadeMedida').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        unidadeMedidaRepository.save(unidadeMedida);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, fm);
     }
 
     public UnidadeMedida getUnidadeMedida() {
