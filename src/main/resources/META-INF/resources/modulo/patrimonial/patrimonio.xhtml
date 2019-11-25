@@ -78,7 +78,7 @@
                                             converter="GrupoBemConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um Gupo de Bem" />
                                             <f:selectItems value="#{grupoBemBean.grupoBens}" var="grupoBem"
-                                                itemValue="#{grupoBem}" itemLabel="#{grupoBem.descricao}" />
+                                                itemValue="#{grupoBem}" itemLabel="#{grupoBem.descricao} (Depreciação: #{grupoBem.taxadepreciacao} Vida Útil: #{grupoBem.vidautil})" />
                                         </p:selectOneMenu><br /><br />
 
                                         <h:outputText value="Est. Conserv.: " style="margin-right: 4px;" />

@@ -172,16 +172,22 @@ public class PatrimonioBean implements Serializable {
     }
 
     public void Deletar(int id) {
-        if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao2", fm);
-        } else {
-            depreciacaoRepository.DeletarDepreciacao(id);
-            patrimonioRepository.deleteById(id);
-            this.AtualizarTabela();
+        try {
+            if (id == 0) {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao2", fm);
+            } else {
+                depreciacaoRepository.DeletarDepreciacao(id);
+                patrimonioRepository.deleteById(id);
+                this.AtualizarTabela();
 
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro deletado.");
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao2", fm);
+            }
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!","Não é possível excluir, pois possui relação com outro registro.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         }

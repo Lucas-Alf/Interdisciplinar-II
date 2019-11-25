@@ -67,15 +67,21 @@ public class LocalBean implements Serializable {
     }
 
     public void Deletar(int id) {
-        if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao2", fm);
-        } else {
-            localRepository.deleteById(id);
-            this.AtualizarTabela();
+        try {
+            if (id == 0) {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao2", fm);
+            } else {
+                localRepository.deleteById(id);
+                this.AtualizarTabela();
 
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao2", fm);
+            }
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!","Não é possível excluir, pois possui relação com outro registro.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         }
@@ -91,16 +97,6 @@ public class LocalBean implements Serializable {
             local = localRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarLocal').modal('show');");
         }
-    }
-
-    public void Alterar() {
-        localRepository.save(local);
-        this.AtualizarTabela();
-        PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-
-        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro alterado.");
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage("validacao2", fm);
     }
 
     public Local getLocal() {

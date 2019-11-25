@@ -98,11 +98,9 @@ public class EnderecoBean implements Serializable {
                 context.addMessage("validacao2", fm);
             }
         } catch (Exception e) {
-            if (e.getMessage().contains("could not extract ResultSet")) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!","Não é possível excluir este registro, pois está relacionado!");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("validacao2", fm);
-            }
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!","Não é possível excluir, pois possui relação com outro registro.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
         }
     }
 
