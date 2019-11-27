@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ContaReceberRepository extends JpaRepository<ContaReceberRepository, Integer> {
+public interface ContaReceberRepository extends JpaRepository<ContaReceber, Integer> {
 
     @Query(value = "select * from contareceber where nome like %?1% and cliforid = ?2", nativeQuery = true)
     public List<ContaReceber> Pesquisar(String descricao, String empresa);
