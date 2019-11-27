@@ -184,7 +184,7 @@ public class RelatorioBean implements Serializable {
     private JasperPrint exportPdfFile(Relatorio relatorio) {
         try {
             Resource resource = resourceLoader
-                    .getResource("classpath:/META-INF/resources/reports/" + relatorio.getNome() + ".jrxml");
+                    .getResource("/META-INF/resources/reports/" + relatorio.getNome() + ".jrxml");
             URI uri = resource.getURI();
             System.out.println("URI-> " + uri);
             String path = uri.getPath();
