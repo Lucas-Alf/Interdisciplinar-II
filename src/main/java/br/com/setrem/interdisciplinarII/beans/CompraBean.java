@@ -209,16 +209,18 @@ public class CompraBean implements Serializable {
 
     public void Deletar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
-                    "Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-        } else {
+            context.addMessage("validacao4", fm);
+        } else {  
+            movItensRepository.DeletarMovItens(id);
+            movimentacaoRepository.DeletarMovimentacao(id);
             this.AtualizarTabelaMovimentacao();
+            movItenss.removeAll(movItenss);
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
+            context.addMessage("validacao4", fm);
         }
     }
 

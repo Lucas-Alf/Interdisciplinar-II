@@ -152,6 +152,8 @@
                         </div>
                     </div>
 
+                    <p:messages for="validacao4" id="validacao4" var="validacao4" showDetail="true" closable="true" />
+
                     <div class="float-right">
                         <h:outputText style="font-weight:bold" value="Pesquisar: " />
                         <p:inputText style="width: 250px;" id="pesquisa" binding="#{pesquisa}" />
@@ -169,10 +171,9 @@
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
 
-                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
-                        action="#{compraBean.AbreAlterar(item.id)}">
+                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#{compraBean.Deletar(item2.id)}">
                         <f:ajax execute="@form" render="@form" />
-                        <i class="far fa-edit crud-btn"></i>
+                        <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="40%" id="tabela2" var="item2"
@@ -197,7 +198,8 @@
                     </p:column>
                     </p:dataTable>
 
-                    <p:dataTable scrollable="true" scrollHeight="40%" id="tabela3" var="item3"
+                    <h:form id="form2" var="form2">
+                        <p:dataTable scrollable="true" scrollHeight="40%" id="tabela3" var="item3"
                         value="#{compraBean.movItenss}" style="margin-top: 10px; height: 250px;" rowKey="#{item3.id}"
                         selection="#{item3}" selectionMode="single" emptyMessage="Não há registros na tabela.">
                         <p:column headerText="Nota Fiscal" style="text-align: center; width: 10%;">
@@ -215,6 +217,8 @@
                             </h:outputText>
                         </p:column>
                     </p:dataTable>
+                    </h:form>
+
 
                 </h:form>
             </div>

@@ -4,7 +4,10 @@ import br.com.setrem.interdisciplinarII.model.Movimentacao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,5 +22,10 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Inte
 
    @Query(value = "select * from movimentacao where empresaid = ?1 and tipo = 'V'", nativeQuery = true)
    public List<Movimentacao> AtualizarTabelaSaida(String empresa);
+   
+   @Modifying
+   @Transactional
+   @Query(value = "delete from movimentacao where id = ?1", nativeQuery = true)
+   public void DeletarMovimentacao(int id);
    
 }
