@@ -47,16 +47,18 @@ public class VendaBean implements Serializable {
     double valor;
     double qtde;
     int seq = 0;
- 
+    double qtdeMaxima = 0;
+    double vlrTotal = 0;
+
     public VendaBean() {
 
     }
 
     public void AtualizarTabelaSaida() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        this.movimentacoes = movimentacaoRepository.AtualizarTabelaSaida  (empresa.getId());
+        this.movimentacoes = movimentacaoRepository.AtualizarTabelaSaida(empresa.getId());
     }
-    
+
     public void AtualizarTabelaMovItens() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.movItenss = movItensRepository.AtualizarTabela(empresa.getId());
@@ -69,7 +71,7 @@ public class VendaBean implements Serializable {
     public void rowSelected(SelectEvent event) {
         Movimentacao mov = (Movimentacao) event.getObject();
         this.movItenss = movItensRepository.ListarProdutos(mov.getId());
-   }
+    }
 
     public void AbrirModal() {
         this.movItens = new MovItens();
@@ -103,16 +105,16 @@ public class VendaBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else {
-            if( this.produtos == null){
+            if (this.produtos == null) {
                 this.produtos = new ArrayList<MovItens>();
             }
-    
+
             if (getSeq() == 0) {
                 setSeq(1);
             } else {
                 setSeq(getSeq() + 1);
             }
-    
+
             movItens.setSequencia(getSeq());
             this.produtos.add(movItens);
             movItens = new MovItens();
@@ -120,8 +122,8 @@ public class VendaBean implements Serializable {
             PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         }
     }
-    
-    public void DeletarEstoque(int sequencia){
+
+    public void DeletarEstoque(int sequencia) {
         for (int i = 0; i < this.produtos.size(); i++) {
             if (produtos.get(i).getSequencia() == sequencia) {
                 this.movItens = produtos.get(i);
@@ -159,7 +161,8 @@ public class VendaBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                    .get("empresa");
             movimentacao.setTipo('V');
             movimentacao.setValortotal(0);
             movimentacao.setEmpresaId(empresa);
@@ -177,15 +180,8 @@ public class VendaBean implements Serializable {
                 if (saldos.size() > 0) {
                     saldo.setId(saldos.get(0).getId());
                     saldo.setProdutoid(saldos.get(0).getProdutoid());
-                    saldo.setQtde(saldos.get(0).getQtde() + movItens.getQtde());
-                    saldo.setValor(saldos.get(0).getValor() + movItens.getValor());
-                    saldoRepository.save(saldo);
-                    saldo = new Saldo();
-                    saldos.removeAll(saldos);
-                } else {
-                    saldo.setProdutoid(movItens.getProdutoId());
-                    saldo.setQtde(movItens.getQtde());
-                    saldo.setValor(movItens.getValor());
+                    saldo.setQtde(saldos.get(0).getQtde() - movItens.getQtde());
+                    saldo.setValor(saldos.get(0).getValor());
                     saldoRepository.save(saldo);
                     saldo = new Saldo();
                     saldos.removeAll(saldos);
@@ -202,9 +198,19 @@ public class VendaBean implements Serializable {
         }
     }
 
+    public void trazValor() {
+        saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId());
+        if (saldos.size() > 0) {
+            this.qtdeMaxima = saldos.get(0).getQtde();
+            movItens.setValor(saldos.get(0).getValor() * 1.20);
+        }
+        // da msg que nao há saldo para esse produto
+    }
+
     public void Deletar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Excluir.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
@@ -305,8 +311,6 @@ public class VendaBean implements Serializable {
         this.produtos = produtos;
     }
 
-
-
     public double getValor() {
         return valor;
     }
@@ -331,13 +335,13 @@ public class VendaBean implements Serializable {
         this.produtoid = produtoid;
     }
 
-	public String getLocalid() {
-		return localid;
-	}
+    public String getLocalid() {
+        return localid;
+    }
 
-	public void setLocalid(String localid) {
-		this.localid = localid;
-	}
+    public void setLocalid(String localid) {
+        this.localid = localid;
+    }
 
     public int getSeq() {
         return seq;

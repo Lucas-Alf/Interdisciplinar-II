@@ -168,7 +168,8 @@ public class ContaBean implements Serializable {
 
     public List<Conta> getContas() {
         if (this.contas == null) {
-            this.contas = contaRepository.findAll();
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            this.contas = contaRepository.pessquisarGrid(empresa.getId(),"");
         }
         return contas;
     }
