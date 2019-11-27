@@ -84,26 +84,23 @@ public class VendaBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Produto.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (movItens.getLocalId() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Local.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (movItens.getQtde() == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Quantidade.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (movItens.getValor() == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
+        } else if (qtdeMaxima < movItens.getValor()) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
+                    "Quantidade selecionada ultrapassa a quantidade disponível (" + qtdeMaxima + ").");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
         } else {
             if (this.produtos == null) {
                 this.produtos = new ArrayList<MovItens>();
@@ -120,6 +117,7 @@ public class VendaBean implements Serializable {
             movItens = new MovItens();
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
+
         }
     }
 
