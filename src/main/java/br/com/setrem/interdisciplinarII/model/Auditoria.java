@@ -42,6 +42,7 @@ public class Auditoria implements Serializable {
     @Basic(optional = false)
     @Column(name = "valornovo")
     private String valornovo;
+    private String cliforid;
 
     public Auditoria() {
     }
@@ -63,6 +64,14 @@ public class Auditoria implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public String getCliforId() {
+        return this.cliforid;
+    }
+
+    public void setCliforId(String cliforid) {
+        this.cliforid = cliforid;
     }
 
     public String getTabela() {

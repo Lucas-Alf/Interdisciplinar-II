@@ -137,6 +137,10 @@ public class RelatorioBean implements Serializable {
 
     private String gerarConsulta(Relatorio relatorio, List<FiltroRelatorio> filtrosList) {
         String sql = relatorio.getSqlquery();
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        if (sql.contains(":empresa")) {
+            sql = sql.replace(":empresa", "'" + empresa.getId().replaceAll("\\W+", "") + "'");
+        }
         FiltroRelatorio[] filtros = filtrosList.toArray(new FiltroRelatorio[filtrosList.size()]);
         String sqlWhere = "";
         if (filtros.length > 0) {
@@ -148,20 +152,7 @@ public class RelatorioBean implements Serializable {
                     sqlWhere = sqlWhere + " " + ("AND " + filtros[i].getSqlwhere());
                 }
             }
-        }
-        final Pattern pattern1 = Pattern.compile("(select.+)(group\\W+by.+)\\W+(order\\W+by.+)", Pattern.MULTILINE);
-        final Matcher matcher1 = pattern1.matcher(sql);
-        if (matcher1.matches()) {
-            sql = matcher1.replaceAll("$1 " + sqlWhere + " $2 $3");
-        } else {
-            final Pattern pattern2 = Pattern.compile("(select.+)((order\\W+by.+)|\\W+(group\\W+by.+))",
-                    Pattern.MULTILINE);
-            final Matcher matcher2 = pattern2.matcher(sql);
-            if (matcher2.matches()) {
-                sql = matcher2.replaceAll("$1 " + sqlWhere + " $2");
-            } else {
-                sql = sql + " " + sqlWhere;
-            }
+            sql = "select * from (" + sql + " ) as consulta" + relatorio.getId() + relatorio.getCliForid() + sqlWhere;
         }
         return sql;
     }
@@ -182,7 +173,7 @@ public class RelatorioBean implements Serializable {
 
     private JRBeanArrayDataSource gerarDataSourceHibernate(String consulta) {
         try {
-            List<?> result = relatorioRepository.RealizaConsulta();
+            List<?> result = relatorioRepository.RealizaConsultaBalanceteVerificacao();
             return new JRBeanArrayDataSource(result.toArray());
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -212,7 +203,7 @@ public class RelatorioBean implements Serializable {
             JRResultSetDataSource resultSet = gerarDataSource(
                     gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
             // JRBeanArrayDataSource resultSet = gerarDataSourceHibernate(
-            //         gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
+            // gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
             JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, resultSet);
             return print;
         } catch (Exception e) {

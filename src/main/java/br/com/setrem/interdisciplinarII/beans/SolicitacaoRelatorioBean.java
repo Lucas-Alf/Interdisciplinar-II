@@ -80,6 +80,7 @@ public class SolicitacaoRelatorioBean implements Serializable {
             audit.setTabela("solicitacaorelatorio");
             audit.setValorantigo(null);
             audit.setValornovo(gson.toJson(solicitacao));
+            audit.setCliforId(empresa.getId());
             auditoriaRepository.save(audit);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
