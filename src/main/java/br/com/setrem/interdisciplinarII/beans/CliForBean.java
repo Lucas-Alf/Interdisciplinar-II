@@ -99,7 +99,7 @@ public class CliForBean implements Serializable {
     public void AtualizarTable() {
         this.clifors = cliforRepository.findAll();
     }
-/*
+
     public void AbreAlterar(String id) {
         if (id.equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
@@ -110,7 +110,7 @@ public class CliForBean implements Serializable {
             PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('show');");
         }
     }
-
+/*
     public void Remove(String id) {
         if (id.equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
@@ -126,7 +126,7 @@ public class CliForBean implements Serializable {
         }
 
     }
-
+*/
     public void Alterar() {
         cliforRepository.save(cliFor);
         this.AtualizarTable(); 
@@ -136,7 +136,7 @@ public class CliForBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, fm);
     }
-*/
+
     public void Pesquisar(String nome) {
          this.clifors = cliforRepository.pesquisar(nome);
     }
