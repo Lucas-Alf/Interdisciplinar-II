@@ -186,10 +186,13 @@ public class RelatorioBean implements Serializable {
             Resource resource = resourceLoader
                     .getResource("classpath:/META-INF/resources/reports/" + relatorio.getNome() + ".jrxml");
             URI uri = resource.getURI();
+            System.out.println("URI-> " + uri);
             String path = uri.getPath();
+            System.out.println("PATH-> " + path);
             JasperReport jasperReport = JasperCompileManager.compileReport(path);
             final String classpath = Pattern.compile("(.+\\/META-INF\\/resources\\/reports\\/).+", Pattern.MULTILINE)
                     .matcher(path).replaceAll("$1");
+            System.out.println("CLASSPATH-> " + classpath);
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                     .get("empresa");
             Map<String, Object> parameters = new HashMap<String, Object>();
