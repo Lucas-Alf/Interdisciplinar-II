@@ -9,7 +9,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.PrimeFaces.Ajax;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.CliFor;
