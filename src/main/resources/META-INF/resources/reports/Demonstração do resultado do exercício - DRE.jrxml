@@ -11,57 +11,38 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="nome" class="java.lang.String"/>
-	<field name="valor" class="java.lang.Double"/>
+	<field name="valortotal" class="java.lang.Double"/>
 	<field name="grupo" class="java.lang.String"/>
-	<field name="subgrupo" class="java.lang.String"/>
 	<variable name="valorTotalGrupo" class="java.lang.Double" resetType="Group" resetGroup="Grupo" calculation="Sum">
-		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
-	</variable>
-	<variable name="valorTotalSubGrupo" class="java.lang.Double" resetType="Group" resetGroup="SubGrupo" calculation="Sum">
-		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+		<variableExpression><![CDATA[$F{valortotal}]]></variableExpression>
 	</variable>
 	<variable name="valorTotalGrupoHeader" class="java.lang.Double" resetType="Group" resetGroup="Grupo" calculation="Sum">
-		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+		<variableExpression><![CDATA[$F{valortotal}]]></variableExpression>
 	</variable>
 	<group name="Grupo" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{grupo}]]></groupExpression>
 		<groupHeader>
-			<band height="18">
+			<band height="15">
 				<rectangle>
-					<reportElement x="6" y="3" width="544" height="15" forecolor="#000000" backcolor="#D1D1D1" uuid="8088133c-0451-4cc9-a7eb-30f324cbd4c6"/>
+					<reportElement key="" x="410" y="0" width="137" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="e7bd47e7-7872-4675-af56-050577eff3bf"/>
+				</rectangle>
+				<rectangle>
+					<reportElement key="" x="6" y="0" width="404" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="8088133c-0451-4cc9-a7eb-30f324cbd4c6"/>
 				</rectangle>
 				<textField>
-					<reportElement x="15" y="4" width="395" height="13" backcolor="#0058B5" uuid="43d5a5a0-5097-4fa5-b982-3aafe2140c48"/>
+					<reportElement x="15" y="1" width="395" height="13" backcolor="#0058B5" uuid="43d5a5a0-5097-4fa5-b982-3aafe2140c48"/>
 					<textElement textAlignment="Left" verticalAlignment="Top">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{grupo}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="Grupo" pattern="¤#,##0.##;¤-#,##0.##">
-					<reportElement x="410" y="4" width="137" height="13" uuid="3f9e0591-9589-45f2-98d1-bca30fd4d59b"/>
+					<reportElement x="410" y="1" width="134" height="13" uuid="3f9e0591-9589-45f2-98d1-bca30fd4d59b"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$V{valorTotalGrupoHeader}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
-	</group>
-	<group name="SubGrupo">
-		<groupExpression><![CDATA[$F{subgrupo}]]></groupExpression>
-		<groupFooter>
-			<band height="13">
-				<textField pattern="¤#,##0.##;¤-#,##0.##">
-					<reportElement x="410" y="0" width="137" height="13" uuid="2599f857-a4b7-4bfe-ba9e-c9cd70745f18"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[$V{valorTotalSubGrupo}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="30" y="0" width="380" height="13" uuid="9ed5d551-f54b-4dd1-8579-9c3a8a7e632a"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{subgrupo}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupFooter>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
