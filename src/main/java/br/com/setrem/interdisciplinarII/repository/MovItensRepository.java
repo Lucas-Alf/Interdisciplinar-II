@@ -4,7 +4,10 @@ import br.com.setrem.interdisciplinarII.model.MovItens;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,5 +19,10 @@ public interface MovItensRepository extends JpaRepository<MovItens, Integer> {
 
     @Query(value = "select * from movitens where movimentacaoid = ?1", nativeQuery = true)
     public List<MovItens> ListarProdutos(int id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from movitens where movimentacaoid = ?1", nativeQuery = true)
+    public void DeletarMovItens(int id);
    
 }
