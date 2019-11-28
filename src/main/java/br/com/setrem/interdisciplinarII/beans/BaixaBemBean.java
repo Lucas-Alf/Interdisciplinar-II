@@ -2,6 +2,7 @@ package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,13 +17,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.BaixaBem;
 import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Historico;
+import br.com.setrem.interdisciplinarII.model.LancamentoContabil;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
+import br.com.setrem.interdisciplinarII.repository.HistoricoRepository;
+import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
 
 @Named(value = "baixaBemBean")
 @SessionScoped
 public class BaixaBemBean implements Serializable {
+
+    @Autowired
+    private CentroCustoRepository centroCustoRepository;
+    @Autowired
+    private HistoricoRepository historicoRepository;
+    @Autowired
+    private LancamentoContabilRepository lancamentoContabilRepository;
+    @Autowired
+    private ContaRepository contaRepository;
 
     @Autowired
     private BaixaBemRepository baixaBemRepository;
@@ -84,6 +100,28 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Patrimônio Baixado.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
+           
+            Historico his = historicoRepository.trazHistorico("Baixa Patrimônio");
+            //replace
+
+            LancamentoContabil lanC = new LancamentoContabil();
+            lanC.setCliforid(empresa);
+            lanC.setDatahora(new Date());
+            lanC.setHistorico(his.getHistorico());
+            lanC.setTipo("C");
+            lanC.setCentrocustoid(centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado"));
+            lanC.setIdconta(contaRepository.trazConta(empresa.getId(),"OUTROS IMOBILIZADOS"));
+            lanC.setValor(this.baixaBem.getValor());
+
+            // LancamentoContabil lanD = new LancamentoContabil();
+            // lanC.setCliforid(empresa);
+            // lanC.setDatahora(new Date());
+            // lanC.setHistorico(his.getHistorico());
+            // lanC.setTipo("C");
+            // lanC.setCentrocustoid(centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado"));
+            // lanC.setIdconta(contaRepository.trazConta(empresa.getId(),"OUTROS IMOBILIZADOS"));
+            // lanC.setValor(this.baixaBem.getValor());
+            // o.LancamentoContabil(listaLancamento);
         }
     }
 
