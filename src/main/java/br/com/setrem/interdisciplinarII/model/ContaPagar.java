@@ -43,6 +43,9 @@ public class ContaPagar implements Serializable {
     @JoinColumn(name = "cliforid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CliFor CliForid;
+    @JoinColumn(name = "fornecedorid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CliFor fornecedorid;
 
     public ContaPagar() {
     }
@@ -144,5 +147,13 @@ public class ContaPagar implements Serializable {
 
     public void setCliForid(CliFor CliForid) {
         this.CliForid = CliForid;
+    }
+
+    public CliFor getFornecedorid() {
+        return fornecedorid;
+    }
+
+    public void setFornecedorid(CliFor fornecedorid) {
+        this.fornecedorid = fornecedorid;
     }
 }
