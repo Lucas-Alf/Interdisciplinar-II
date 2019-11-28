@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="abacoTeste" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
-	<parameter name="REPORTS_DIR" class="java.lang.String"/>
 	<parameter name="EMPRESA_NOME" class="java.lang.String"/>
 	<parameter name="RELATORIO_NOME" class="java.lang.String"/>
 	<parameter name="EMPRESA_CNPJ" class="java.lang.String"/>
 	<parameter name="EMPRESA_ID" class="java.lang.String"/>
 	<parameter name="EMPRESA_CELULAR" class="java.lang.String"/>
 	<parameter name="EMPRESA_EMAIL" class="java.lang.String"/>
+	<parameter name="LOGO_ABACO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -29,10 +29,6 @@
 				</textElement>
 				<text><![CDATA[Relatório:]]></text>
 			</staticText>
-			<image>
-				<reportElement x="15" y="16" width="156" height="59" uuid="1b4d8e1c-eef6-48fb-a664-dd60eef41b7b"/>
-				<imageExpression><![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="184" y="39" width="46" height="15" uuid="43e2d87c-cabc-4757-a411-8a086e130db8"/>
 				<textElement>
@@ -41,14 +37,14 @@
 				<text><![CDATA[Empresa:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="184" y="57" width="70" height="14" uuid="c0fe0318-58e2-491d-a423-7ff0d4f81308"/>
+				<reportElement x="184" y="57" width="72" height="14" uuid="c0fe0318-58e2-491d-a423-7ff0d4f81308"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data emissão:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="254" y="57" width="100" height="14" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
+				<reportElement x="256" y="57" width="100" height="14" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
@@ -64,6 +60,10 @@
 				<reportElement x="231" y="21" width="317" height="13" uuid="e36f35ed-56ee-4d67-8615-8a512c642428"/>
 				<textFieldExpression><![CDATA[$P{RELATORIO_NOME}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="15" y="17" width="156" height="58" uuid="150a344d-05f1-42be-aec3-53d1bdf60dad"/>
+				<imageExpression><![CDATA[$P{LOGO_ABACO}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
