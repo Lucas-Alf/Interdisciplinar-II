@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório de auditoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Etiqueta Patrimônio" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="EMPRESA_NOME" class="java.lang.String"/>
 	<parameter name="RELATORIO_NOME" class="java.lang.String"/>
 	<parameter name="EMPRESA_CNPJ" class="java.lang.String"/>
@@ -11,46 +20,13 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="tabela" class="java.lang.String"/>
-	<field name="valorantigo" class="java.lang.String"/>
-	<field name="valornovo" class="java.lang.String"/>
 	<field name="id" class="java.lang.Integer"/>
-	<group name="Group">
-		<groupExpression><![CDATA[$F{id}]]></groupExpression>
-		<groupHeader>
-			<band height="38">
-				<textField>
-					<reportElement x="5" y="0" width="544" height="16" uuid="90380560-a65b-4d2e-94e7-b407d64f16c9"/>
-					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA["Tabela: " + $F{tabela}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="107" y="20" width="70" height="16" uuid="06bbb160-0b56-4ac9-9694-6b73281c462e"/>
-					<textElement textAlignment="Center"/>
-					<text><![CDATA[Valor antigo]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="390" y="21" width="60" height="14" uuid="e874d49f-6508-4629-9a38-06d593bf7aaf"/>
-					<textElement textAlignment="Center"/>
-					<text><![CDATA[Valor novo]]></text>
-				</staticText>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="11">
-				<line>
-					<reportElement x="5" y="0" width="544" height="1" uuid="474efd93-2513-4093-8484-70f4a2bc4e3e">
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					</reportElement>
-				</line>
-			</band>
-		</groupFooter>
-	</group>
+	<field name="nome" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="89" splitType="Stretch">
+		<band height="90" splitType="Stretch">
 			<staticText>
 				<reportElement x="184" y="21" width="47" height="13" uuid="db21b1b6-c56e-4114-8371-c6b6ba52c300"/>
 				<textElement>
@@ -95,28 +71,36 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="15" y="17" width="156" height="58" uuid="61277fa4-f8ee-41b4-891e-4b54d4018df2"/>
+				<reportElement x="15" y="16" width="156" height="59" uuid="b22db817-5b05-48a4-9110-a138b3bf4f5c"/>
 				<imageExpression><![CDATA[$P{LOGO_ABACO}]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<detail>
-		<band height="56" splitType="Stretch">
+		<band height="108" splitType="Stretch">
+			<rectangle>
+				<reportElement x="34" y="5" width="239" height="85" uuid="e8f96846-8675-42d2-9c0e-d90276069706"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</rectangle>
 			<textField>
-				<reportElement x="5" y="0" width="265" height="50" uuid="4c19b07b-6a8c-4af7-ac9c-f5759dbca72b"/>
-				<textFieldExpression><![CDATA[($F{valorantigo} != null) ? $F{valorantigo} : ""]]></textFieldExpression>
+				<reportElement x="124" y="14" width="140" height="20" uuid="84fe3dd5-9385-4e86-814d-f62720d7386e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="290" y="0" width="258" height="50" uuid="6b37f6d2-c67f-4652-844c-ea5cbfdb8834"/>
-				<textFieldExpression><![CDATA[($F{valornovo} != null) ? $F{valornovo} : ""]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="280" y="0" width="1" height="56" uuid="89903793-e69e-4185-b6ec-fa920115cfac">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<componentElement>
+				<reportElement x="124" y="40" width="130" height="30" uuid="8e52afff-cb57-4d4b-bd0e-57222bb2f1a5">
+					<property name="com.jaspersoft.studio.unit.barWidth" value="px"/>
 				</reportElement>
-			</line>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Codabar" drawText="true" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{id}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<image>
+				<reportElement x="47" y="14" width="60" height="59" uuid="60f4761e-e164-4eaf-ae45-473af5ae77c0"/>
+				<imageExpression><![CDATA[$P{LOGO_ABACO}]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 </jasperReport>

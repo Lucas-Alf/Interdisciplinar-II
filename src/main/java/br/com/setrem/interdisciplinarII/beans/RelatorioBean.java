@@ -5,6 +5,10 @@
  */
 package br.com.setrem.interdisciplinarII.beans;
 
+import java.awt.Image;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URI;
 import java.sql.Connection;
@@ -22,9 +26,11 @@ import java.util.regex.Pattern;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.imageio.stream.ImageInputStream;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.ImageIcon;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,18 +191,20 @@ public class RelatorioBean implements Serializable {
         try {
             Resource resource = resourceLoader
                     .getResource("classpath:/META-INF/resources/reports/" + relatorio.getNome() + ".jrxml");
-            URI uri = resource.getURI();
-            System.out.println("URI-> " + uri);
-            String path = uri.getPath();
-            System.out.println("PATH-> " + path);
-            JasperReport jasperReport = JasperCompileManager.compileReport(path);
-            final String classpath = Pattern.compile("(.+\\/META-INF\\/resources\\/reports\\/).+", Pattern.MULTILINE)
-                    .matcher(path).replaceAll("$1");
-            System.out.println("CLASSPATH-> " + classpath);
+            Resource logoResource = resourceLoader.getResource("classpath:/META-INF/resources/reports/abaco.jpg");
+            InputStream is = logoResource.getInputStream();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[16384];
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+              buffer.write(data, 0, nRead);
+            }
+            Image logo = new ImageIcon(buffer.toByteArray()).getImage();
+            JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                     .get("empresa");
             Map<String, Object> parameters = new HashMap<String, Object>();
-            parameters.put("REPORTS_DIR", classpath);
+            parameters.put("LOGO_ABACO", logo);
             parameters.put("EMPRESA_NOME", empresa.getNome());
             parameters.put("EMPRESA_CNPJ", empresa.getCnpj());
             parameters.put("EMPRESA_ID", empresa.getId());

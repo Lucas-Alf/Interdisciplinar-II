@@ -122,7 +122,7 @@ public class DespesaInvestimentoBean implements Serializable {
                 FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage("validacao2", fm);
             } else {
-                depreciacaoRepository.deleteById(id);
+                despesaInvestimentoRepository.deleteById(id);
                 this.AtualizarTabela();
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
