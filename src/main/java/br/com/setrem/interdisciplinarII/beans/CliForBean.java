@@ -57,6 +57,13 @@ public class CliForBean implements Serializable {
                 }
                 cliforRepository.save(this.cliFor);
                 this.AtualizarTable();
+
+                FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
+                PrimeFaces.current().executeScript("$('#CadastrarCliFor').modal('hide');");
+
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao2", fm);
             }
         } else if (this.cliFor.getNomefantasia() != null) {
             if(this.cliFor.getNomefantasia().equals("")){
