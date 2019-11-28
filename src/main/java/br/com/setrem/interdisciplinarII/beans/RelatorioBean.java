@@ -184,19 +184,13 @@ public class RelatorioBean implements Serializable {
     private JasperPrint exportPdfFile(Relatorio relatorio) {
         try {
             Resource resource = resourceLoader
-                    .getResource("/META-INF/resources/reports/" + relatorio.getNome() + ".jrxml");
-            URI uri = resource.getURI();
-            System.out.println("URI-> " + uri);
-            String path = uri.getPath();
-            System.out.println("PATH-> " + path);
-            JasperReport jasperReport = JasperCompileManager.compileReport(path);
-            final String classpath = Pattern.compile("(.+\\/META-INF\\/resources\\/reports\\/).+", Pattern.MULTILINE)
-                    .matcher(path).replaceAll("$1");
-            System.out.println("CLASSPATH-> " + classpath);
+                    .getResource("classpath:/META-INF/resources/reports/" + relatorio.getNome() + ".jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
+
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                     .get("empresa");
             Map<String, Object> parameters = new HashMap<String, Object>();
-            parameters.put("REPORTS_DIR", classpath);
+            // parameters.put("REPORTS_DIR", classpath);
             parameters.put("EMPRESA_NOME", empresa.getNome());
             parameters.put("EMPRESA_CNPJ", empresa.getCnpj());
             parameters.put("EMPRESA_ID", empresa.getId());

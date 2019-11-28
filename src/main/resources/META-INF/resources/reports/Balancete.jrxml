@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Balancete de verificação" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
-	<parameter name="REPORTS_DIR" class="java.lang.String"/>
 	<parameter name="EMPRESA_NOME" class="java.lang.String"/>
 	<parameter name="RELATORIO_NOME" class="java.lang.String"/>
 	<parameter name="EMPRESA_CNPJ" class="java.lang.String"/>
@@ -24,7 +23,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="81" splitType="Stretch">
+		<band height="85" splitType="Stretch">
 			<staticText>
 				<reportElement x="184" y="21" width="47" height="13" uuid="db21b1b6-c56e-4114-8371-c6b6ba52c300"/>
 				<textElement>
@@ -32,10 +31,6 @@
 				</textElement>
 				<text><![CDATA[Relatório:]]></text>
 			</staticText>
-			<image>
-				<reportElement x="15" y="16" width="156" height="59" uuid="1b4d8e1c-eef6-48fb-a664-dd60eef41b7b"/>
-				<imageExpression><![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="184" y="39" width="46" height="15" uuid="43e2d87c-cabc-4757-a411-8a086e130db8"/>
 				<textElement>
@@ -67,6 +62,10 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="15" y="17" width="156" height="58" uuid="6d590599-666e-4860-a992-10a58859a010"/>
+				<imageExpression><![CDATA["./META-INF/resources/reports/images/abaco.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<columnHeader>
