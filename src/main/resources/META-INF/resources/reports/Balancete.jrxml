@@ -7,6 +7,7 @@
 	<parameter name="EMPRESA_ID" class="java.lang.String"/>
 	<parameter name="EMPRESA_CELULAR" class="java.lang.String"/>
 	<parameter name="EMPRESA_EMAIL" class="java.lang.String"/>
+	<parameter name="LOGO_ABACO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -64,7 +65,7 @@
 			</textField>
 			<image>
 				<reportElement x="15" y="17" width="156" height="58" uuid="6d590599-666e-4860-a992-10a58859a010"/>
-				<imageExpression><![CDATA["./META-INF/resources/reports/images/abaco.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{LOGO_ABACO}]]></imageExpression>
 			</image>
 		</band>
 	</title>

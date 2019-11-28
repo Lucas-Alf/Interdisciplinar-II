@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Patrimônios da empresa" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="794f0561-ae21-49e4-b7a3-86d58710a4f0">
-	<parameter name="REPORTS_DIR" class="java.lang.String"/>
 	<parameter name="EMPRESA_NOME" class="java.lang.String"/>
 	<parameter name="RELATORIO_NOME" class="java.lang.String"/>
 	<parameter name="EMPRESA_CNPJ" class="java.lang.String"/>
 	<parameter name="EMPRESA_ID" class="java.lang.String"/>
 	<parameter name="EMPRESA_CELULAR" class="java.lang.String"/>
 	<parameter name="EMPRESA_EMAIL" class="java.lang.String"/>
+	<parameter name="LOGO_ABACO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -32,10 +32,6 @@
 				</textElement>
 				<text><![CDATA[Relatório:]]></text>
 			</staticText>
-			<image>
-				<reportElement x="15" y="16" width="156" height="59" uuid="1b4d8e1c-eef6-48fb-a664-dd60eef41b7b"/>
-				<imageExpression><![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="184" y="39" width="46" height="15" uuid="43e2d87c-cabc-4757-a411-8a086e130db8"/>
 				<textElement>
@@ -72,6 +68,10 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="15" y="17" width="156" height="58" uuid="32b73682-9965-40b7-9608-178fc2215963"/>
+				<imageExpression><![CDATA[$P{LOGO_ABACO}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>
