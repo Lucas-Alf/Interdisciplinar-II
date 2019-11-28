@@ -37,14 +37,14 @@
 				<text><![CDATA[Empresa:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="184" y="57" width="70" height="14" uuid="c0fe0318-58e2-491d-a423-7ff0d4f81308"/>
+				<reportElement x="184" y="57" width="72" height="14" uuid="c0fe0318-58e2-491d-a423-7ff0d4f81308"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data emissão:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="254" y="57" width="100" height="14" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
+				<reportElement x="256" y="57" width="100" height="14" uuid="57050f4e-55ed-4543-9e80-c8d8b9bf2636"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
