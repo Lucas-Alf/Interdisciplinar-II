@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PagamentoRepository extends JpaRepository<PagamentoRepository, Integer> {
+public interface PagamentoRepository extends JpaRepository<Pagamento, Integer> {
 
     @Query(value = "select * from pagamento where nome like %?1% and cliforid = ?2", nativeQuery = true)
     public List<Pagamento> Pesquisar(String descricao, String empresa);
