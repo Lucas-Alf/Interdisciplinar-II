@@ -105,12 +105,6 @@ public class LancamentoContabilBean implements Serializable {
         }
     }
 
-    public void LancamentoContabil(List<LancamentoContabil> listaLancamento) {
-        for (int i = 0; i <= listaLancamento.size(); i++){
-            lancamentoContabilRepository.save(listaLancamento.get(i));
-        }
-    }
-
     public void PesquisarAnalitica() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.contasAnalit = contaRepository.pesquisarAnalit(empresa.getId());
