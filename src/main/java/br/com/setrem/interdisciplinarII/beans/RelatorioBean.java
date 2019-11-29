@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -42,6 +43,7 @@ import br.com.setrem.interdisciplinarII.model.FiltroRelatorio;
 import br.com.setrem.interdisciplinarII.model.Relatorio;
 import br.com.setrem.interdisciplinarII.repository.FiltroRelatorioRepository;
 import br.com.setrem.interdisciplinarII.repository.RelatorioRepository;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -215,6 +217,8 @@ public class RelatorioBean implements Serializable {
                     gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
             // JRBeanArrayDataSource resultSet = gerarDataSourceHibernate(
             // gerarConsulta(relatorio, this.listaFiltroRelatorioSelecionados));
+            java.util.Locale locale = new Locale( "pt", "BR" );
+            parameters.put( JRParameter.REPORT_LOCALE, locale );
             JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, resultSet);
             return print;
         } catch (Exception e) {
