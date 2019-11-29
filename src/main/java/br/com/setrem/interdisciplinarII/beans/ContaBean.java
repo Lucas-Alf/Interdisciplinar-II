@@ -1,7 +1,10 @@
 package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -34,7 +37,7 @@ public class ContaBean implements Serializable {
     public ContaBean() {
     }
 
-    public void Insert() {
+    public void Insert() throws InterruptedException {
         if (this.conta.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descriçao!");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -47,7 +50,6 @@ public class ContaBean implements Serializable {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.conta.setCliforid(empresa);
             contaRepository.save(this.conta);
-            this.AtualizarTable();
 
             FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
             PrimeFaces.current().executeScript("$('#CadastrarConta').modal('hide');");
@@ -55,6 +57,8 @@ public class ContaBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
+
+            this.AtualizarTable();
         }
     }
 
