@@ -17,12 +17,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Depreciacao;
+import br.com.setrem.interdisciplinarII.model.Historico;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
 import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
+import br.com.setrem.interdisciplinarII.repository.HistoricoRepository;
+import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 
 @Named(value = "depreciacaoBean")
 @SessionScoped
 public class DepreciacaoBean implements Serializable {
     
+    @Autowired
+    private CentroCustoRepository centroCustoRepository;
+    @Autowired
+    private HistoricoRepository historicoRepository;
+    @Autowired
+    private LancamentoContabilRepository lancamentoContabilRepository;
+    @Autowired
+    private ContaRepository contaRepository;
     @Autowired
     private DepreciacaoRepository depreciacaoRepository;
     private Depreciacao depreciacao = new Depreciacao();
@@ -76,6 +89,17 @@ public class DepreciacaoBean implements Serializable {
                 this.depreciacao.setDatadepreciacao(new Date());
                 this.depreciacao.setCliForid(empresa);
                 depreciacaoRepository.save(this.depreciacao);
+
+                
+            Historico his = historicoRepository.trazHistorico("Depreciação do Patrimônio");
+            his.setHistorico(his.getHistorico().replace("{CODIGO}", depreciacao.getId().toString()));
+            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
+
+            //CREDITO
+            lancamentoContabilRepository.insert(this.depreciacao.getValormes(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "( - ) DEPRECIAÇÃO ACUMULADA").toInt(), new Date());
+
+            //DEBITO
+            lancamentoContabilRepository.insert(this.depreciacao.getValormes(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DEPRECIAÇÕES").toInt(), new Date());
             }
     
             this.depreciacao = new Depreciacao();

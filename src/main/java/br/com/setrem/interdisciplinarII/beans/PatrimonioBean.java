@@ -18,13 +18,18 @@ import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Depreciacao;
 import br.com.setrem.interdisciplinarII.model.EstadoConservacao;
 import br.com.setrem.interdisciplinarII.model.GrupoBem;
+import br.com.setrem.interdisciplinarII.model.Historico;
 import br.com.setrem.interdisciplinarII.model.MovItens;
 import br.com.setrem.interdisciplinarII.model.Movimentacao;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.model.Produto;
 import br.com.setrem.interdisciplinarII.model.Saldo;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
 import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
+import br.com.setrem.interdisciplinarII.repository.HistoricoRepository;
+import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 import br.com.setrem.interdisciplinarII.repository.MovItensRepository;
 import br.com.setrem.interdisciplinarII.repository.MovimentacaoRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
@@ -34,6 +39,15 @@ import br.com.setrem.interdisciplinarII.repository.SaldoRepository;
 @SessionScoped
 public class PatrimonioBean implements Serializable {
 
+    @Autowired
+    private CentroCustoRepository centroCustoRepository;
+    @Autowired
+    private HistoricoRepository historicoRepository;
+    @Autowired
+    private LancamentoContabilRepository lancamentoContabilRepository;
+    @Autowired
+    private ContaRepository contaRepository;
+    
     @Autowired
     private PatrimonioRepository patrimonioRepository;
 
@@ -216,6 +230,20 @@ public class PatrimonioBean implements Serializable {
             saldos.removeAll(saldos);
             movimentacao = new Movimentacao();
             movItens = new MovItens();
+
+
+            Historico his = historicoRepository.trazHistorico("Lançamento Patrimonial");
+            his.setHistorico(his.getHistorico().replace("{CODIGO}", patrimonio.getId().toString()));
+            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
+            his.setHistorico(his.getHistorico().replace("{TIPOMOVIMENTO}", "V"));
+
+            //CREDITO
+            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
+
+            //DEBITO
+            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
+
+
             this.AtualizarTabela();
 
             FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
