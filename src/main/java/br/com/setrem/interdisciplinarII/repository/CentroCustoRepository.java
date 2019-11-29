@@ -16,5 +16,8 @@ public interface CentroCustoRepository extends JpaRepository<CentroCusto, Intege
 
     @Query(value="SELECT * FROM centrocusto c WHERE c.cliforid = ?1 ORDER BY id", nativeQuery = true)
     public List<CentroCusto> findByCliForid(String id);
+
+    @Query(value="SELECT * FROM centrocusto c WHERE c.nome LIKE %?2% AND c.cliforid = ?1 ORDER BY id", nativeQuery = true)
+    public CentroCusto trazCentroCusto(String id, String nome);
    
 }

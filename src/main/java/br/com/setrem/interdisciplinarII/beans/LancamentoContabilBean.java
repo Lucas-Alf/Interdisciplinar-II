@@ -45,6 +45,13 @@ public class LancamentoContabilBean implements Serializable {
     }
 
     public void Insert() throws ParseException {
+        if (this.val < 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Valor!");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
+        }
         NumberFormat format = NumberFormat.getInstance(Locale.FRENCH);
         Number number = format.parse(valor);
         val = number.doubleValue();
@@ -55,14 +62,7 @@ public class LancamentoContabilBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
         }
-        if (this.val < 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um Valor!");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarConta').modal('show');");
-        }
-        if (this.lancamentoContabil.getDatahora().equals("")) {
+        if (this.lancamentoContabil.getDatahora().equals("") || this.lancamentoContabil.getDatahora().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Data!");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
@@ -103,17 +103,6 @@ public class LancamentoContabilBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         }
-    }
-
-    public void LancamentoContabil(List<LancamentoContabil> listaLancamento, int historicoPadrao) {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        // this.lancamentoContabil.setCliforid(empresa);
-
-        // LancamentoContabil lan = new LancamentoContabil();
-        // VER COM O PROFESSOR COMO VAI FUNCIONAR O HISTORICO PADRAO NOS MODULOS (CRIAR
-        // TELA DE PARAMETRIZAÇÃO? OU PEGAR AUTOMATICO CONFORME O NOME?).
-
-        listaLancamento.forEach(item -> lancamentoContabilRepository.save(item));
     }
 
     public void PesquisarAnalitica() {

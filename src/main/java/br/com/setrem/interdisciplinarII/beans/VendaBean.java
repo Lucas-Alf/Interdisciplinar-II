@@ -156,8 +156,7 @@ public class VendaBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-                    .get("empresa");
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             movimentacao.setTipo('V');
             movimentacao.setValortotal(0);
             movimentacao.setEmpresaId(empresa);
@@ -171,7 +170,7 @@ public class VendaBean implements Serializable {
                 movItensRepository.save(movItens);
                 valorTotal += movItens.getValor();
 
-                saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId());
+                saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId(), movItens.getLocalId().getId());
                 if (saldos.size() > 0) {
                     saldo.setId(saldos.get(0).getId());
                     saldo.setProdutoid(saldos.get(0).getProdutoid());
@@ -194,7 +193,7 @@ public class VendaBean implements Serializable {
     }
 
     public void trazValor() {
-        saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId());
+        saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId(), movItens.getLocalId().getId());
         if (saldos.size() > 0) {
             this.qtdeMaxima = saldos.get(0).getQtde();
             movItens.setValor(saldos.get(0).getValor() * 1.20);

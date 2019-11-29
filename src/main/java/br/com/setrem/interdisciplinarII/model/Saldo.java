@@ -44,6 +44,9 @@ public class Saldo implements Serializable {
     @JoinColumn(name = "produtoid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Produto produtoid;
+    @JoinColumn(name = "localid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Local localid;
 
     public Saldo() {
     }
@@ -115,4 +118,12 @@ public class Saldo implements Serializable {
         this.valor = valor;
     }
 
+    public Local getLocalid() {
+        return localid;
+    }
+
+    public void setLocalid(Local localid) {
+        this.localid = localid;
+    }
+    
 }

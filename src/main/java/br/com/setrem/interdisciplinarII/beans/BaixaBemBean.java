@@ -2,6 +2,8 @@ package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,13 +18,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.BaixaBem;
 import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Historico;
+import br.com.setrem.interdisciplinarII.model.LancamentoContabil;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
+import br.com.setrem.interdisciplinarII.repository.HistoricoRepository;
+import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
 
 @Named(value = "baixaBemBean")
 @SessionScoped
 public class BaixaBemBean implements Serializable {
+
+    @Autowired
+    private CentroCustoRepository centroCustoRepository;
+    @Autowired
+    private HistoricoRepository historicoRepository;
+    @Autowired
+    private LancamentoContabilRepository lancamentoContabilRepository;
+    @Autowired
+    private ContaRepository contaRepository;
 
     @Autowired
     private BaixaBemRepository baixaBemRepository;
@@ -57,7 +74,7 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.baixaBem.getPatrimonioid() == null) {    
+        } else if (this.baixaBem.getPatrimonioid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Patrimônio.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
@@ -65,12 +82,14 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Motivo de Baixa.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if ((int)(this.baixaBem.getValor()) == 0 && this.baixaBem.getMotivobaixaid().getDescricao().equals("Venda")) {
+        } else if ((int) (this.baixaBem.getValor()) == 0
+                && this.baixaBem.getMotivobaixaid().getDescricao().equals("Venda")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor da Venda.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                    .get("empresa");
             this.patrimonio = patrimonioRepository.getOne(this.baixaBem.getPatrimonioid().getId());
             this.patrimonio.setBaixado(1);
             patrimonioRepository.save(patrimonio);
@@ -84,6 +103,17 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Patrimônio Baixado.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
+
+            Historico his = historicoRepository.trazHistorico("Baixa Patrimônio");
+            his.setHistorico(his.getHistorico().replace("{CODIGO}", baixaBem.getId().toString()));
+            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
+
+            //CREDITO
+            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
+
+            //DEBITO
+            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
+
         }
     }
 
@@ -164,5 +194,5 @@ public class BaixaBemBean implements Serializable {
     public void setPatrimonioRepository(PatrimonioRepository patrimonioRepository) {
         this.patrimonioRepository = patrimonioRepository;
     }
-    
+
 }

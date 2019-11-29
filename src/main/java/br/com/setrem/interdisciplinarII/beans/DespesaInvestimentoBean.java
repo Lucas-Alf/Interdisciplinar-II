@@ -2,6 +2,7 @@ package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,12 +18,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Depreciacao;
 import br.com.setrem.interdisciplinarII.model.DespesaInvestimento;
+import br.com.setrem.interdisciplinarII.model.Historico;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
 import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
 import br.com.setrem.interdisciplinarII.repository.DespesaInvestimentoRepository;
+import br.com.setrem.interdisciplinarII.repository.HistoricoRepository;
+import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 
 @Named(value = "despesaInvestimentoBean")
 @SessionScoped
 public class DespesaInvestimentoBean implements Serializable {
+
+    @Autowired
+    private CentroCustoRepository centroCustoRepository;
+    @Autowired
+    private HistoricoRepository historicoRepository;
+    @Autowired
+    private LancamentoContabilRepository lancamentoContabilRepository;
+    @Autowired
+    private ContaRepository contaRepository;
 
     @Autowired
     private DespesaInvestimentoRepository despesaInvestimentoRepository;
@@ -104,6 +119,17 @@ public class DespesaInvestimentoBean implements Serializable {
                             depreciacao.setValoranual(valorAnual);
                             depreciacao.setValormes(valorMensal);
                             depreciacaoRepository.save(depreciacao);
+
+                            
+                            Historico his = historicoRepository.trazHistorico("Despesa/Investimento do Patrimônio");
+                            his.setHistorico(his.getHistorico().replace("{CODIGO}", depreciacao.getId().toString()));
+                            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
+
+                            //CREDITO //VER VALOR E CONTAS
+                            lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
+
+                            //DEBITO
+                            lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
                         }
                     }
                 }
