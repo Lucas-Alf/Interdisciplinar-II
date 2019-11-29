@@ -105,7 +105,7 @@ public class BaixaBemBean implements Serializable {
             context.addMessage("validacao2", fm);
 
             Historico his = historicoRepository.trazHistorico("Baixa Patrimônio");
-            his.getHistorico().replace("{CODIGO}", baixaBem.getId().toString());
+            his.setHistorico(his.getHistorico().replace("{CODIGO}", baixaBem.getId().toString()));
             //his.getHistorico().replace("{MODULO}", "PATRIMONIO");
 
             //CREDITO
