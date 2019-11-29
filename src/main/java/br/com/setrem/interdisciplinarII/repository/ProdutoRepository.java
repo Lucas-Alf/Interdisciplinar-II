@@ -17,5 +17,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
     @Query(value = "select * from produto where cliforid = ?1", nativeQuery = true)
     public List<Produto> AtualizarTabela(String empresa);
-
+    
 }

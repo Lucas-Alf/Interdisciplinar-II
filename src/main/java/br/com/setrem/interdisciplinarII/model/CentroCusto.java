@@ -126,6 +126,10 @@ public class CentroCusto implements Serializable {
         return nome;
     }
 
+    public int toInt() {
+        return id;
+    }
+
     public CliFor getCliforid() {
         return cliforid;
     }

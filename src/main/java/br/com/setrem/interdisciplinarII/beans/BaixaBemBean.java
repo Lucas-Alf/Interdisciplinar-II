@@ -105,35 +105,15 @@ public class BaixaBemBean implements Serializable {
             context.addMessage("validacao2", fm);
 
             Historico his = historicoRepository.trazHistorico("Baixa Patrimônio");
-            his.getHistorico().replace("{CODIGO}", baixaBem.getId().toString());
-            his.getHistorico().replace("{MODULO}", "PATRIMONIO");
+            his.setHistorico(his.getHistorico().replace("{CODIGO}", baixaBem.getId().toString()));
+            //his.getHistorico().replace("{MODULO}", "PATRIMONIO");
 
-            List<LancamentoContabil> listaLan = new ArrayList<>();
+            //CREDITO
+            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
 
-            LancamentoContabil lanC = new LancamentoContabil();
-            lanC.setCliforid(empresa);
-            lanC.setDatahora(new Date());
-            lanC.setHistorico(his.getHistorico());
-            lanC.setTipo("C");
-            lanC.setCentrocustoid(centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado"));
-            lanC.setIdconta(contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS"));
-            lanC.setValor(this.baixaBem.getValor());
+            //DEBITO
+            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
 
-            LancamentoContabil lanD = new LancamentoContabil();
-            lanD.setCliforid(empresa);
-            lanD.setDatahora(new Date());
-            lanD.setHistorico(his.getHistorico());
-            lanD.setTipo("D");
-            lanD.setCentrocustoid(centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado"));
-            lanD.setIdconta(contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI"));
-            lanD.setValor(this.baixaBem.getValor());
-
-            listaLan.add(lanC);
-            listaLan.add(lanD);
-
-            LancamentoContabilBean bean = new LancamentoContabilBean();
-
-            bean.LancamentoContabil(listaLan);
         }
     }
 

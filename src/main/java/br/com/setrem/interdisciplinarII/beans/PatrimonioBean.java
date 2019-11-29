@@ -18,11 +18,17 @@ import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.Depreciacao;
 import br.com.setrem.interdisciplinarII.model.EstadoConservacao;
 import br.com.setrem.interdisciplinarII.model.GrupoBem;
+import br.com.setrem.interdisciplinarII.model.MovItens;
+import br.com.setrem.interdisciplinarII.model.Movimentacao;
 import br.com.setrem.interdisciplinarII.model.Patrimonio;
 import br.com.setrem.interdisciplinarII.model.Produto;
+import br.com.setrem.interdisciplinarII.model.Saldo;
 import br.com.setrem.interdisciplinarII.repository.BaixaBemRepository;
 import br.com.setrem.interdisciplinarII.repository.DepreciacaoRepository;
+import br.com.setrem.interdisciplinarII.repository.MovItensRepository;
+import br.com.setrem.interdisciplinarII.repository.MovimentacaoRepository;
 import br.com.setrem.interdisciplinarII.repository.PatrimonioRepository;
+import br.com.setrem.interdisciplinarII.repository.SaldoRepository;
 
 @Named(value = "patrimonioBean")
 @SessionScoped
@@ -34,14 +40,27 @@ public class PatrimonioBean implements Serializable {
     @Autowired
     private DepreciacaoRepository depreciacaoRepository;
 
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
+
+    @Autowired
+    private MovItensRepository movItensRepository;
+
+    @Autowired
+    private SaldoRepository saldoRepository;
+
     private Depreciacao depreciacao = new Depreciacao();
     private Patrimonio patrimonio = new Patrimonio();
     private Produto produto = new Produto();
     private GrupoBem grupoBem = new GrupoBem();
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
-    private VendaBean vendaBean = new VendaBean();
+    private Movimentacao movimentacao = new Movimentacao();
+    private MovItens movItens = new MovItens();
+    private Saldo saldo = new Saldo();
 
     private List<Patrimonio> patrimonios;
+    private List<Saldo> saldos;
+    private List<Saldo> produtos;
 
     public PatrimonioBean() {
 
@@ -163,7 +182,40 @@ public class PatrimonioBean implements Serializable {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             patrimonio.setCliForid(empresa);
             patrimonioRepository.save(this.patrimonio);
-            vendaBean.SalvarMovimentacao("P");
+
+            // Saída do Estoque
+            movimentacao.setNotafiscal(patrimonio.getId() + "00000");
+            movimentacao.setTipo('P');
+            movimentacao.setValortotal(0);
+            movimentacao.setData(new Date());
+            movimentacao.setEmpresaId(empresa);
+            movimentacao.setCliForid(empresa);
+            movimentacaoRepository.save(movimentacao);
+
+            movItens.setCliForId(empresa);
+            movItens.setMovimentacaoId(movimentacao);
+            movItens.setProdutoId(patrimonio.getProdutoid());
+            movItens.setQtde(1);
+            // Busca o produto com maior saldo para baixar do estoque
+            saldos = saldoRepository.BuscaProdutoMaiorSaldo(patrimonio.getProdutoid().getId());
+            movItens.setLocalId(saldos.get(0).getLocalid());
+            movItens.setValor(saldos.get(0).getValor());
+            movItensRepository.save(movItens);
+
+            // Desconta a quantidade da tabela saldo
+            saldo.setId(saldos.get(0).getId());
+            saldo.setProdutoid(saldos.get(0).getProdutoid());
+            saldo.setLocalid(saldos.get(0).getLocalid());
+            saldo.setQtde(saldos.get(0).getQtde() - movItens.getQtde());
+            saldo.setValor(saldos.get(0).getValor());
+            saldoRepository.save(saldo);
+
+            movimentacao.setValortotal(saldos.get(0).getValor());
+            movimentacaoRepository.save(movimentacao);
+            saldo = new Saldo();
+            saldos.removeAll(saldos);
+            movimentacao = new Movimentacao();
+            movItens = new MovItens();
             this.AtualizarTabela();
 
             FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
@@ -262,12 +314,44 @@ public class PatrimonioBean implements Serializable {
         this.depreciacao = depreciacao;
     }
 
-    public VendaBean getVendaBean() {
-        return vendaBean;
+    public Movimentacao getMovimentacao() {
+        return movimentacao;
     }
 
-    public void setVendaBean(VendaBean vendaBean) {
-        this.vendaBean = vendaBean;
+    public void setMovimentacao(Movimentacao movimentacao) {
+        this.movimentacao = movimentacao;
+    }
+
+    public MovItens getMovItens() {
+        return movItens;
+    }
+
+    public void setMovItens(MovItens movItens) {
+        this.movItens = movItens;
+    }
+
+    public Saldo getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Saldo saldo) {
+        this.saldo = saldo;
+    }
+
+    public List<Saldo> getSaldos() {
+        return saldos;
+    }
+
+    public void setSaldos(List<Saldo> saldos) {
+        this.saldos = saldos;
+    }
+
+    public List<Saldo> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Saldo> produtos) {
+        this.produtos = produtos;
     }
 
 }

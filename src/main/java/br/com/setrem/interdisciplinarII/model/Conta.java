@@ -135,6 +135,10 @@ public class Conta implements Serializable {
         return descricao;
     }
 
+    public int toInt() {
+        return id;
+    }
+
     public CliFor getCliforid() {
         return cliforid;
     }
