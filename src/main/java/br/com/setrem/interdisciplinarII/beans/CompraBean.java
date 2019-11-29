@@ -2,6 +2,7 @@ package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -15,9 +16,14 @@ import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.setrem.interdisciplinarII.model.CliFor;
+import br.com.setrem.interdisciplinarII.model.Historico;
 import br.com.setrem.interdisciplinarII.model.MovItens;
 import br.com.setrem.interdisciplinarII.model.Movimentacao;
 import br.com.setrem.interdisciplinarII.model.Saldo;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
+import br.com.setrem.interdisciplinarII.repository.HistoricoRepository;
+import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 import br.com.setrem.interdisciplinarII.repository.MovItensRepository;
 import br.com.setrem.interdisciplinarII.repository.MovimentacaoRepository;
 import br.com.setrem.interdisciplinarII.repository.SaldoRepository;
@@ -25,6 +31,15 @@ import br.com.setrem.interdisciplinarII.repository.SaldoRepository;
 @Named(value = "compraBean")
 @SessionScoped
 public class CompraBean implements Serializable {
+
+    @Autowired
+    private CentroCustoRepository centroCustoRepository;
+    @Autowired
+    private HistoricoRepository historicoRepository;
+    @Autowired
+    private LancamentoContabilRepository lancamentoContabilRepository;
+    @Autowired
+    private ContaRepository contaRepository;
 
     @Autowired
     private MovItensRepository movItensRepository;
@@ -172,7 +187,7 @@ public class CompraBean implements Serializable {
                 movItens.setCliForId(empresa);
                 movItens.setMovimentacaoId(movimentacao);
                 movItensRepository.save(movItens);
-                valorTotal += movItens.getValor();
+                valorTotal += movItens.getValor() *  movItens.getQtde();
 
                 saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId(), movItens.getLocalId().getId());
                 if (saldos.size() > 0) {
@@ -196,6 +211,18 @@ public class CompraBean implements Serializable {
                     saldo = new Saldo();
                     saldos.removeAll(saldos);
                 }
+
+                Historico his = historicoRepository.trazHistorico("Movimentação");
+                his.setHistorico(his.getHistorico().replace("{CODIGO}",movItens.getId().toString()));
+                his.setHistorico(his.getHistorico().replace("{MODULO}", "ESTOQUE"));
+                his.setHistorico(his.getHistorico().replace("{TIPOMOVIMENTO}", "C"));
+    
+                //CREDITO
+                lancamentoContabilRepository.insert(this.movItens.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
+    
+                //DEBITO
+                lancamentoContabilRepository.insert(this.movItens.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "ESTOQUE DE MERCADORIAS").toInt(), new Date());
+    
             }
 
             movimentacao.setValortotal(valorTotal);
@@ -204,6 +231,7 @@ public class CompraBean implements Serializable {
             movItens = new MovItens();
             produtos.removeAll(produtos);
             this.AtualizarTabelaMovimentacao();
+          
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }
     }
