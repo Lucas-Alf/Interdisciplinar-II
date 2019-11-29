@@ -108,7 +108,8 @@
 
                                         <h:commandLink class="btn btn-success btn-sm" value="Incluir"
                                             action="#{vendaBean.SalvarEstoque()}">
-                                            <f:ajax execute="@form" render="@form" />
+                                            <f:ajax execute="@form" render="tabela" />
+                                            <f:ajax execute="@form" render="validacao" />
                                             <i class="far fa-edit crud-btn"></i>
                                         </h:commandLink>
 

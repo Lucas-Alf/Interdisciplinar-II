@@ -96,7 +96,7 @@ public class VendaBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
-        } else if (qtdeMaxima < movItens.getValor()) {
+        } else if (qtdeMaxima < movItens.getQtde()) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
                     "Quantidade selecionada ultrapassa a quantidade disponível (" + qtdeMaxima + ").");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -115,9 +115,6 @@ public class VendaBean implements Serializable {
             movItens.setSequencia(getSeq());
             this.produtos.add(movItens);
             movItens = new MovItens();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
-
         }
     }
 
