@@ -160,8 +160,7 @@ public class CompraBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarCompra').modal('show');");
         } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-                    .get("empresa");
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             movimentacao.setTipo('C');
             movimentacao.setValortotal(0);
             movimentacao.setEmpresaId(empresa);
@@ -175,13 +174,14 @@ public class CompraBean implements Serializable {
                 movItensRepository.save(movItens);
                 valorTotal += movItens.getValor();
 
-                saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId());
+                saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId(), movItens.getLocalId().getId());
                 if (saldos.size() > 0) {
                     double pmpm = ((saldos.get(0).getValor() * saldos.get(0).getQtde()) + (movItens.getQtde() * movItens.getValor())) / (saldos.get(0).getQtde()
                     + movItens.getQtde()); //(vlrtotal + vlritem total) / qtde (soma atual + item)  
                    
                     saldo.setId(saldos.get(0).getId());
                     saldo.setProdutoid(saldos.get(0).getProdutoid());
+                    saldo.setLocalid(movItens.getLocalId());
                     saldo.setQtde(saldos.get(0).getQtde() + movItens.getQtde());
                     saldo.setValor(pmpm);
                     saldoRepository.save(saldo);
@@ -189,6 +189,7 @@ public class CompraBean implements Serializable {
                     saldos.removeAll(saldos);
                 } else {
                     saldo.setProdutoid(movItens.getProdutoId());
+                    saldo.setLocalid(movItens.getLocalId());
                     saldo.setQtde(movItens.getQtde());
                     saldo.setValor(movItens.getValor());
                     saldoRepository.save(saldo);

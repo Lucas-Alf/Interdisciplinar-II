@@ -133,71 +133,77 @@ public class VendaBean implements Serializable {
         PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
     }
 
-    public void SalvarMovimentacao() {
-        if (movimentacao.getData() == null) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
-        } else if (movimentacao.getNotafiscal() == "") {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Nota Fiscal.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
-        } else if (movimentacao.getCliForid() == null) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Fornecedor.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
-        } else if (produtos == null || produtos.size() == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Inclua ao menos 1 produto.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao3", fm);
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
-            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
-        } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-                    .get("empresa");
-            movimentacao.setTipo('V');
-            movimentacao.setValortotal(0);
-            movimentacao.setEmpresaId(empresa);
-            movimentacaoRepository.save(movimentacao);
+    public void SalvarMovimentacao(String tipo) {
+        if (tipo == "P") {
 
-            double valorTotal = 0;
-            for (int i = 0; i < produtos.size(); i++) {
-                movItens = produtos.get(i);
-                movItens.setCliForId(empresa);
-                movItens.setMovimentacaoId(movimentacao);
-                movItensRepository.save(movItens);
-                valorTotal += movItens.getValor();
 
-                saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId());
-                if (saldos.size() > 0) {
-                    saldo.setId(saldos.get(0).getId());
-                    saldo.setProdutoid(saldos.get(0).getProdutoid());
-                    saldo.setQtde(saldos.get(0).getQtde() - movItens.getQtde());
-                    saldo.setValor(saldos.get(0).getValor());
-                    saldoRepository.save(saldo);
-                    saldo = new Saldo();
-                    saldos.removeAll(saldos);
+
+
+        } else if (tipo == "V") {
+            if (movimentacao.getData() == null) {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao", fm);
+                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
+            } else if (movimentacao.getNotafiscal() == "") {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Nota Fiscal.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao", fm);
+                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
+            } else if (movimentacao.getCliForid() == null) {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Fornecedor.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao", fm);
+                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
+            } else if (produtos == null || produtos.size() == 0) {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Inclua ao menos 1 produto.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao3", fm);
+                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+                PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
+            } else {
+                CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+                movimentacao.setTipo('V');
+                movimentacao.setValortotal(0);
+                movimentacao.setEmpresaId(empresa);
+                movimentacaoRepository.save(movimentacao);
+    
+                double valorTotal = 0;
+                for (int i = 0; i < produtos.size(); i++) {
+                    movItens = produtos.get(i);
+                    movItens.setCliForId(empresa);
+                    movItens.setMovimentacaoId(movimentacao);
+                    movItensRepository.save(movItens);
+                    valorTotal += movItens.getValor();
+    
+                    saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId(), movItens.getLocalId().getId());
+                    if (saldos.size() > 0) {
+                        saldo.setId(saldos.get(0).getId());
+                        saldo.setProdutoid(saldos.get(0).getProdutoid());
+                        saldo.setQtde(saldos.get(0).getQtde() - movItens.getQtde());
+                        saldo.setValor(saldos.get(0).getValor());
+                        saldoRepository.save(saldo);
+                        saldo = new Saldo();
+                        saldos.removeAll(saldos);
+                    }
                 }
+    
+                movimentacao.setValortotal(valorTotal);
+                movimentacaoRepository.save(movimentacao);
+                movimentacao = new Movimentacao();
+                movItens = new MovItens();
+                produtos.removeAll(produtos);
+                this.AtualizarTabelaSaida();
+                PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             }
-
-            movimentacao.setValortotal(valorTotal);
-            movimentacaoRepository.save(movimentacao);
-            movimentacao = new Movimentacao();
-            movItens = new MovItens();
-            produtos.removeAll(produtos);
-            this.AtualizarTabelaSaida();
-            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
         }
     }
 
     public void trazValor() {
-        saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId());
+        saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId(), movItens.getLocalId().getId());
         if (saldos.size() > 0) {
             this.qtdeMaxima = saldos.get(0).getQtde();
             movItens.setValor(saldos.get(0).getValor() * 1.20);

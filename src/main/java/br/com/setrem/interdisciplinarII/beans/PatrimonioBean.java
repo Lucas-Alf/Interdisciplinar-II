@@ -39,6 +39,7 @@ public class PatrimonioBean implements Serializable {
     private Produto produto = new Produto();
     private GrupoBem grupoBem = new GrupoBem();
     private EstadoConservacao estadoConservacao = new EstadoConservacao();
+    private VendaBean vendaBean = new VendaBean();
 
     private List<Patrimonio> patrimonios;
 
@@ -162,6 +163,7 @@ public class PatrimonioBean implements Serializable {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             patrimonio.setCliForid(empresa);
             patrimonioRepository.save(this.patrimonio);
+            vendaBean.SalvarMovimentacao("P");
             this.AtualizarTabela();
 
             FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
@@ -258,6 +260,14 @@ public class PatrimonioBean implements Serializable {
 
     public void setDepreciacao(Depreciacao depreciacao) {
         this.depreciacao = depreciacao;
+    }
+
+    public VendaBean getVendaBean() {
+        return vendaBean;
+    }
+
+    public void setVendaBean(VendaBean vendaBean) {
+        this.vendaBean = vendaBean;
     }
 
 }

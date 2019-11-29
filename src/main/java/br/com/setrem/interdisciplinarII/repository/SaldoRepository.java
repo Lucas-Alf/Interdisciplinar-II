@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SaldoRepository extends JpaRepository<Saldo, Integer> {
 
-    @Query(value = "select * from saldo where produtoid = ?1", nativeQuery = true)
-    public List<Saldo> BuscarSaldo(int produto);
+    @Query(value = "select * from saldo where produtoid = ?1 and localid = ?2", nativeQuery = true)
+    public List<Saldo> BuscarSaldo(int produto, int local);
 
 }
