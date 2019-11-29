@@ -92,6 +92,7 @@
                                                     <f:selectItem itemValue="null" itemLabel="Selecione um local" />
                                                     <f:selectItems value="#{localBean.locais}" var="local"
                                                         itemValue="#{local}" itemLabel="#{local.descricao}" />
+                                                    <f:ajax event="change" listener="#{vendaBean.trazValor()}" render="valor"/> 
                                                 </p:selectOneMenu><br />
 
                                                 <h:outputText value="Quantidade: "
@@ -187,7 +188,7 @@
                             <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Fornecedor" style="width: 40%; text-align: left">
+                    <p:column headerText="Cliente" style="width: 40%; text-align: left">
                         <h:outputText value="#{item2.cliForid.nome}" />
                     </p:column>
                     <p:column headerText="Valor Total" style="width: 10%; text-align: right">
