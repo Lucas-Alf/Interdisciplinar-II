@@ -42,10 +42,10 @@
                                         </h:panelGroup>
 
                                         <h:outputText value="Valor: " />
-                                        <p:inputText style="width: 300px;" id="valor" value="#{lancamentoContabilBean.valor}" />
+                                        <p:inputNumber style="width: 300px;" id="valor" value="#{lancamentoContabilBean.valor}" />
 
                                         <h:outputText for="pt" value="Data: "/>
-                                        <p:datePicker id="pt" value="#{lancamentoContabilBean.lancamentoContabil.datahora}" showIcon="false" style="width: 300px;" pattern="dd/MM/yyyy" locale="pt_BR"/>
+                                        <p:datePicker id="pt" readonlyInput="true" value="#{lancamentoContabilBean.lancamentoContabil.datahora}" showIcon="false" style="width: 300px;" pattern="dd/MM/yyyy" locale="pt_BR"/>
                                         
                                         <h:outputText value="Tipo: " />
                                         <p:selectOneMenu id="tipo" value="#{lancamentoContabilBean.lancamentoContabil.tipo}"

@@ -39,23 +39,23 @@ public class ContaBean implements Serializable {
 
     public void Insert() throws InterruptedException {
         if (this.conta.getDescricao().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descriçao!");
-            FacesContext context = FacesContext.getCurrentInstance();
+            final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descriçao!");
+            final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } if(!this.conta.isSintetica() && this.conta.getContapai() == null){
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Quando a conta for analítica, é obrigatório informar o Pai!");
-            FacesContext context = FacesContext.getCurrentInstance();
+            final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Quando a conta for analítica, é obrigatório informar o Pai!");
+            final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            final CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.conta.setCliforid(empresa);
             contaRepository.save(this.conta);
 
             FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
             PrimeFaces.current().executeScript("$('#CadastrarConta').modal('hide');");
 
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
-            FacesContext context = FacesContext.getCurrentInstance();
+            final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
+            final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
 
             this.AtualizarTable();
@@ -63,40 +63,40 @@ public class ContaBean implements Serializable {
     }
 
     public List<Conta> ListarTable() {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        final CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         return contaRepository.pessquisarGrid(empresa.getId(),"");
     }
 
     public void AtualizarTable() {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        final CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.contas = contaRepository.pessquisarGrid(empresa.getId(),"");
     }
 
-    public void Remove(int id) {
+    public void Remove(final int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
-            FacesContext context = FacesContext.getCurrentInstance();
+            final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
+            final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         } else {
             try {
                 contaRepository.deleteById(id);
                 this.AtualizarTable();
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
-                FacesContext context = FacesContext.getCurrentInstance();
+                final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                final FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage("validacao2", fm);
-            } catch (Exception e) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção", "Registro é utilizado por Lançamento(s) Contábil(eis).");
-                FacesContext context = FacesContext.getCurrentInstance();
+            } catch (final Exception e) {
+                final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção", "Registro é utilizado por Lançamento(s) Contábil(eis).");
+                final FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage("validacao2", fm);
             }
         }
 
     }
 
-    public void AbreAlterar(int id) {
+    public void AbreAlterar(final int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
-            FacesContext context = FacesContext.getCurrentInstance();
+            final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
+            final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         } else {
             this.PesquisarSintetica();
@@ -105,13 +105,13 @@ public class ContaBean implements Serializable {
         }
     }
 
-    public void Pesquisar(String nome) {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+    public void Pesquisar(final String nome) {
+        final CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.contas = contaRepository.pessquisarGrid(empresa.getId(),nome);
     }
 
     public void PesquisarSintetica() { //ORGANIZAR A LISTA POR HIERARQUIA, FICA CANSATIVO TERQUE ACHAR A CONTA PAI
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        final CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.contasSint = contaRepository.pesquisarSint(empresa.getId());
     }
 
@@ -126,7 +126,7 @@ public class ContaBean implements Serializable {
         return conta;
     }
 
-    public void setConta(Conta conta) {
+    public void setConta(final Conta conta) {
         this.conta = conta;
     }
 
@@ -134,7 +134,7 @@ public class ContaBean implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -142,7 +142,7 @@ public class ContaBean implements Serializable {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(final String descricao) {
         this.descricao = descricao;
     }
 
@@ -150,7 +150,7 @@ public class ContaBean implements Serializable {
         return CliForid;
     }
 
-    public void setCliForid(CliFor cliForid) {
+    public void setCliForid(final CliFor cliForid) {
         CliForid = cliForid;
     }
 
@@ -158,7 +158,7 @@ public class ContaBean implements Serializable {
         return sintetica;
     }
 
-    public void setSintetica(boolean sintetica) {
+    public void setSintetica(final boolean sintetica) {
         this.sintetica = sintetica;
     }
 
@@ -166,19 +166,19 @@ public class ContaBean implements Serializable {
         return contapai;
     }
 
-    public void setContapai(Conta contapai) {
+    public void setContapai(final Conta contapai) {
         this.contapai = contapai;
     }
 
     public List<Conta> getContas() {
         if (this.contas == null) {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            final CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             this.contas = contaRepository.pessquisarGrid(empresa.getId(),"");
         }
         return contas;
     }
 
-    public void setContas(List<Conta> contas) {
+    public void setContas(final List<Conta> contas) {
         this.contas = contas;
     }
 
@@ -186,7 +186,7 @@ public class ContaBean implements Serializable {
         return contasSint;
     }
 
-    public void setContasSint(List<Conta> contasSint) {
+    public void setContasSint(final List<Conta> contasSint) {
         this.contasSint = contasSint;
     }
 
