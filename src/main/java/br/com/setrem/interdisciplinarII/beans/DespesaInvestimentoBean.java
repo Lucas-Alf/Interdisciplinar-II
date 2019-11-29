@@ -119,19 +119,18 @@ public class DespesaInvestimentoBean implements Serializable {
                             depreciacao.setValoranual(valorAnual);
                             depreciacao.setValormes(valorMensal);
                             depreciacaoRepository.save(depreciacao);
-
-                            
-                            Historico his = historicoRepository.trazHistorico("Despesa/Investimento do Patrimônio");
-                            his.setHistorico(his.getHistorico().replace("{CODIGO}", depreciacao.getId().toString()));
-                            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
-
-                            //CREDITO //VER VALOR E CONTAS
-                            lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
-
-                            //DEBITO
-                            lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
                         }
                     }
+
+                    String hist = historicoRepository.trazHistorico("Despesa/Investimento do Patrimônio").getHistorico();
+                    hist = hist.replace("{CODIGO}", despesaInvestimento.getId().toString());
+                    hist = hist.replace("{MODULO}", "PATRIMONIO");
+
+                    //CREDITO 
+                    lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), hist, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
+
+                    //DEBITO
+                    lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), hist, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
                 }
             }
     

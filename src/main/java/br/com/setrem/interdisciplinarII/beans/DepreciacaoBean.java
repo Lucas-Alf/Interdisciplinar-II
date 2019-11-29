@@ -91,15 +91,15 @@ public class DepreciacaoBean implements Serializable {
                 depreciacaoRepository.save(this.depreciacao);
 
                 
-            Historico his = historicoRepository.trazHistorico("Depreciação do Patrimônio");
-            his.setHistorico(his.getHistorico().replace("{CODIGO}", depreciacao.getId().toString()));
-            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
+            String his = historicoRepository.trazHistorico("Depreciação do Patrimônio").getHistorico();
+            his = his.replace("{CODIGO}", depreciacao.getId().toString());
+            his = his.replace("{MODULO}", "PATRIMONIO");
 
             //CREDITO
-            lancamentoContabilRepository.insert(this.depreciacao.getValormes(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "( - ) DEPRECIAÇÃO ACUMULADA").toInt(), new Date());
+            lancamentoContabilRepository.insert(this.depreciacao.getValormes(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "( - ) DEPRECIAÇÃO ACUMULADA").toInt(), new Date());
 
             //DEBITO
-            lancamentoContabilRepository.insert(this.depreciacao.getValormes(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DEPRECIAÇÕES").toInt(), new Date());
+            lancamentoContabilRepository.insert(this.depreciacao.getValormes(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(),his, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DEPRECIAÇÕES").toInt(), new Date());
             }
     
             this.depreciacao = new Depreciacao();

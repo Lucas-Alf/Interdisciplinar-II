@@ -212,16 +212,16 @@ public class CompraBean implements Serializable {
                     saldos.removeAll(saldos);
                 }
 
-                Historico his = historicoRepository.trazHistorico("Movimentação");
-                his.setHistorico(his.getHistorico().replace("{CODIGO}",movItens.getId().toString()));
-                his.setHistorico(his.getHistorico().replace("{MODULO}", "ESTOQUE"));
-                his.setHistorico(his.getHistorico().replace("{TIPOMOVIMENTO}", "C"));
+                String his = historicoRepository.trazHistorico("Movimentação").getHistorico();
+                his = his.replace("{CODIGO}",movItens.getId().toString());
+                his = his.replace("{MODULO}","ESTOQUE");
+                his = his.replace("{TIPOMOVIMENTO}","C");
     
                 //CREDITO
-                lancamentoContabilRepository.insert(this.movItens.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
+                lancamentoContabilRepository.insert(this.movItens.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
     
                 //DEBITO
-                lancamentoContabilRepository.insert(this.movItens.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "ESTOQUE DE MERCADORIAS").toInt(), new Date());
+                lancamentoContabilRepository.insert(this.movItens.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "ESTOQUE DE MERCADORIAS").toInt(), new Date());
     
             }
 

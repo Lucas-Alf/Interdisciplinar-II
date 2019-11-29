@@ -232,16 +232,16 @@ public class PatrimonioBean implements Serializable {
             movItens = new MovItens();
 
 
-            Historico his = historicoRepository.trazHistorico("Lançamento Patrimonial");
-            his.setHistorico(his.getHistorico().replace("{CODIGO}", patrimonio.getId().toString()));
-            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
-            his.setHistorico(his.getHistorico().replace("{TIPOMOVIMENTO}", "V"));
+            String his = historicoRepository.trazHistorico("Lançamento Patrimonial").getHistorico();
+            his = his.replace("{CODIGO}", patrimonio.getId().toString());
+            his = his.replace("{MODULO}",  "PATRIMONIO");
+            his = his.replace("{TIPOMOVIMENTO}", "V");
 
             //CREDITO
-            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
+            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
 
             //DEBITO
-            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
+            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
 
 
             this.AtualizarTabela();

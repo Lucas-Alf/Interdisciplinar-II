@@ -104,15 +104,15 @@ public class BaixaBemBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
 
-            Historico his = historicoRepository.trazHistorico("Baixa Patrimônio");
-            his.setHistorico(his.getHistorico().replace("{CODIGO}", baixaBem.getId().toString()));
-            his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
+            String his = historicoRepository.trazHistorico("Baixa Patrimônio").getHistorico();
+            his = his.replace("{CODIGO}", baixaBem.getId().toString());
+            his = his.replace("{MODULO}", "PATRIMONIO");
 
             //CREDITO
-            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
+            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
 
             //DEBITO
-            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
+            lancamentoContabilRepository.insert(this.baixaBem.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
 
         }
     }
