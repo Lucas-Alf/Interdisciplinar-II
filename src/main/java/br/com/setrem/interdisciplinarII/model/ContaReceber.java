@@ -135,4 +135,8 @@ public class ContaReceber implements Serializable {
     public void setCliForid(CliFor CliForid) {
         this.CliForid = CliForid;
     }
+
+    public Object getDatarecebimento() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

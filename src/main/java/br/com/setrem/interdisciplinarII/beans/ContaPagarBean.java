@@ -51,16 +51,12 @@ public class ContaPagarBean implements Serializable {
 
     public void AbrirModal() {
         this.contapagar = new ContaPagar();
-        PrimeFaces.current().executeScript("$('#CadastrarProduto').modal('show');");
+        PrimeFaces.current().executeScript("$('#CadastrarContaPagar').modal('show');");
     }
 
     public void Salvar() {
         if (this.contapagar.getDescricao().equals("")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descrição.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao", fm);
-        } else if (this.contapagar.getNumdocumento() == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o número do documento.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else if (this.contapagar.getNumdocumento() == 0) {
@@ -87,19 +83,72 @@ public class ContaPagarBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um valor.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
+        } else if (this.contapagar.getSaldo() == 0) {
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             contapagar.setCliForid(empresa);
             contapagarRepository.save(this.contapagar);
-            this.Atualizar();
+            this.AtualizarTabela();
 
             FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
-            PrimeFaces.current().executeScript("$('#CadastrarProduto').modal('hide');");
+            PrimeFaces.current().executeScript("$('#CadastrarContaPagar').modal('hide');");
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         }
+    }
+
+    public void Deletar(int id) {
+        try {
+            if (id == 0) {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Excluir.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao2", fm);
+            } else {
+                contapagarRepository.deleteById(id);
+                this.AtualizarTabela();
+
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("validacao2", fm);
+            }
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!", "Não é possível excluir, pois possui relação com outro registro.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
+        }
+    }
+
+    public void AbreAlterar(int id) {
+        if (id == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Alterar.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao2", fm);
+        } else {
+            contapagar = contapagarRepository.getOne(id);
+            PrimeFaces.current().executeScript("$('#CadastrarContaPagar').modal('show');");
+        }
+    }
+
+    public ContaPagar getContaPagar() {
+        return contapagar;
+    }
+
+    public void setContaPagar(ContaPagar contaPagar) {
+        this.contapagar = contapagar;
+    }
+
+    public List<ContaPagar> getContasPagar() {
+        if (this.contaspagar == null) {
+            this.contaspagar = contapagarRepository.findAll();
+        }
+        return contaspagar;
+    }
+
+    public void setContasPagar(List<ContaPagar> contaspagar) {
+        this.contaspagar = contaspagar;
     }
 
     public ContaPagarRepository getContapagarRepository() {
@@ -198,7 +247,4 @@ public class ContaPagarBean implements Serializable {
         this.contaspagar = contaspagar;
     }
 
-    private void Atualizar() {
-
-    }
 }
