@@ -126,10 +126,10 @@ public class DespesaInvestimentoBean implements Serializable {
                             his.setHistorico(his.getHistorico().replace("{MODULO}", "PATRIMONIO"));
 
                             //CREDITO //VER VALOR E CONTAS
-                            lancamentoContabilRepository.insert(this.depreciacao.getValoranual(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
+                            lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
 
                             //DEBITO
-                            lancamentoContabilRepository.insert(this.depreciacao.getValoranual(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
+                            lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), his.getHistorico(), empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI").toInt(), new Date());
                         }
                     }
                 }
