@@ -105,15 +105,10 @@ public class LancamentoContabilBean implements Serializable {
         }
     }
 
-    public void LancamentoContabil(List<LancamentoContabil> listaLancamento, int historicoPadrao) {
-        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        // this.lancamentoContabil.setCliforid(empresa);
-
-        // LancamentoContabil lan = new LancamentoContabil();
-        // VER COM O PROFESSOR COMO VAI FUNCIONAR O HISTORICO PADRAO NOS MODULOS (CRIAR
-        // TELA DE PARAMETRIZAÇÃO? OU PEGAR AUTOMATICO CONFORME O NOME?).
-
-        listaLancamento.forEach(item -> lancamentoContabilRepository.save(item));
+    public void LancamentoContabil(List<LancamentoContabil> listaLancamento) {
+        for (int i = 0; i <= listaLancamento.size(); i++){
+            lancamentoContabilRepository.save(listaLancamento.get(i));
+        }
     }
 
     public void PesquisarAnalitica() {
