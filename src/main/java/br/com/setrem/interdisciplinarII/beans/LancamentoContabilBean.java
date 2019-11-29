@@ -106,7 +106,9 @@ public class LancamentoContabilBean implements Serializable {
     }
 
     public void LancamentoContabil(List<LancamentoContabil> listaLancamento) {
-        listaLancamento.forEach(item -> lancamentoContabilRepository.save(item));
+        for (int i = 0; i <= listaLancamento.size(); i++){
+            lancamentoContabilRepository.save(listaLancamento.get(i));
+        }
     }
 
     public void PesquisarAnalitica() {

@@ -2,6 +2,7 @@ package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Data.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.baixaBem.getPatrimonioid() == null) {    
+        } else if (this.baixaBem.getPatrimonioid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Patrimônio.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
@@ -81,12 +82,14 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Motivo de Baixa.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if ((int)(this.baixaBem.getValor()) == 0 && this.baixaBem.getMotivobaixaid().getDescricao().equals("Venda")) {
+        } else if ((int) (this.baixaBem.getValor()) == 0
+                && this.baixaBem.getMotivobaixaid().getDescricao().equals("Venda")) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor da Venda.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                    .get("empresa");
             this.patrimonio = patrimonioRepository.getOne(this.baixaBem.getPatrimonioid().getId());
             this.patrimonio.setBaixado(1);
             patrimonioRepository.save(patrimonio);
@@ -100,9 +103,12 @@ public class BaixaBemBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Patrimônio Baixado.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
-           
+
             Historico his = historicoRepository.trazHistorico("Baixa Patrimônio");
-            //replace
+            his.getHistorico().replace("{CODIGO}", baixaBem.getId().toString());
+            his.getHistorico().replace("{MODULO}", "PATRIMONIO");
+
+            List<LancamentoContabil> listaLan = new ArrayList<>();
 
             LancamentoContabil lanC = new LancamentoContabil();
             lanC.setCliforid(empresa);
@@ -110,18 +116,24 @@ public class BaixaBemBean implements Serializable {
             lanC.setHistorico(his.getHistorico());
             lanC.setTipo("C");
             lanC.setCentrocustoid(centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado"));
-            lanC.setIdconta(contaRepository.trazConta(empresa.getId(),"OUTROS IMOBILIZADOS"));
+            lanC.setIdconta(contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS"));
             lanC.setValor(this.baixaBem.getValor());
 
-            // LancamentoContabil lanD = new LancamentoContabil();
-            // lanC.setCliforid(empresa);
-            // lanC.setDatahora(new Date());
-            // lanC.setHistorico(his.getHistorico());
-            // lanC.setTipo("C");
-            // lanC.setCentrocustoid(centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado"));
-            // lanC.setIdconta(contaRepository.trazConta(empresa.getId(),"OUTROS IMOBILIZADOS"));
-            // lanC.setValor(this.baixaBem.getValor());
-            // o.LancamentoContabil(listaLancamento);
+            LancamentoContabil lanD = new LancamentoContabil();
+            lanD.setCliforid(empresa);
+            lanD.setDatahora(new Date());
+            lanD.setHistorico(his.getHistorico());
+            lanD.setTipo("D");
+            lanD.setCentrocustoid(centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado"));
+            lanD.setIdconta(contaRepository.trazConta(empresa.getId(), "DESPESA OU CUSTO COM BAIXA DE AI"));
+            lanD.setValor(this.baixaBem.getValor());
+
+            listaLan.add(lanC);
+            listaLan.add(lanD);
+
+            LancamentoContabilBean bean = new LancamentoContabilBean();
+
+            bean.LancamentoContabil(listaLan);
         }
     }
 
@@ -202,5 +214,5 @@ public class BaixaBemBean implements Serializable {
     public void setPatrimonioRepository(PatrimonioRepository patrimonioRepository) {
         this.patrimonioRepository = patrimonioRepository;
     }
-    
+
 }
