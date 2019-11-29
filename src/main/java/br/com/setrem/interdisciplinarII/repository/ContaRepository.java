@@ -21,5 +21,7 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
     @Query(value="WITH RECURSIVE conts(id, descricao, ordem, name_path) AS ( SELECT id, descricao, ordem, ARRAY[cast(ordem as text)] FROM conta WHERE contapai is null and cliforid = ?1 UNION ALL SELECT p.id, p.descricao, p.ordem, ARRAY_APPEND(t0.name_path, cast(p.ordem as text)) FROM conta p INNER JOIN conts t0 ON t0.id = p.contapai where p.cliforid = ?1) SELECT conts.id, cast(ARRAY_TO_STRING(name_path, '.') as text) hierarquia, conts.descricao,vdd.cliforid, vdd.sintetica, conts.ordem, vdd.contapai FROM conts inner join conta vdd on(conts.id = vdd.id) where sintetica = false order by hierarquia ", nativeQuery = true)
     public List<Conta> pesquisarAnalit(String id);
-
+    
+    @Query(value="selet * from conta where cliforid = ?1 and descricao = ?2 ", nativeQuery = true)
+    public Conta trazConta(String id, String desc);
 }

@@ -10,13 +10,13 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<parameter name="REPORTS_DIR" class="java.lang.String"/>
 	<parameter name="EMPRESA_NOME" class="java.lang.String"/>
 	<parameter name="RELATORIO_NOME" class="java.lang.String"/>
 	<parameter name="EMPRESA_CNPJ" class="java.lang.String"/>
 	<parameter name="EMPRESA_ID" class="java.lang.String"/>
 	<parameter name="EMPRESA_CELULAR" class="java.lang.String"/>
 	<parameter name="EMPRESA_EMAIL" class="java.lang.String"/>
+	<parameter name="LOGO_ABACO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -34,10 +34,6 @@
 				</textElement>
 				<text><![CDATA[Relatório:]]></text>
 			</staticText>
-			<image>
-				<reportElement x="15" y="16" width="156" height="59" uuid="1b4d8e1c-eef6-48fb-a664-dd60eef41b7b"/>
-				<imageExpression><![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="184" y="39" width="46" height="15" uuid="43e2d87c-cabc-4757-a411-8a086e130db8"/>
 				<textElement>
@@ -74,14 +70,20 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="15" y="16" width="156" height="59" uuid="b22db817-5b05-48a4-9110-a138b3bf4f5c"/>
+				<imageExpression><![CDATA[$P{LOGO_ABACO}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>
-		<band height="95" splitType="Stretch">
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="44" y="22" width="65" height="60" uuid="b84b9ad9-26d9-43ba-a88d-9ebf6deb1cf4"/>
-				<imageExpression><![CDATA[$P{REPORTS_DIR} + "images/abaco.png"]]></imageExpression>
-			</image>
+		<band height="108" splitType="Stretch">
+			<rectangle>
+				<reportElement x="34" y="5" width="239" height="85" uuid="e8f96846-8675-42d2-9c0e-d90276069706"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</rectangle>
 			<textField>
 				<reportElement x="124" y="14" width="140" height="20" uuid="84fe3dd5-9385-4e86-814d-f62720d7386e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
@@ -95,6 +97,10 @@
 					<jr:codeExpression><![CDATA[$F{id}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
+			<image>
+				<reportElement x="47" y="14" width="60" height="59" uuid="60f4761e-e164-4eaf-ae45-473af5ae77c0"/>
+				<imageExpression><![CDATA[$P{LOGO_ABACO}]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 </jasperReport>
