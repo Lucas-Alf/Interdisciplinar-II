@@ -11,7 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContaPagarRepository  extends JpaRepository<ContaPagar, Integer> {
 
-    @Query("SELECT e FROM contapagar e WHERE e.rua LIKE %?1%")
+    @Query(value = "select * from contapagar where nome like %?1% and cliforid = ?2", nativeQuery = true)
+    public List<ContaPagar> Pesquisar(String descricao, String empresa);
+
+    @Query(value = "select * from contapagar where cliforid = ?1", nativeQuery = true)
+    public List<ContaPagar> AtualizarTabela(String empresa);
+
     public List<ContaPagar> pesquisar(String descricao);
 
 }
