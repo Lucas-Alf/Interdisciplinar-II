@@ -2,6 +2,7 @@ package br.com.setrem.interdisciplinarII.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -16,7 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.setrem.interdisciplinarII.model.CliFor;
 import br.com.setrem.interdisciplinarII.model.MovItens;
 import br.com.setrem.interdisciplinarII.model.Movimentacao;
+import br.com.setrem.interdisciplinarII.model.Produto;
 import br.com.setrem.interdisciplinarII.model.Saldo;
+import br.com.setrem.interdisciplinarII.repository.CentroCustoRepository;
+import br.com.setrem.interdisciplinarII.repository.ContaRepository;
+import br.com.setrem.interdisciplinarII.repository.HistoricoRepository;
+import br.com.setrem.interdisciplinarII.repository.LancamentoContabilRepository;
 import br.com.setrem.interdisciplinarII.repository.MovItensRepository;
 import br.com.setrem.interdisciplinarII.repository.MovimentacaoRepository;
 import br.com.setrem.interdisciplinarII.repository.SaldoRepository;
@@ -24,6 +30,15 @@ import br.com.setrem.interdisciplinarII.repository.SaldoRepository;
 @Named(value = "vendaBean")
 @SessionScoped
 public class VendaBean implements Serializable {
+
+    @Autowired
+    private CentroCustoRepository centroCustoRepository;
+    @Autowired
+    private HistoricoRepository historicoRepository;
+    @Autowired
+    private LancamentoContabilRepository lancamentoContabilRepository;
+    @Autowired
+    private ContaRepository contaRepository;
 
     @Autowired
     private MovItensRepository movItensRepository;
@@ -83,24 +98,34 @@ public class VendaBean implements Serializable {
         if (movItens.getProdutoId() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Produto.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao2", fm);
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (movItens.getLocalId() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Local.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao2", fm);
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (movItens.getQtde() == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a Quantidade.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao2", fm);
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (movItens.getValor() == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Valor.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("validacao2", fm);
+            context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (qtdeMaxima < movItens.getQtde()) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
                     "Quantidade selecionada ultrapassa a quantidade disponível (" + qtdeMaxima + ").");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else {
             if (this.produtos == null) {
                 this.produtos = new ArrayList<MovItens>();
@@ -112,9 +137,26 @@ public class VendaBean implements Serializable {
                 setSeq(getSeq() + 1);
             }
 
-            movItens.setSequencia(getSeq());
-            this.produtos.add(movItens);
+            boolean pas = false;
+            MovItens prodGrid = new MovItens();
+            for (int i = 0; i < produtos.size(); i++) {
+                prodGrid = produtos.get(i);
+                if (prodGrid.getProdutoId().getId() == movItens.getProdutoId().getId()) {
+                    FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
+                            "Este produto já esta incluído na lista!");
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    context.addMessage("validacao", fm);
+                    pas = true;
+                    break;
+                }
+            }
+            if (!pas) {
+                movItens.setSequencia(getSeq());
+                this.produtos.add(movItens);
+            }
             movItens = new MovItens();
+            PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
+            PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         }
     }
 
@@ -144,7 +186,7 @@ public class VendaBean implements Serializable {
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
             PrimeFaces.current().executeScript("$('#CadastrarVenda').modal('show');");
         } else if (movimentacao.getCliForid() == null) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Fornecedor.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o Cliente.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
             PrimeFaces.current().executeScript("$('.modal-backdrop').hide();");
@@ -169,7 +211,7 @@ public class VendaBean implements Serializable {
                 movItens.setCliForId(empresa);
                 movItens.setMovimentacaoId(movimentacao);
                 movItensRepository.save(movItens);
-                valorTotal += movItens.getValor();
+                valorTotal += movItens.getValor() * movItens.getQtde();
 
                 saldos = saldoRepository.BuscarSaldo(movItens.getProdutoId().getId(), movItens.getLocalId().getId());
                 if (saldos.size() > 0) {
@@ -182,6 +224,16 @@ public class VendaBean implements Serializable {
                     saldos.removeAll(saldos);
                 }
             }
+            String his = historicoRepository.trazHistorico("Movimentação").getHistorico();
+            his = his.replace("{CODIGO}",movimentacao.getId().toString());
+            his = his.replace("{MODULO}","ESTOQUE");
+            his = his.replace("{TIPOMOVIMENTO}","V");
+            his = movimentacao.getId() + "#MOVIMENTACAO#"  + his;
+            //CREDITO
+            lancamentoContabilRepository.insert(valorTotal, centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "ESTOQUE DE MERCADORIAS").toInt(), new Date());
+
+            //DEBITO
+            lancamentoContabilRepository.insert(valorTotal, centroCustoRepository.trazCentroCusto(empresa.getId(), "Estoque").toInt(), his, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "CUSTO DAS MERCADORIAS VENDIDAS (CMV)").toInt(), new Date());
 
             movimentacao.setValortotal(valorTotal);
             movimentacaoRepository.save(movimentacao);
@@ -211,7 +263,11 @@ public class VendaBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, fm);
         } else {
+            movItensRepository.DeletarMovItens(id);
+            movimentacaoRepository.DeletarMovimentacao(id);
+            lancamentoContabilRepository.DeletarLancamentoCont(id + "#MOVIMENTACAO#");
             this.AtualizarTabelaSaida();
+            movItenss.removeAll(movItenss);
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
             FacesContext context = FacesContext.getCurrentInstance();

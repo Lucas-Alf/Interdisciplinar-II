@@ -14,6 +14,9 @@ public interface CliForRepository extends JpaRepository<CliFor, String> {
 
     @Query(value = "SELECT * FROM clifor WHERE tipocliente = 'F' ORDER BY id", nativeQuery = true)
     List<CliFor> ListaFornecedor();
+
+    @Query(value = "SELECT * FROM clifor WHERE tipocliente like '%C%' ORDER BY id", nativeQuery = true)
+    List<CliFor> listaCliente();
     
     @Query(value = "SELECT * FROM clifor WHERE id = ?", nativeQuery = true)
     CliFor BuscaPorId(String id);
