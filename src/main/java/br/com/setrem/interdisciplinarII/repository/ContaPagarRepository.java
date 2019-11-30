@@ -1,5 +1,5 @@
 
-/*package br.com.setrem.interdisciplinarII.repository;
+package br.com.setrem.interdisciplinarII.repository;
 
 import br.com.setrem.interdisciplinarII.model.ContaPagar;
 
@@ -11,11 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContaPagarRepository  extends JpaRepository<ContaPagar, Integer> {
 
-    @Query(value = "select * from contapagar where nome like %?1% and cliforid = ?2", nativeQuery = true)
+    /*@Query(value = "select * from contapagar where nome like %?1% and cliforid = ?2", nativeQuery = true)
     public List<ContaPagar> Pesquisar(String descricao, String empresa);
 
     @Query(value = "select * from contapagar where cliforid = ?1", nativeQuery = true)
     public List<ContaPagar> AtualizarTabela(String empresa);
 
-    public List<ContaPagar> pesquisar(String descricao);*
-}*/
+    public List<ContaPagar> pesquisar(String descricao);*/
+
+}

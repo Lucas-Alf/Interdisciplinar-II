@@ -1,29 +1,28 @@
 package br.com.setrem.interdisciplinarII.beans;
 
+import br.com.setrem.interdisciplinarII.model.CliFor;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.setrem.interdisciplinarII.model.Conta;
 import br.com.setrem.interdisciplinarII.model.ContaPagar;
 import br.com.setrem.interdisciplinarII.repository.ContaPagarRepository;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 
 @Named(value = "contapagarBean")
 @SessionScoped
 public class ContaPagarBean implements Serializable {
 
-    @Autowired
+    /*@Autowired
     private ContaPagarRepository contapagarRepository;
     private ContaPagar contapagar = new ContaPagar();
-    private Conta conta = new Conta();
 
     private int id;
     private String descricao;
@@ -34,18 +33,19 @@ public class ContaPagarBean implements Serializable {
     private Date datapagamento;
     private double valor;
     private double saldo;
-    private List<ContaPagar> contaspagar;
+    private List<ContaPagar> contaspagar;*/
 
     public ContaPagarBean() {
 
-    }
-
-    public void AtualizarTabela() {
-        this.contaspagar = contapagarRepository.pesquisar("");
+    }}
+    /*public void AtualizarTabela() {
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.contaspagar = contapagarRepository.AtualizarTabela(empresa.getId());
     }
 
     public void Pesquisar(String descricao) {
-        this.contaspagar = contapagarRepository.pesquisar(descricao);
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        this.contaspagar = contapagarRepository.Pesquisar(descricao, empresa.getId());
     }
 
     public void AbrirModal() {
@@ -55,45 +55,48 @@ public class ContaPagarBean implements Serializable {
 
     public void Salvar() {
         if (this.contapagar.getDescricao().equals("")) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descricao.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma descrição.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.contapagar.getNumdocumento()== 0) {
+        } else if (this.contapagar.getNumdocumento() == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o número do documento.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.contapagar.getSeriedocumento()==0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a série do documento.");
+        } else if (this.contapagar.getSeriedocumento() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o número da série da nota.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.contapagar.getDatadocumento()==null) {
+        } else if (this.contapagar.getDatadocumento() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a data de entrada.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.contapagar.getDatavencimento()==null) {
+        } else if (this.contapagar.getDatavencimento() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a data de vencimento.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.contapagar.getDatapagamento()==null) {
+        } else if (this.contapagar.getDatapagamento() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a data de pagamento.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-            } else if (this.contapagar.getValor()==0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe o valor.");
+        } else if (this.contapagar.getValor() == 0) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um valor.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
-        } else if (this.contapagar.getContaid() == null) {
+        }else if (this.contapagar.getContaid() == null) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a conta contábil.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
+        } else if (this.contapagar.getSaldo() == 0) {
         } else {
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            contapagar.setCliForid(empresa);
             contapagarRepository.save(this.contapagar);
             this.AtualizarTabela();
 
             FacesContext.getCurrentInstance().getPartialViewContext().setRenderAll(true);
             PrimeFaces.current().executeScript("$('#CadastrarContaPagar').modal('hide');");
 
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Salvo com sucesso.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Salvo com sucesso.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         }
@@ -122,13 +125,33 @@ public class ContaPagarBean implements Serializable {
 
     public void AbreAlterar(int id) {
         if (id == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Selecione um registro para Alterar.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                    "Selecione um registro para Alterar.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         } else {
             contapagar = contapagarRepository.getOne(id);
             PrimeFaces.current().executeScript("$('#CadastrarContaPagar').modal('show');");
         }
+    }
+
+    public ContaPagar getContaPagar() {
+        return contapagar;
+    }
+
+    public void setContaPagar(ContaPagar contaPagar) {
+        this.contapagar = contapagar;
+    }
+
+    public List<ContaPagar> getContasPagar() {
+        if (this.contaspagar == null) {
+            this.contaspagar = contapagarRepository.findAll();
+        }
+        return contaspagar;
+    }
+
+    public void setContasPagar(List<ContaPagar> contaspagar) {
+        this.contaspagar = contaspagar;
     }
 
     public ContaPagarRepository getContapagarRepository() {
@@ -145,14 +168,6 @@ public class ContaPagarBean implements Serializable {
 
     public void setContapagar(ContaPagar contapagar) {
         this.contapagar = contapagar;
-    }
-
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
     }
 
     public int getId() {
@@ -235,6 +250,4 @@ public class ContaPagarBean implements Serializable {
         this.contaspagar = contaspagar;
     }
 
-}
-    
-
+    }*/
