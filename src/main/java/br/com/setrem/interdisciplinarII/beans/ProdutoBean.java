@@ -46,6 +46,12 @@ public class ProdutoBean implements Serializable {
         this.produtos = produtoRepository.Pesquisar(descricao, empresa.getId());
     }
 
+    public List<Produto> ListaProdutoPatrimonio() {
+        CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        List<Produto> produtos = produtoRepository.BuscaProdutoPatrimonio(empresa.getId());
+        return produtos;
+    }
+
     public void AbrirModal() {
         this.produto = new Produto();
         PrimeFaces.current().executeScript("$('#CadastrarProduto').modal('show');");
@@ -61,7 +67,8 @@ public class ProdutoBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else if (this.produto.getQuantidademinima() == 0) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Quantidade Mínica.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
+                    "Informe uma Quantidade Mínica.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else if (this.produto.getMarcaid() == null) {
@@ -73,7 +80,8 @@ public class ProdutoBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else if (this.produto.getUnidademedidaid() == null) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe uma Unidade de Medida.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!",
+                    "Informe uma Unidade de Medida.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else if (this.produto.getFornecedorid() == null) {
@@ -81,7 +89,8 @@ public class ProdutoBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else {
-            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+            CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                    .get("empresa");
             produto.setCliforid(empresa);
             produtoRepository.save(this.produto);
             this.AtualizarTabela();
@@ -98,7 +107,8 @@ public class ProdutoBean implements Serializable {
     public void Deletar(int id) {
         try {
             if (id == 0) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!","Selecione um registro para Excluir.");
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!",
+                        "Selecione um registro para Excluir.");
                 FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage("validacao2", fm);
             } else {
@@ -110,7 +120,8 @@ public class ProdutoBean implements Serializable {
                 context.addMessage("validacao2", fm);
             }
         } catch (Exception e) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!","Não é possível excluir, pois possui relação com outro registro.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Atenção!",
+                    "Não é possível excluir, pois possui relação com outro registro.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao2", fm);
         }

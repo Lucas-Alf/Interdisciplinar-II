@@ -55,7 +55,7 @@
                                             value="#{patrimonioBean.patrimonio.produtoid}" style="width: 520px;"
                                             converter="ProdutoConverter" appendTo="@this">
                                             <f:selectItem itemValue="null" itemLabel="Selecione um Patrimônio" />
-                                            <f:selectItems value="#{produtoBean.produtos}" var="produto"
+                                            <f:selectItems value="#{produtoBean.ListaProdutoPatrimonio()}" var="produto"
                                                 itemValue="#{produto}" itemLabel="#{produto.nome}" />
                                         </p:selectOneMenu><br /><br />
 
