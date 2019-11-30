@@ -156,4 +156,8 @@ public class ContaPagar implements Serializable {
     public void setFornecedorid(CliFor fornecedorid) {
         this.fornecedorid = fornecedorid;
     }
+
+    public Object getContaid() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

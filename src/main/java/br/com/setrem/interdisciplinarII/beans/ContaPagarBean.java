@@ -25,6 +25,7 @@ public class ContaPagarBean implements Serializable {
     private ContaPagar contapagar = new ContaPagar();
 
     private int id;
+    private String contacontabil;
     private String descricao;
     private double numdocumento;
     private double seriedocumento;
@@ -81,6 +82,10 @@ public class ContaPagarBean implements Serializable {
             context.addMessage("validacao", fm);
         } else if (this.contapagar.getValor() == 0) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe um valor.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("validacao", fm);
+        }else if (this.contapagar.getContaid() == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atenção!", "Informe a conta contábil.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("validacao", fm);
         } else if (this.contapagar.getSaldo() == 0) {
@@ -245,6 +250,14 @@ public class ContaPagarBean implements Serializable {
 
     public void setContaspagar(List<ContaPagar> contaspagar) {
         this.contaspagar = contaspagar;
+    }
+
+    public String getContacontabil() {
+        return contacontabil;
+    }
+
+    public void setContacontabil(String contacontabil) {
+        this.contacontabil = contacontabil;
     }
 
 }
