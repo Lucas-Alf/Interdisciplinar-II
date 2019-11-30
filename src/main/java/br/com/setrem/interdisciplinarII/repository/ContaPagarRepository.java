@@ -1,5 +1,5 @@
 
-package br.com.setrem.interdisciplinarII.repository;
+/*package br.com.setrem.interdisciplinarII.repository;
 
 import br.com.setrem.interdisciplinarII.model.ContaPagar;
 
@@ -17,6 +17,5 @@ public interface ContaPagarRepository  extends JpaRepository<ContaPagar, Integer
     @Query(value = "select * from contapagar where cliforid = ?1", nativeQuery = true)
     public List<ContaPagar> AtualizarTabela(String empresa);
 
-    public List<ContaPagar> pesquisar(String descricao);
-
-}
+    public List<ContaPagar> pesquisar(String descricao);*
+}*/
