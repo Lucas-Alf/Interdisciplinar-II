@@ -20,7 +20,7 @@ import org.primefaces.PrimeFaces;
 @SessionScoped
 public class ContaPagarBean implements Serializable {
 
-    /*@Autowired
+    @Autowired
     private ContaPagarRepository contapagarRepository;
     private ContaPagar contapagar = new ContaPagar();
 
@@ -33,12 +33,12 @@ public class ContaPagarBean implements Serializable {
     private Date datapagamento;
     private double valor;
     private double saldo;
-    private List<ContaPagar> contaspagar;*/
+    private List<ContaPagar> contaspagar;
 
     public ContaPagarBean() {
 
-    }}
-    /*public void AtualizarTabela() {
+    }
+    public void AtualizarTabela() {
         CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         this.contaspagar = contapagarRepository.AtualizarTabela(empresa.getId());
     }
@@ -250,4 +250,4 @@ public class ContaPagarBean implements Serializable {
         this.contaspagar = contaspagar;
     }
 
-    }*/
+    }
