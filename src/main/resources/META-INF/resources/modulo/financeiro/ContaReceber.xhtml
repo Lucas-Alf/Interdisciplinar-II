@@ -28,9 +28,7 @@
                 <h3 style="margin-top: 10px; margin-bottom: 10px; text-align: center; font-weight: bold;">Conta a Receber</h3>
                 <h:form>
 
-                    <div class="modal fade" id="ContaReceber" widgetVar="ContaReceber"
-                        tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
-                        data-backdrop="static">
+                    <div class="modal fade" id="CadastrarContaReceber" widgetVar="CadastrarContaReceber"tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
                             <div style="margin-top: 65%; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 580px;"
                                 class="modal-content">
@@ -77,3 +75,18 @@
                                         </p:selectOneMenu>
                                     </span>
                                 </div>
+                                <div class="modal-footer">
+                                        <h:commandLink class="btn btn-primary btn-sm" value="Salvar" action="#{contapagarBean.Salvar()}">
+                                            <f:ajax execute="@form" render="validacao" />
+                                            <i class="far fa-save crud-btn"></i>
+                                        </h:commandLink>
+                                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    </div>
+                                </div>
+    </h:body>
+        <f:metadata>
+        <f:viewAction action="#{usuarioBean.VerificaLogin()}" />
+        <f:viewAction action="#{contareceberBean.AtualizarTabela()}" />
+        <f:viewAction action="#{contaBean.AtualizarTabela()}" />
+    </f:metadata>
+</html>
