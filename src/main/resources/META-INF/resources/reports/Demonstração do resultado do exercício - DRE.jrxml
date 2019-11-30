@@ -36,7 +36,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{grupo}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Grupo" pattern="¤#,##0.##;¤-#,##0.##">
+				<textField evaluationTime="Group" evaluationGroup="Grupo" pattern="#,##0.00#">
 					<reportElement x="410" y="1" width="134" height="13" uuid="3f9e0591-9589-45f2-98d1-bca30fd4d59b"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$V{valorTotalGrupoHeader}]]></textFieldExpression>
