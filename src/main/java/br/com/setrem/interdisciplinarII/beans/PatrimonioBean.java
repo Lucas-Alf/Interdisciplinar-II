@@ -195,6 +195,11 @@ public class PatrimonioBean implements Serializable {
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             patrimonio.setCliForid(empresa);
+
+            if(patrimonio.getId() != null)
+            {
+                lancamentoContabilRepository.DeletarLancamentoCont(patrimonio.getId() + "#PATRIMONIO#");
+            }
             patrimonioRepository.save(this.patrimonio);
 
             // Saída do Estoque
@@ -236,12 +241,14 @@ public class PatrimonioBean implements Serializable {
             his = his.replace("{CODIGO}", patrimonio.getId().toString());
             his = his.replace("{MODULO}",  "PATRIMONIO");
             his = his.replace("{TIPOMOVIMENTO}", "V");
+            his = patrimonio.getId() + "#PATRIMONIO#" + his;
+
 
             //CREDITO
-            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
+            lancamentoContabilRepository.insert(patrimonio.getValor(), patrimonio.getCentroCustoid().getId(), his, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
 
             //DEBITO
-            lancamentoContabilRepository.insert(this.movItens.getValor(), patrimonio.getCentroCustoid().getId(), his, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
+            lancamentoContabilRepository.insert(patrimonio.getValor(), patrimonio.getCentroCustoid().getId(), his, empresa.toString(), "D", contaRepository.trazConta(empresa.getId(), "OUTROS IMOBILIZADOS").toInt(), new Date());
 
 
             this.AtualizarTabela();
@@ -262,6 +269,7 @@ public class PatrimonioBean implements Serializable {
             } else {
                 depreciacaoRepository.DeletarDepreciacao(id);
                 patrimonioRepository.deleteById(id);
+                lancamentoContabilRepository.DeletarLancamentoCont(id + "#PATRIMONIO#");
                 this.AtualizarTabela();
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");

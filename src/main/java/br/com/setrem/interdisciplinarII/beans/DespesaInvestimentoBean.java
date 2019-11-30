@@ -84,6 +84,10 @@ public class DespesaInvestimentoBean implements Serializable {
         } else {
             CliFor empresa = (CliFor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
             despesaInvestimento.setCliForid(empresa);
+            if(despesaInvestimento.getId() != null)
+            {
+                lancamentoContabilRepository.DeletarLancamentoCont(despesaInvestimento.getId() + "#DESPESA#");
+            }
             despesaInvestimentoRepository.save(this.despesaInvestimento);
             this.AtualizarTabela();
 
@@ -125,6 +129,7 @@ public class DespesaInvestimentoBean implements Serializable {
                     String hist = historicoRepository.trazHistorico("Despesa/Investimento do Patrimônio").getHistorico();
                     hist = hist.replace("{CODIGO}", despesaInvestimento.getId().toString());
                     hist = hist.replace("{MODULO}", "PATRIMONIO");
+                    hist = despesaInvestimento.getId() + "#DESPESA#"  + hist;
 
                     //CREDITO 
                     lancamentoContabilRepository.insert(this.despesaInvestimento.getValor(), centroCustoRepository.trazCentroCusto(empresa.getId(), "Almoxarifado").toInt(), hist, empresa.toString(), "C", contaRepository.trazConta(empresa.getId(), "CAIXA").toInt(), new Date());
@@ -148,6 +153,7 @@ public class DespesaInvestimentoBean implements Serializable {
                 context.addMessage("validacao2", fm);
             } else {
                 despesaInvestimentoRepository.deleteById(id);
+                lancamentoContabilRepository.DeletarLancamentoCont(id + "#DESPESA#");
                 this.AtualizarTabela();
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Registro deletado.");
