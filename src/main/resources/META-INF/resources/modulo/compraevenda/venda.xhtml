@@ -57,14 +57,14 @@
                                                     style="width: 300px; margin-bottom: 5px; margin-left: 30px;"
                                                     id="notafiscal" value="#{vendaBean.movimentacao.notafiscal}" />
                                                 <br />
-                                                <h:outputText value="Fornecedor: "
+                                                <h:outputText value="CLiente: "
                                                     style="width: 150px; margin-right: 6px; margin: 10px;" />
                                                 <p:selectOneMenu id="clifor" filter="true" filterMatchMode="contains"
                                                     value="#{vendaBean.movimentacao.cliForid}" style="width: 300px;"
                                                     converter="CliForConverter" appendTo="@this">
                                                     <f:selectItem itemValue="null"
-                                                        itemLabel="Selecione um Fornecedor" />
-                                                    <f:selectItems value="#{cliforBean.listaFornecedores()}"
+                                                        itemLabel="Selecione um Cliente" />
+                                                    <f:selectItems value="#{cliforBean.listaClientes()}"
                                                         var="clifor" itemValue="#{clifor}" itemLabel="#{clifor.nome}" />
                                                 </p:selectOneMenu>
                                             </f:facet>
@@ -109,8 +109,7 @@
 
                                         <h:commandLink class="btn btn-success btn-sm" value="Incluir"
                                             action="#{vendaBean.SalvarEstoque()}">
-                                            <f:ajax execute="@form" render="tabela" />
-                                            <f:ajax execute="@form" render="validacao" />
+                                            <f:ajax execute="@form" render="@form" />
                                             <i class="far fa-edit crud-btn"></i>
                                         </h:commandLink>
 
@@ -169,11 +168,10 @@
                         <f:ajax execute="@form" render="@form" />
                         <i class="far fa-edit crud-btn"></i>
                     </h:commandLink>
-
-                    <h:commandLink class="btn btn-warning btn-sm" value="Alterar"
-                        action="#{vendaBean.AbreAlterar(item.id)}">
+                  
+                    <h:commandLink class="btn btn-danger btn-sm" value="Excluir" action="#{vendaBean.Deletar(item2.id)}">
                         <f:ajax execute="@form" render="@form" />
-                        <i class="far fa-edit crud-btn"></i>
+                        <i class="far fa-trash-alt crud-btn"></i>
                     </h:commandLink>
 
                     <p:dataTable scrollable="true" scrollHeight="40%" id="tabela2" var="item2"

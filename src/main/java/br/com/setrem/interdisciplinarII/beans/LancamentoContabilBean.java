@@ -146,7 +146,7 @@ public class LancamentoContabilBean implements Serializable {
         } else {
             lancamentoContabil = lancamentoContabilRepository.getOne(id);
             val = lancamentoContabil.getValor();
-            valor = Double.toString(val).replace('.', ',');
+            valor = Double.toString(val);//.replace('.', ',');
             PrimeFaces.current().executeScript("$('#CadastrarLancamento').modal('show');");
         }
     }
