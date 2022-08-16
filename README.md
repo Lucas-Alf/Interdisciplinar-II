@@ -1,7 +1,7 @@
 # Interdisciplinar II
 <p align="center">
    <img src="src/main/resources/META-INF/resources/images/AbacoLogoMedio.png" width="400"><br/><br/>
-    Projeto Web para LP I
+   Projeto Web para disciplina de Lógica de Programação I
 </p>
 
 # Requisitos
